@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
+import styled from 'styled-components';
 import styles from './typography.module.css';
-interface TypographyProps {
-  variant: keyof typeof styles;
-  color?: string;
-  children: string;
-}&HTMLAttributes<HTMLHeadingElement>
 
-export const Typography: React.FC<TypographyProps> = ({ variant, color, children,...props }) => {
+type TypographyProps = {
+  variant: keyof typeof styles;
+  style?: React.CSSProperties;
+  children: string;
+} & HTMLAttributes<HTMLHeadingElement>;
+
+const TAG_MAPPING: { [key: string]: keyof JSX.IntrinsicElements } = {
+  largetitle: 'h1',
+};
+
+export const Typography: React.FC<TypographyProps> = ({ variant, style, children, ...props }) => {
   return (
-    <StyledTypography className={`${variant}`} style={styles}>
+    <StyledTypography
+      as={TAG_MAPPING[variant] || 'p'}
+      className={styles[variant]}
+      style={{ ...style }}
+      {...props}
+    >
       {children}
     </StyledTypography>
   );
 };
 
-const StyledTypography = styled.div`
-
-`;
+const StyledTypography = styled.div``;
