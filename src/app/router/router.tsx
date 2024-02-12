@@ -1,3 +1,5 @@
+import { SigninPage } from 'pages/signin';
+import { SignupPage } from 'pages/signup';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
@@ -9,11 +11,11 @@ const router = createBrowserRouter([
   },
   {
     path: ROUTES_PATH.signin,
-    element: '',
+    element: <SigninPage />,
   },
   {
     path: ROUTES_PATH.signup,
-    element: '',
+    element: <SignupPage />,
   },
   {
     path: ROUTES_PATH.profile,

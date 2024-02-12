@@ -1,8 +1,15 @@
 import React from 'react';
 const mockData = {
-  id: 'juhee',
+  email: 'asdf@naver.com',
   password: 'juhee123',
 };
 export const SignupPage = () => {
-  return <div>SignupPage</div>;
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+  };
+  return (
+    <div>
+      <button onClick={handleSubmit}>회원가입 버튼</button>
+    </div>
+  );
 };
