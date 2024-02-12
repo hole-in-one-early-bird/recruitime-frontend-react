@@ -4,6 +4,7 @@ const mockData = {
   password: 'juhee123',
 };
 export const SignupPage = () => {
+  //const { mutate, signUp, isLoading } = useSignUpMutation();
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
   };
