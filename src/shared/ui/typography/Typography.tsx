@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styles from './typography.module.css';
 interface TypographyProps {
   variant:
     | 'largeTitle'
@@ -24,5 +24,9 @@ interface TypographyProps {
 }
 
 export const Typography: React.FC<TypographyProps> = ({ variant, color, children }) => {
-  return <div className={`${variant}`}>{children}</div>;
+  return (
+    <div className={`${variant}`} style={styles}>
+      {children}
+    </div>
+  );
 };
