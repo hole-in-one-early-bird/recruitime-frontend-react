@@ -1,12 +1,14 @@
+import { useSignUpMutation } from 'features/auth';
 import React from 'react';
 const mockData = {
   email: 'asdf@naver.com',
   password: 'juhee123',
 };
 export const SignupPage = () => {
-  //const { mutate, signUp, isLoading } = useSignUpMutation();
+  const { mutate: signUp } = useSignUpMutation();
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    signUp(mockData);
   };
   return (
     <div>
