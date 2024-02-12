@@ -5,7 +5,7 @@
     font-weight: 700;
     line-height: 32px;
     letter-spacing: -0.02em;
-    color: ${colors.gray[900]};
+   color: var(--gray-900);
   }
   
   .subtitle {
@@ -13,7 +13,7 @@
     font-weight:500;
     line-height: 100%;
     letter-spacing: -0.02em;
-    color: ${colors.gray[600]};
+    color: var(--gray-600);
   }
   
   .placeholder {
@@ -21,159 +21,159 @@
     font-weight:500;
     line-height: 100%;
     letter-spacing: -0.02em;
-    color: ${colors.gray[400]};
+    color: var(--gray-400);
   }
 
   .placeholderActive {
-    color: ${colors.gray[700]};
+    color: var(--gray-700);
   }
   
   .button1 {
-    color: ${colors.gray[500]};
     font-size: 16px;
     font-weight: 600;
     line-height: 1; 
     letter-spacing: -0.02em;
+   
   }
   
   .button1Active {
-    color: ${colors.blue[600]};
+    color: var(--blue-600);
   }
   
   .button2 {
-    color: ${colors.gray[500]};
     font-size: 16px;
     font-weight: 500; 
     line-height: 1;
     letter-spacing: -0.02em; 
+    color: var(--gray-500);
   }
   
   .button2Active {
-    color: ${colors.white};
     font-weight: 700;
+    color: var(--white);
   }
   
   .button3 {
-    color: ${colors.gray[500]};
     font-size: 16px;
     font-weight: 500;
     line-height: 20px; 
+    color: var(--gray-500);
   }
   
   .button3Active {
-    color: ${colors.blue[600]};
-    font-weight: 600;
+    font-weight: 600; 
+    color: var(--blue-600);
   }
 
   .keyword {
-    color:${colors.gray[400]}; 
     font-size: 18px;  
     font-weight: bold;
     line-height: auto;
     letter-spacing: -0.02em; 
+    color: var(--gray-400);
   }
 
   .stepButton {
-    color:${colors.white}; 
     font-size: 18px;  
     font-weight: bold;
     line-height: auto;
     letter-spacing: -0.02em; 
+    color: var(--white);
   }
   
   .count1 {
-    color:${colors.blue[600]}; 
     font-size: 14px;
     font-weight: 600; 
     line-height: 1;
     letter-spacing: 0;
+    color: var(--blue-600);
   }
   
   .count2 {
-    color: ${colors.blue[600]}; 
     font-size: 16px;
     font-weight: 500;   
     line-height: 1;
-    letter-spacing: -0.02em; 
+    letter-spacing: -0.02em;
+    color: var(--blue-600);
   }
   
   .selectBox {
-    color: ${colors.blue[600]}; 
     font-size: 16px;
     font-weight: 500; 
     line-height: 1;
-    letter-spacing: -0.02em; 
+    letter-spacing: -0.02em;
+    color: var(--blue-600);
   }
   
   .selectList {
-    color: ${colors.gray[500]}; 
     font-size: 16px;
     font-weight: 600; 
     line-height: 1;
     letter-spacing: -0.02em; 
+    color: var(--gray-500);
   }
   
   .box1 {
-    color: ${colors.gray[800]}; 
     font-size: 16px;
     font-weight: 600; 
     line-height: 1; 
     letter-spacing: -0.02em; 
+    color: var(--gray-800);
   }
 
   .box2 {
-    color: ${colors.gray[700]}; 
     font-size: 16px;
     font-weight:500; 
     line-height: 1; 
     letter-spacing: -0.02em; 
+    color: var(--gray-700);
   }
   
   .caption {
-    color: ${colors.gray[400]}; 
     font-size: 14px;
     font-weight: 500;   
     line-height: 1; 
     letter-spacing: -0.02em; 
+    color: var(--gray-400);
   }
   
   .body1 {
-    color: ${colors.gray[700]}; 
     font-size: 18px;
     font-weight: 500;   
     line-height: 1;
     letter-spacing: -0.02em; 
+    color: var(--gray-700);
   }
   
   .body2 {
-    color: ${colors.gray[700]};  
     font-size: 16px;
     font-weight: 500;   
     line-height: 24px;
     letter-spacing: -0.02em; 
+    color: var(--gray-700);
   }
   
   .body3 {
-    color: ${colors.gray[600]};  
     font-size: 16px;
     font-weight: 400;
     line-height: 22px;
   letter-spacing: -0.02em; 
+  color: var(--gray-600);
 }
 
   .title1 {
-    color: ${colors.white};  
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
-  letter-spacing: -0.02em; 
+  letter-spacing: -0.02em;
+  color: var(--white);
   }
   
   .title2 {
-    color: ${colors.gray[600]};  
     font-size: 16px;
     font-weight: 700;
     line-height: 1;
   letter-spacing: -0.02em; 
+  color: var(--gray-600);
   }
   
