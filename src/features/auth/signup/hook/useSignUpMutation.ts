@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { authService, SignUpResponse, UserData } from 'features/auth/api/authService';
+import { authService } from 'features/auth/api/authService';
 import { useNavigate } from 'react-router-dom';
 
 export const useSignUpMutation = () => {
   const navigate = useNavigate();
-  return useMutation<SignUpResponse, Error, UserData>({
+  return useMutation({
     mutationFn: authService.signUp,
     onSuccess: (data) => {
       console.log('성공', data);
