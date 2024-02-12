@@ -1,32 +1,19 @@
 import React from 'react';
 import styles from './typography.module.css';
 interface TypographyProps {
-  variant:
-    | 'largeTitle'
-    | 'subtitle'
-    | 'placeholder'
-    | 'button1'
-    | 'button2'
-    | 'button3'
-    | 'stepButton'
-    | 'count1'
-    | 'count2'
-    | 'selectBoxList'
-    | 'box'
-    | 'caption'
-    | 'body1'
-    | 'body2'
-    | 'body3'
-    | 'title1'
-    | 'title2';
+  variant: keyof typeof styles;
   color?: string;
   children: string;
-}
+}&HTMLAttributes<HTMLHeadingElement>
 
-export const Typography: React.FC<TypographyProps> = ({ variant, color, children }) => {
+export const Typography: React.FC<TypographyProps> = ({ variant, color, children,...props }) => {
   return (
-    <div className={`${variant}`} style={styles}>
+    <StyledTypography className={`${variant}`} style={styles}>
       {children}
-    </div>
+    </StyledTypography>
   );
 };
+
+const StyledTypography = styled.div`
+
+`;
