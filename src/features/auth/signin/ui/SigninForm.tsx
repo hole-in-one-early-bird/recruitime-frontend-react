@@ -1,7 +1,7 @@
 import { useSignInMutation } from 'features/auth';
 import React from 'react';
 const mockData = {
-  email: 'asdf@naver.com',
+  userEmail: 'asdf@naver.com',
   password: 'juhee123',
 };
 export const SigninForm = () => {
