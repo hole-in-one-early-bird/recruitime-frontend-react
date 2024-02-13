@@ -1,6 +1,5 @@
 import { useSignInMutation } from 'features/auth';
 import React from 'react';
-import { Typography } from 'shared/ui/typography/Typography';
 
 const mockData = {
   userEmail: 'asdf@naver.com',
@@ -16,7 +15,6 @@ export const SigninForm = () => {
 
   return (
     <div>
-      <Typography variant={'count1'}>제목 1</Typography>
       <button onClick={handleSubmit}>로그인 버튼</button>
     </div>
   );
