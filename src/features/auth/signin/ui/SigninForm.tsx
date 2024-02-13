@@ -2,6 +2,8 @@ import { useSignInMutation } from 'features/auth';
 import React from 'react';
 import { useForm } from 'shared/hooks/useForm';
 import TextInput from 'shared/ui/input/TextInput';
+import { Typography } from 'shared/ui/typography/Typography';
+import styled from 'styled-components';
 
 const mockData = {
   userEmail: 'asdf@naver.com',
@@ -23,7 +25,10 @@ export const SigninForm = () => {
   };
 
   return (
-    <div>
+    <SigninFormWrapper>
+      <Typography className='title' variant={'largeTitle'}>
+        로그인
+      </Typography>
       <TextInput
         label='이메일'
         type='text'
@@ -41,6 +46,12 @@ export const SigninForm = () => {
         placeholder={'영문, 숫자가 포함된 1~10자'}
       />
       <button onClick={handleSubmit}>로그인 버튼</button>
-    </div>
+    </SigninFormWrapper>
   );
 };
+
+const SigninFormWrapper = styled.div`
+  .title {
+    margin-bottom: 66px;
+  }
+`;

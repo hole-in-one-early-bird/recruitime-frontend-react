@@ -6,12 +6,17 @@ import { typographyStyles } from './typographyType';
 interface TypographyProps {
   variant: keyof typeof typographyStyles;
   children: string;
+  className?: string;
 }
-export const Typography = ({ variant, children }: TypographyProps) => {
-  return <StyledTypography variant={variant}>{children}</StyledTypography>;
+export const Typography = ({ variant, children, className }: TypographyProps) => {
+  return (
+    <StyledTypography variant={variant} className={className}>
+      {children}
+    </StyledTypography>
+  );
 };
 
-const StyledTypography = styled.span<TypographyProps>`
+const StyledTypography = styled.div<TypographyProps>`
   ${({ variant }) => {
     // 스타일 객체를 직접 구성하여 `css` 함수에 전달
     const style = typographyStyles[variant] || typographyStyles.body1;
