@@ -28,7 +28,6 @@ export const Layout = (props: Props) => {
 };
 
 const LayoutContainer = styled.div`
-  border: 1px solid #ddd;
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
   background-color: ${colors.white};
