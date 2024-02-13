@@ -1,58 +1,26 @@
-import React, { HTMLAttributes } from 'react';
-import styled from 'styled-components';
-import { typographyStyles } from './typography';
-
-type TypographyProps = {
-  variant:
-    | 'largeTitle'
-    | 'subtitle'
-    | 'placeholder'
-    | 'button1'
-    | 'button2'
-    | 'button3'
-    | 'stepButton'
-    | 'count1'
-    | 'count2'
-    | 'selectBoxList'
-    | 'box'
-    | 'caption'
-    | 'body1'
-    | 'body2'
-    | 'body3'
-    | 'title1'
-    | 'title2';
-  style?: React.CSSProperties;
+import React from 'react';
+import styled, { css } from 'styled-components';
+// import { typographyStyles } from './typography';
+// Props 타입 정의
+interface TypographyProps {
+  variant: keyof typeof TypographyStyles;
   children: string;
-} & HTMLAttributes<HTMLHeadingElement>;
+}
 
-const TAG_MAPPING: { [key in TypographyProps['variant']]: keyof JSX.IntrinsicElements } = {
-  largeTitle: 'h1',
-  subtitle: 'p',
-  placeholder: 'p',
-  button1: 'p',
-  button2: 'p',
-  button3: 'p',
-  stepButton: 'p',
-  count1: 'p',
-  count2: 'p',
-  selectBoxList: 'p',
-  box: 'p',
-  caption: 'p',
-  body1: 'p',
-  body2: 'p',
-  body3: 'p',
-  title1: 'p',
-  title2: 'p',
+export const Typography = ({ variant, children }: TypographyProps) => {
+  return <StyledTypography variant={variant}>{children}</StyledTypography>;
 };
 
-export const Typography: React.FC<TypographyProps> = ({ variant, style, children, ...props }) => {
-  return (
-    <StyledTypography as={TAG_MAPPING[variant] || 'p'} style={{ ...style }} {...props}>
-      {children}
-    </StyledTypography>
-  );
-};
-
-const StyledTypography = styled.div`
-  ${({ variant }) => typographyStyles[variant]}
+const StyledTypography = styled.span<TypographyProps>`
+  ${({ variant }) => {
+    // 스타일 객체를 직접 구성하여 `css` 함수에 전달
+    const style = TypographyStyles[variant] || TypographyStyles.body1;
+    return css`
+      font-size: ${style.fontSize};
+      font-weight: ${style.fontWeight};
+      line-height: ${style.lineHeight};
+      letter-spacing: ${style.letterSpacing};
+      color: ${style.color};
+    `;
+  }}
 `;

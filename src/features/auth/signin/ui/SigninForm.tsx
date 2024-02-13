@@ -7,13 +7,16 @@ const mockData = {
 };
 export const SigninForm = () => {
   const { mutate: signIn } = useSignInMutation();
+
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     signIn(mockData);
   };
+
   return (
     <div>
-      {/* <Typography variant='count1' children={'test'} /> */}
+      <Typography variant='count1'>제목 1</Typography>
+
       <button onClick={handleSubmit}>로그인 버튼</button>
     </div>
   );
