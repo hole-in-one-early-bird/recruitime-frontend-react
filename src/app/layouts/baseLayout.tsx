@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'shared/ui/layout/Layout';
 
-export const baseLayout = () => {
+export const BaseLayout = () => {
   return <Layout headerSlot={undefined} />;
 };
