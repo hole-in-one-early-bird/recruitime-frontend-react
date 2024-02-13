@@ -8,7 +8,7 @@ import { ROUTES_PATH } from 'shared/constants/routes';
 export const router = createBrowserRouter([
   {
     element: <BaseLayout />,
-    errorElement: <div>error</div>,
+    // errorElement: <div>error</div>,
     children: [
       {
         path: ROUTES_PATH.home,

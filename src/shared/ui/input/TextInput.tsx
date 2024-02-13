@@ -1,9 +1,12 @@
 import React, { ChangeEventHandler, useState } from 'react';
+import colors from 'shared/styles/color';
 import styled from 'styled-components';
+import { Typography } from '../typography/Typography';
 
 interface TextInputProps {
-  placeholder?: string;
   type: string;
+  name: string;
+  placeholder?: string;
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   label?: string;
@@ -11,8 +14,9 @@ interface TextInputProps {
   isDisabled?: boolean;
 }
 const TextInput: React.FC<TextInputProps> = ({
-  placeholder,
   type,
+  name,
+  placeholder,
   value,
   onChange,
   label,
@@ -23,9 +27,14 @@ const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <TextInputWrapper>
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label>
+          <Typography variant={'label'}>{label}</Typography>
+        </Label>
+      )}
       <StyledInput
         type={type}
+        name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -49,21 +58,16 @@ const StyledInput = styled.input<{ $isFocused: boolean }>`
   width: 100%;
   padding: 18px;
   margin-bottom: 50px;
-  border: 1px solid
-    ${({ $isFocused, theme }) => ($isFocused ? theme.colors.blue400 : theme.colors.gray400)};
+  border: 1px solid ${({ $isFocused }) => ($isFocused ? colors.blue[400] : colors.gray[400])};
   border-radius: 10px;
-  font-size: ${(prop) => prop.theme.fonts.placeholder};
-  font-weight: ${(prop) => prop.theme.fontWeight.placeholder};
   outline: none;
   transition: border 0.3s ease;
   &::placeholder {
-    color: ${({ $isFocused, theme }) => ($isFocused ? theme.colors.gray800 : theme.colors.gray500)};
+    color: ${({ $isFocused }) => ($isFocused ? colors.gray[800] : colors.gray[500])};
   }
 `;
 
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
-  font-size: ${(prop) => prop.theme.fonts.mediumText};
-  font-weight: ${(prop) => prop.theme.fontWeight.smallText};
 `;

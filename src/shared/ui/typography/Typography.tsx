@@ -22,5 +22,5 @@ const StyledTypography = styled.span<TypographyProps>`
       letter-spacing: ${style.letterSpacing};
       color: ${style.color};
     `;
-  }}    
+  }}
 `;

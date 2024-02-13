@@ -152,6 +152,13 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '22px',
     letterSpacing: '0.02em',
   },
+  label: {
+    color: colors.gray[800],
+    fontSize: '16px',
+    fontWeight: 500,
+    lineHeight: '1',
+    letterSpacing: '0.02em',
+  },
   title1: {
     color: colors.white,
     fontSize: '18px',
