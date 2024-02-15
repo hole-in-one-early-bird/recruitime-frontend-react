@@ -21,7 +21,6 @@ export const SigninForm = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(values.password);
     signIn(mockData);
   };
 
@@ -46,9 +45,11 @@ export const SigninForm = () => {
         onChange={handleChange}
         placeholder={'영문, 숫자가 포함된 1~10자'}
       />
-      <Button onClick={handleSubmit} variant={'primary'}>
+      <Button onClick={handleSubmit} variant={'primary'} style={{ width: '100%', maxWidth: '440px' }}>
         로그인
       </Button>
+      <div>회원가입</div>
+      <div>계정 찾기</div>
     </SigninFormWrapper>
   );
 };

@@ -51,19 +51,19 @@ const TextInput: React.FC<TextInputProps> = ({
 export default TextInput;
 
 const TextInputWrapper = styled.div`
-  width: 70%;
+  width: 100%;
 `;
 
 const StyledInput = styled.input<{ $isFocused: boolean }>`
   width: 100%;
   padding: 18px;
-  margin-bottom: 50px;
-  border: 1px solid ${({ $isFocused }) => ($isFocused ? colors.blue[400] : colors.gray[400])};
+  margin-bottom: 46px;
+  border: 1px solid ${({ $isFocused }) => ($isFocused ? colors.blue[400] : '#D9D9D9')};
   border-radius: 10px;
   outline: none;
   transition: border 0.3s ease;
   &::placeholder {
-    color: ${({ $isFocused }) => ($isFocused ? colors.gray[800] : colors.gray[500])};
+    color: ${({ $isFocused }) => ($isFocused ? colors.gray[800] : colors.gray[300])};
   }
 `;
 
