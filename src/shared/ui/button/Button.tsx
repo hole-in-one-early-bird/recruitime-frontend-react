@@ -44,7 +44,7 @@ const variantStyles = {
   `,
 };
 
-type VariantType = 'primary' | 'secondary' | 'disabled';
+type VariantType = 'primary' | 'confirm' | 'active' | 'inactive' | 'primaryDisabled' | 'cancel';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: VariantType;
