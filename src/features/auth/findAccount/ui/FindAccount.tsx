@@ -17,7 +17,7 @@ export const FindAccount = () => {
     password: '',
   };
   const { mutate: signUp } = useSignUpMutation();
-  const [values, handleChange] = useForm(initialValues);
+  const { values, handleChange, errors } = useForm(initialValues);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     signUp(mockData);

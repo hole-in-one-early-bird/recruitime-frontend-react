@@ -21,7 +21,7 @@ export const SigninForm = () => {
   };
   const { mutate: signIn } = useSignInMutation();
 
-  const [values, handleChange] = useForm(initialValues);
+  const { values, handleChange } = useForm(initialValues);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
