@@ -3,6 +3,7 @@ import { useState } from 'react';
 interface Errors {
   email?: string;
   password?: string;
+  passwordConfirm?: string;
 }
 
 export const useForm = (initialValues: any) => {
@@ -20,6 +21,9 @@ export const useForm = (initialValues: any) => {
       tempErrors.password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,10}$/.test(value)
         ? ''
         : '비밀번호는 영문, 숫자가 포함된 1~10자여야 합니다.';
+    }
+    if (name === 'passwordConfirm') {
+      tempErrors.passwordConfirm = values.password === value ? '' : '비밀번호가 일치하지 않습니다.';
     }
     setErrors({
       ...tempErrors,

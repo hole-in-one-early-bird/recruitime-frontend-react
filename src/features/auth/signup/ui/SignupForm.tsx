@@ -12,6 +12,7 @@ export const SignupForm = () => {
   const initialValues = {
     email: '',
     password: '',
+    passwordConfirm: '',
   };
   const { mutate: signUp } = useSignUpMutation();
   const { values, handleChange, errors } = useForm(initialValues);
@@ -29,8 +30,8 @@ export const SignupForm = () => {
       <TextInput
         label='이메일'
         type='text'
-        name='username'
-        value={values.username}
+        name='email'
+        value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
       />
@@ -45,11 +46,12 @@ export const SignupForm = () => {
       <TextInput
         label='비밀번호 확인'
         type='password'
-        name='password'
-        value={values.password}
+        name='passwordConfirm'
+        value={values.passwordConfirm}
         onChange={handleChange}
         placeholder={'영문, 숫자가 포함된 1~10자'}
       />
+      {errors.passwordConfirm && <div>{errors.passwordConfirm}</div>}
       <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
         회원가입
       </Button>
