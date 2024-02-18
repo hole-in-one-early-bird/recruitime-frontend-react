@@ -7,10 +7,7 @@ import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-const mockData = {
-  email: 'asdf@naver.com',
-  password: 'juhee123',
-};
+
 export const SignupForm = () => {
   const initialValues = {
     email: '',
@@ -20,7 +17,9 @@ export const SignupForm = () => {
   const { values, handleChange, errors } = useForm(initialValues);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signUp(mockData);
+    if (Object.values(errors).every((x) => x === '')) {
+      signUp(values);
+    }
   };
   return (
     <SignupFormWrapper>
