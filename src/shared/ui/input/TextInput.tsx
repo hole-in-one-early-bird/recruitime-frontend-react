@@ -13,6 +13,7 @@ interface TextInputProps {
   style?: React.CSSProperties;
   isDisabled?: boolean;
 }
+
 const TextInput: React.FC<TextInputProps> = ({
   type,
   name,

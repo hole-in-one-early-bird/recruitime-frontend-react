@@ -1,6 +1,8 @@
 import { useSignInMutation } from 'features/auth';
 import React from 'react';
 import { useForm } from 'shared/hooks/useForm';
+import colors from 'shared/styles/color';
+import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
 import { Typography } from 'shared/ui/typography/Typography';
@@ -45,11 +47,17 @@ export const SigninForm = () => {
         onChange={handleChange}
         placeholder={'영문, 숫자가 포함된 1~10자'}
       />
-      <Button onClick={handleSubmit} variant={'primary'} style={{ width: '100%', maxWidth: '440px' }}>
+      <Button
+        onClick={handleSubmit}
+        variant={'primary'}
+        style={{ width: '100%', maxWidth: '440px', marginBottom: '28px' }}
+      >
         로그인
       </Button>
-      <div>회원가입</div>
-      <div>계정 찾기</div>
+      <AuthOptions>
+        <Typography variant={'caption'}>회원가입</Typography>
+        <Typography variant={'caption'}>계정 찾기</Typography>
+      </AuthOptions>
     </SigninFormWrapper>
   );
 };
@@ -57,5 +65,14 @@ export const SigninForm = () => {
 const SigninFormWrapper = styled.div`
   .title {
     margin-bottom: 66px;
+  }
+`;
+
+const AuthOptions = styled.div`
+  ${common.flexCenterRow}
+  gap: 28px;
+  * {
+    padding: 2px;
+    border-bottom: 1px solid ${colors.gray[400]};
   }
 `;
