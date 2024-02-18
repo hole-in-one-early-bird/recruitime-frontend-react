@@ -3,6 +3,7 @@ export const ROUTES_PATH = {
   home: '/home',
   signin: '/signin',
   signup: '/signup',
+  findAccount: '/findAccount',
   signupSuccess: '/signupSuccess',
   profile: '/profile',
   track: '/track',
