@@ -46,12 +46,9 @@ export const SigninForm = () => {
         value={values.password}
         onChange={handleChange}
         placeholder={'영문, 숫자가 포함된 1~10자'}
+        style={{ marginBottom: '60px' }}
       />
-      <Button
-        onClick={handleSubmit}
-        variant={'primary'}
-        style={{ width: '100%', maxWidth: '440px', marginBottom: '28px' }}
-      >
+      <Button onClick={handleSubmit} variant={'primary'} style={{ marginBottom: '22px' }}>
         로그인
       </Button>
       <AuthOptions>

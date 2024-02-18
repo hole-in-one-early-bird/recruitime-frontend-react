@@ -9,6 +9,8 @@ const primaryCommonStyles = css`
 export const variantStyles = {
   // 기본 버튼
   primary: css`
+    width: 100%;
+    max-width: 440px;
     ${primaryCommonStyles}
     background-color: ${colors.blue[500]};
     color: ${colors.white};
