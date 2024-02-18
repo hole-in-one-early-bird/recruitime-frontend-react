@@ -1,4 +1,5 @@
 import { BaseLayout } from 'app/layouts/baseLayout';
+import { Intro } from 'pages/intro';
 import { SigninPage } from 'pages/signin';
 import { SignupPage } from 'pages/signup';
 import { SignupSuccessPage } from 'pages/signupSuccess';
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
     element: <BaseLayout />,
     // errorElement: <div>error</div>,
     children: [
+      {
+        path: ROUTES_PATH.intro,
+        element: <Intro />,
+      },
       {
         path: ROUTES_PATH.home,
         element: '',
