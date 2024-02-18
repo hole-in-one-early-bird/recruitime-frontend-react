@@ -1,4 +1,5 @@
 import { BaseLayout } from 'app/layouts/baseLayout';
+import { FindAccountPage } from 'pages/findAccount';
 import { Intro } from 'pages/intro';
 import { SigninPage } from 'pages/signin';
 import { SignupPage } from 'pages/signup';
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES_PATH.signup,
         element: <SignupPage />,
+      },
+      {
+        path: ROUTES_PATH.findAccount,
+        element: <FindAccountPage />,
       },
       {
         path: ROUTES_PATH.signupSuccess,

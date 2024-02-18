@@ -1,5 +1,7 @@
 import { useSignInMutation } from 'features/auth';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
@@ -48,12 +50,18 @@ export const SigninForm = () => {
         placeholder={'영문, 숫자가 포함된 1~10자'}
         style={{ marginBottom: '60px' }}
       />
-      <Button onClick={handleSubmit} variant={'primary'} style={{ marginBottom: '22px' }}>
-        로그인
-      </Button>
+
       <AuthOptions>
-        <Typography variant={'caption'}>회원가입</Typography>
-        <Typography variant={'caption'}>계정 찾기</Typography>
+        <Link to={ROUTES_PATH.signup}>
+          <Typography variant={'caption'} className='option'>
+            회원가입
+          </Typography>
+        </Link>
+        <Link to={ROUTES_PATH.findAccount}>
+          <Typography variant={'caption'} className='option'>
+            계정 찾기
+          </Typography>
+        </Link>
       </AuthOptions>
     </SigninFormWrapper>
   );
@@ -68,7 +76,7 @@ const SigninFormWrapper = styled.div`
 const AuthOptions = styled.div`
   ${common.flexCenterRow}
   gap: 28px;
-  * {
+  .option {
     padding: 2px;
     border-bottom: 1px solid ${colors.gray[400]};
   }
