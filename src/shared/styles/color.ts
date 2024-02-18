@@ -21,6 +21,7 @@ export const colors = {
     500: '#4498FF',
     600: '#5897E5',
   },
+  error: '#FF6363',
 };
 
 export default colors;

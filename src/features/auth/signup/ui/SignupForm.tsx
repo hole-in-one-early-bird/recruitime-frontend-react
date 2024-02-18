@@ -27,31 +27,40 @@ export const SignupForm = () => {
       <Typography className='title' variant={'largeTitle'}>
         회원가입
       </Typography>
-      <TextInput
-        label='이메일'
-        type='text'
-        name='email'
-        value={values.email}
-        onChange={handleChange}
-        placeholder={'이메일을 입력해주세요'}
-      />
-      <TextInput
-        label='비밀번호'
-        type='password'
-        name='password'
-        value={values.password}
-        onChange={handleChange}
-        placeholder={'영문, 숫자가 포함된 1~10자'}
-      />
-      <TextInput
-        label='비밀번호 확인'
-        type='password'
-        name='passwordConfirm'
-        value={values.passwordConfirm}
-        onChange={handleChange}
-        placeholder={'영문, 숫자가 포함된 1~10자'}
-      />
-      {errors.passwordConfirm && <div>{errors.passwordConfirm}</div>}
+      <TextInputContainer>
+        <TextInput
+          label='이메일'
+          type='text'
+          name='email'
+          value={values.email}
+          onChange={handleChange}
+          placeholder={'이메일을 입력해주세요'}
+          error={errors.email}
+        />
+      </TextInputContainer>
+      <TextInputContainer>
+        <TextInput
+          label='비밀번호'
+          type='password'
+          name='password'
+          value={values.password}
+          onChange={handleChange}
+          placeholder={'영문, 숫자가 포함된 1~10자'}
+          error={errors.password}
+        />
+      </TextInputContainer>
+      <TextInputContainer>
+        <TextInput
+          label='비밀번호 확인'
+          type='password'
+          name='passwordConfirm'
+          value={values.passwordConfirm}
+          onChange={handleChange}
+          placeholder={'영문, 숫자가 포함된 1~10자'}
+          error={errors.passwordConfirm}
+        />
+      </TextInputContainer>
+
       <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
         회원가입
       </Button>
@@ -63,4 +72,12 @@ const SignupFormWrapper = styled.div`
   .title {
     margin-bottom: 66px;
   }
+`;
+
+const TextInputContainer = styled.div`
+  margin-bottom: 46px;
+`;
+
+const ErrorMsg = styled.div`
+  margin-top: 6px;
 `;

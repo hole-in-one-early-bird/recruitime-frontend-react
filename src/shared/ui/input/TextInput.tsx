@@ -12,6 +12,7 @@ interface TextInputProps {
   label?: string;
   style?: React.CSSProperties;
   isDisabled?: boolean;
+  error?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -23,6 +24,7 @@ const TextInput: React.FC<TextInputProps> = ({
   label,
   style,
   isDisabled,
+  error,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -40,11 +42,17 @@ const TextInput: React.FC<TextInputProps> = ({
         onChange={onChange}
         placeholder={placeholder}
         $isFocused={isFocused}
+        $isError={!!error}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         style={style}
         disabled={isDisabled}
       />
+      {error && (
+        <ErrorMsg>
+          <Typography variant={'error'}>{error}</Typography>
+        </ErrorMsg>
+      )}
     </TextInputWrapper>
   );
 };
@@ -55,11 +63,12 @@ const TextInputWrapper = styled.div`
   width: 100%;
 `;
 
-const StyledInput = styled.input<{ $isFocused: boolean }>`
+const StyledInput = styled.input<{ $isFocused: boolean; $isError: boolean }>`
   width: 100%;
   padding: 18px;
-  margin-bottom: 46px;
-  border: 1px solid ${({ $isFocused }) => ($isFocused ? colors.blue[400] : '#D9D9D9')};
+  border: 1px solid
+    ${({ $isFocused, $isError }) =>
+      $isError ? colors.error : $isFocused ? colors.blue[400] : '#D9D9D9'};
   border-radius: 10px;
   outline: none;
   transition: border 0.3s ease;
@@ -71,4 +80,8 @@ const StyledInput = styled.input<{ $isFocused: boolean }>`
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
+`;
+
+const ErrorMsg = styled.div`
+  margin-top: 6px;
 `;
