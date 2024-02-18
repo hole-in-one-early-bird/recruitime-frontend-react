@@ -1,5 +1,7 @@
 import { useSignUpMutation } from 'features/auth';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
