@@ -6,6 +6,7 @@ import { Mypage } from 'pages/mypage';
 import { SigninPage } from 'pages/signin';
 import { SignupPage } from 'pages/signup';
 import { SignupSuccessPage } from 'pages/signupSuccess';
+import { UserInfo } from 'pages/userInfo';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES_PATH.profile,
-        element: '',
+        element: <UserInfo />,
       },
       {
         path: ROUTES_PATH.track,
