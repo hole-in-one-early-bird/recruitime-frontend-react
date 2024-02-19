@@ -34,6 +34,8 @@ export const variantStyles = {
     color: ${colors.gray[500]};
   `,
   primaryDisabled: css`
+    width: 100%;
+    max-width: 440px;
     ${primaryCommonStyles}
     background-color: ${colors.gray[200]};
     color: ${colors.gray[400]};

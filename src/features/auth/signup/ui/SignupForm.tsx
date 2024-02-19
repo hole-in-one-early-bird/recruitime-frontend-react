@@ -1,7 +1,5 @@
 import { useSignUpMutation } from 'features/auth';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from 'shared/constants/routes';
+import React from 'react';
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
@@ -16,13 +14,17 @@ export const SignupForm = () => {
   };
   const { mutate: signUp } = useSignUpMutation();
   const { values, handleChange, errors } = useForm(initialValues);
+
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (Object.values(errors).every((x) => x === '')) {
+    if (isFormValid) {
       signUp(values);
     }
   };
 
+  const isFormValid =
+    Object.values(values).every((value) => (value as string).trim() !== '') &&
+    Object.values(errors).every((error) => !error);
   return (
     <SignupFormWrapper>
       <Typography className='title' variant={'largeTitle'}>
@@ -37,7 +39,7 @@ export const SignupForm = () => {
           onChange={handleChange}
           placeholder={'이메일을 입력해주세요'}
           error={errors.email}
-          isValid={errors.email === ''}
+          isValid={!errors.email && values.email !== ''}
         />
       </TextInputContainer>
       <TextInputContainer>
@@ -49,7 +51,7 @@ export const SignupForm = () => {
           onChange={handleChange}
           placeholder={'영문, 숫자가 포함된 1~10자'}
           error={errors.password}
-          isValid={errors.password === ''}
+          isValid={!errors.password && values.password !== ''}
         />
       </TextInputContainer>
       <TextInputContainer>
@@ -61,11 +63,20 @@ export const SignupForm = () => {
           onChange={handleChange}
           placeholder={'영문, 숫자가 포함된 1~10자'}
           error={errors.passwordConfirm}
-          isValid={errors.password === '' && errors.passwordConfirm === ''}
+          isValid={
+            !errors.passwordConfirm &&
+            values.passwordConfirm !== '' &&
+            values.password === values.passwordConfirm
+          }
         />
       </TextInputContainer>
 
-      <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
+      <Button
+        onClick={handleSubmit}
+        variant={isFormValid ? 'primary' : 'primaryDisabled'}
+        disabled={!isFormValid}
+        style={{ position: 'fixed', bottom: '65px' }}
+      >
         회원가입
       </Button>
     </SignupFormWrapper>
