@@ -1,5 +1,5 @@
 import { useSignUpMutation } from 'features/auth';
-import { useValidation } from 'features/auth/@hook/useValidation';
+import { useValidation } from 'features/auth/@hooks/useValidation';
 import { useDebounce } from 'features/hooks/useDebounce';
 import React, { useEffect } from 'react';
 import { useForm } from 'shared/hooks/useForm';

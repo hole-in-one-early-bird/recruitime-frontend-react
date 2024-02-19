@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { authService } from 'features/auth/api/authService';
+import { authService } from '../api/authService';
 
 export const useValidation = () => {
   return useMutation({

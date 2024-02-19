@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-import { AIInteractive } from 'widgets/ui/aIInteractiveCard/AIInteractive';
+import { AIInteractive } from 'widgets/aIInteractiveCard/ui/AIInteractive';
 
 export const MainContent = () => {
   return (

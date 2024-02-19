@@ -1,18 +1,16 @@
+import { useAge } from 'features/userInfo/@hooks/useAge';
+import { useGender } from 'features/userInfo/@hooks/useGender';
+import useName from 'features/userInfo/@hooks/useName';
 import React, { useState } from 'react';
 import TextInput from 'shared/ui/input/TextInput';
+import { SelectType } from 'shared/ui/select/Select';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
 export const Profile = () => {
-  const [name, setName] = useState('');
-  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const input = event.target.value;
-    if (input.length > 5) {
-      alert('5자 이하로 작성해주세요');
-    } else {
-      setName(input);
-    }
-  };
+  const [name, handleNicknameChange] = useName('');
+  const { gender, handleGenderSelect } = useGender('');
+  const { age, handleAgeSelect } = useAge('');
 
   return (
     <ProfileWrapper>
@@ -28,6 +26,18 @@ export const Profile = () => {
         placeholder='이름 입력'
         name={'name'}
       />
+      <StyledSelectType
+        label='성별'
+        options={['남자', '여자']}
+        onSelect={handleGenderSelect}
+        selected={gender}
+      />
+      <StyledSelectType
+        label='나이'
+        options={['20대', '30대', '40대', '50대', '60대 이상']}
+        onSelect={handleAgeSelect}
+        selected={age}
+      />
     </ProfileWrapper>
   );
 };
@@ -37,6 +47,11 @@ const ProfileWrapper = styled.div`
     margin-bottom: 46px;
   }
 `;
+
 const StyledTypography = styled(Typography)`
   margin: 48px 0 8px;
+`;
+
+const StyledSelectType = styled(SelectType)`
+  margin-bottom: 60px;
 `;
