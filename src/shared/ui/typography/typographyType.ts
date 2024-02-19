@@ -27,6 +27,13 @@ export const typographyStyles: TypographyVariants = {
     letterSpacing: '0.02em',
     color: colors.gray[600],
   },
+  subtitle2: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '20px',
+    letterSpacing: '0.02em',
+    color: colors.gray[600],
+  },
   placeholder: {
     fontSize: '16px',
     fontWeight: 500,
@@ -169,6 +176,13 @@ export const typographyStyles: TypographyVariants = {
   title2: {
     color: colors.gray[600],
     fontSize: '16px',
+    fontWeight: 700,
+    lineHeight: '1',
+    letterSpacing: '0.02em',
+  },
+  title3: {
+    color: colors.gray[800],
+    fontSize: '20px',
     fontWeight: 700,
     lineHeight: '1',
     letterSpacing: '0.02em',
