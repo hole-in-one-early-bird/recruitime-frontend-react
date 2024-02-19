@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API } from 'config';
 
 export interface SigninData {
-  userEmail: string;
+  email: string;
   password: string;
 }
 

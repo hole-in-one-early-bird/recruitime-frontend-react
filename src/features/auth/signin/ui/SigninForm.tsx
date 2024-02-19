@@ -1,6 +1,7 @@
 import { useSignInMutation } from 'features/auth';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
@@ -9,10 +10,6 @@ import TextInput from 'shared/ui/input/TextInput';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
-const mockData = {
-  userEmail: 'asdf@naver.com',
-  password: 'juhee123',
-};
 export const SigninForm = () => {
   const initialValues = {
     email: '',
@@ -24,19 +21,24 @@ export const SigninForm = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signIn(mockData);
+    signIn(values);
   };
+
+  const isFormValid =
+    Object.values(values).every((value) => (value as string).trim() !== '') &&
+    Object.values(errors).every((error) => !error);
 
   return (
     <SigninFormWrapper>
       <Typography className='title' variant={'largeTitle'}>
         로그인
       </Typography>
+
       <TextInput
         label='이메일'
         type='text'
         name='email'
-        value={values.username}
+        value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
         error={errors.email}
@@ -52,14 +54,19 @@ export const SigninForm = () => {
         error={errors.password}
         isValid={!errors.password && values.password !== ''}
       />
-      <Button onClick={handleSubmit} variant={'primary'} style={{ marginBottom: '22px' }}>
+      <Button
+        onClick={handleSubmit}
+        variant={isFormValid ? 'primary' : 'primaryDisabled'}
+        disabled={!isFormValid}
+        style={{ marginBottom: '22px' }}
+      >
         로그인
       </Button>
       <AuthOptions>
-        <Link to={`ROUTES_PATH.signup`}>
+        <Link to={ROUTES_PATH.signup}>
           <StyledTypography variant={'caption'}>회원가입</StyledTypography>
         </Link>
-        <Link to={`ROUTES_PATH.signup`}>
+        <Link to={ROUTES_PATH.findAccount}>
           <StyledTypography variant={'caption'}>계정 찾기</StyledTypography>
         </Link>
       </AuthOptions>
