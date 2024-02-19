@@ -1,5 +1,5 @@
 import { useSignUpMutation } from 'features/auth';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
@@ -22,6 +22,7 @@ export const SignupForm = () => {
       signUp(values);
     }
   };
+
   return (
     <SignupFormWrapper>
       <Typography className='title' variant={'largeTitle'}>
@@ -36,6 +37,7 @@ export const SignupForm = () => {
           onChange={handleChange}
           placeholder={'이메일을 입력해주세요'}
           error={errors.email}
+          isValid={errors.email === ''}
         />
       </TextInputContainer>
       <TextInputContainer>
@@ -47,6 +49,7 @@ export const SignupForm = () => {
           onChange={handleChange}
           placeholder={'영문, 숫자가 포함된 1~10자'}
           error={errors.password}
+          isValid={errors.password === ''}
         />
       </TextInputContainer>
       <TextInputContainer>
@@ -58,6 +61,7 @@ export const SignupForm = () => {
           onChange={handleChange}
           placeholder={'영문, 숫자가 포함된 1~10자'}
           error={errors.passwordConfirm}
+          isValid={errors.password === '' && errors.passwordConfirm === ''}
         />
       </TextInputContainer>
 
