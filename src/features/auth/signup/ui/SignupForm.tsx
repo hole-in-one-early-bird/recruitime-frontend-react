@@ -25,6 +25,7 @@ export const SignupForm = () => {
       signUp(values);
     }
   };
+
   useEffect(() => {
     if (debouncedEmail.trim() !== '') {
       const result = validation(debouncedEmail);

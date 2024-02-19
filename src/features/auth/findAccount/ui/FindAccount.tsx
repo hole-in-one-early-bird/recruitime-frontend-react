@@ -7,10 +7,7 @@ import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-const mockData = {
-  email: 'asdf@naver.com',
-  password: 'juhee123',
-};
+
 export const FindAccount = () => {
   const initialValues = {
     email: '',
@@ -20,7 +17,7 @@ export const FindAccount = () => {
   const { values, handleChange, errors } = useForm(initialValues);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signUp(mockData);
+    signUp(values);
   };
   return (
     <FindAccountWrapper>
@@ -30,10 +27,12 @@ export const FindAccount = () => {
       <TextInput
         label='이메일'
         type='text'
-        name='username'
-        value={values.username}
+        name='email'
+        value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
       />
 
       <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
