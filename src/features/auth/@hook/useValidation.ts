@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { authService } from 'features/auth/api/authService';
-import { useNavigate } from 'react-router-dom';
 
 export const useValidation = () => {
   return useMutation({
