@@ -1,4 +1,5 @@
 import { useSignUpMutation } from 'features/auth';
+import { useValidation } from 'features/auth/@hook/useValidation';
 import React from 'react';
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
@@ -13,6 +14,7 @@ export const SignupForm = () => {
     passwordConfirm: '',
   };
   const { mutate: signUp } = useSignUpMutation();
+  const { mutate: validation } = useValidation();
   const { values, handleChange, errors } = useForm(initialValues);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
@@ -25,6 +27,7 @@ export const SignupForm = () => {
   const isFormValid =
     Object.values(values).every((value) => (value as string).trim() !== '') &&
     Object.values(errors).every((error) => !error);
+
   return (
     <SignupFormWrapper>
       <Typography className='title' variant={'largeTitle'}>
