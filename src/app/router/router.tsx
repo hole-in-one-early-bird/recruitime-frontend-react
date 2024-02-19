@@ -1,5 +1,6 @@
 import { BaseLayout } from 'app/layouts/baseLayout';
 import { FindAccountPage } from 'pages/findAccount';
+import { Home } from 'pages/home';
 import { Intro } from 'pages/intro';
 import { SigninPage } from 'pages/signin';
 import { SignupPage } from 'pages/signup';
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES_PATH.home,
-        element: '',
+        element: <Home />,
       },
       {
         path: ROUTES_PATH.signin,
