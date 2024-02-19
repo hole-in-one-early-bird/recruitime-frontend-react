@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 import { AIInteractive } from 'widgets/ui/aIInteractiveCard/AIInteractive';
@@ -6,7 +8,10 @@ import { AIInteractive } from 'widgets/ui/aIInteractiveCard/AIInteractive';
 export const MainContent = () => {
   return (
     <MainContentWrapper>
-      <UserIcon src={process.env.PUBLIC_URL + `/images/icon/userIcon.png`} alt='userIcon' />
+      <Link to={ROUTES_PATH.mypage}>
+        <UserIcon src={process.env.PUBLIC_URL + `/images/icon/userIcon.png`} alt='userIcon' />
+      </Link>
+
       <TitleBox>
         <StyledTypography
           variant={'largeTitle'}

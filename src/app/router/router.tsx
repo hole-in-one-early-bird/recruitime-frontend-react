@@ -2,6 +2,7 @@ import { BaseLayout } from 'app/layouts/baseLayout';
 import { FindAccountPage } from 'pages/findAccount';
 import { Home } from 'pages/home';
 import { Intro } from 'pages/intro';
+import { Mypage } from 'pages/mypage';
 import { SigninPage } from 'pages/signin';
 import { SignupPage } from 'pages/signup';
 import { SignupSuccessPage } from 'pages/signupSuccess';
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES_PATH.home,
         element: <Home />,
+      },
+      {
+        path: ROUTES_PATH.mypage,
+        element: <Mypage />,
       },
       {
         path: ROUTES_PATH.signin,

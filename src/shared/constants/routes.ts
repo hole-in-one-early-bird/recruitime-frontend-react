@@ -1,6 +1,7 @@
 export const ROUTES_PATH = {
   intro: '/intro',
   home: '/home',
+  mypage: '/mypage',
   signin: '/signin',
   signup: '/signup',
   findAccount: '/findAccount',
