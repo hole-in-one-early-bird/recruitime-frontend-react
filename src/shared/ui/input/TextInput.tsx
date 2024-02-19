@@ -68,6 +68,7 @@ export default TextInput;
 
 const TextInputWrapper = styled.div`
   width: 100%;
+  margin-bottom: 46px;
 `;
 
 const InputContainer = styled.div`

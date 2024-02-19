@@ -17,7 +17,7 @@ export const SignupForm = () => {
   const { mutate: signUp } = useSignUpMutation();
   const { mutate: validation } = useValidation();
   const { values, handleChange, errors } = useForm(initialValues);
-  const debouncedEmail = useDebounce(values.email, 500); // 이메일 입력에 대해 500ms 디바운싱 적용
+  const debouncedEmail = useDebounce(values.email, 300); // 이메일 입력에 대해 500ms 디바운싱 적용
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -27,9 +27,11 @@ export const SignupForm = () => {
   };
   useEffect(() => {
     if (debouncedEmail.trim() !== '') {
-      validation(debouncedEmail);
+      const result = validation(debouncedEmail);
+      console.log(result);
     }
   }, [debouncedEmail, validation]);
+
   const isFormValid =
     Object.values(values).every((value) => (value as string).trim() !== '') &&
     Object.values(errors).every((error) => !error);
@@ -39,46 +41,43 @@ export const SignupForm = () => {
       <Typography className='title' variant={'largeTitle'}>
         회원가입
       </Typography>
-      <TextInputContainer>
-        <TextInput
-          label='이메일'
-          type='text'
-          name='email'
-          value={values.email}
-          onChange={handleChange}
-          placeholder={'이메일을 입력해주세요'}
-          error={errors.email}
-          isValid={!errors.email && values.email !== ''}
-        />
-      </TextInputContainer>
-      <TextInputContainer>
-        <TextInput
-          label='비밀번호'
-          type='password'
-          name='password'
-          value={values.password}
-          onChange={handleChange}
-          placeholder={'영문, 숫자가 포함된 1~10자'}
-          error={errors.password}
-          isValid={!errors.password && values.password !== ''}
-        />
-      </TextInputContainer>
-      <TextInputContainer>
-        <TextInput
-          label='비밀번호 확인'
-          type='password'
-          name='passwordConfirm'
-          value={values.passwordConfirm}
-          onChange={handleChange}
-          placeholder={'영문, 숫자가 포함된 1~10자'}
-          error={errors.passwordConfirm}
-          isValid={
-            !errors.passwordConfirm &&
-            values.passwordConfirm !== '' &&
-            values.password === values.passwordConfirm
-          }
-        />
-      </TextInputContainer>
+
+      <TextInput
+        label='이메일'
+        type='text'
+        name='email'
+        value={values.email}
+        onChange={handleChange}
+        placeholder={'이메일을 입력해주세요'}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
+      />
+
+      <TextInput
+        label='비밀번호'
+        type='password'
+        name='password'
+        value={values.password}
+        onChange={handleChange}
+        placeholder={'영문, 숫자가 포함된 1~10자'}
+        error={errors.password}
+        isValid={!errors.password && values.password !== ''}
+      />
+
+      <TextInput
+        label='비밀번호 확인'
+        type='password'
+        name='passwordConfirm'
+        value={values.passwordConfirm}
+        onChange={handleChange}
+        placeholder={'영문, 숫자가 포함된 1~10자'}
+        error={errors.passwordConfirm}
+        isValid={
+          !errors.passwordConfirm &&
+          values.passwordConfirm !== '' &&
+          values.password === values.passwordConfirm
+        }
+      />
 
       <Button
         onClick={handleSubmit}
@@ -96,12 +95,4 @@ const SignupFormWrapper = styled.div`
   .title {
     margin-bottom: 66px;
   }
-`;
-
-const TextInputContainer = styled.div`
-  margin-bottom: 46px;
-`;
-
-const ErrorMsg = styled.div`
-  margin-top: 6px;
 `;

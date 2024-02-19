@@ -6,43 +6,6 @@ export const useForm = (initialValues: any) => {
   const [errors, setErrors] = useState<SignupData>({});
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (values.email) {
-        setIsCheckingEmail(true);
-        // 이메일 중복 검사 API 호출
-        fetch('http://example.com/users/check_duplicate_email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email: values.email }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setIsCheckingEmail(false);
-            if (data.isDuplicate) {
-              setErrors((prevErrors) => ({
-                ...prevErrors,
-                email: '이 이메일은 이미 사용 중입니다.',
-              }));
-            } else {
-              setErrors((prevErrors) => ({
-                ...prevErrors,
-                email: '',
-              }));
-            }
-          })
-          .catch((error) => {
-            setIsCheckingEmail(false);
-            console.error('Error:', error);
-          });
-      }
-    }, 500); // 500ms 디바운싱 시간
-
-    return () => clearTimeout(timeoutId); // cleanup 함수
-  }, [values.email]);
-
   const validate = (formValues: SignupData) => {
     const errors: Partial<SignupData> = {};
 
