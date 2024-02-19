@@ -1,6 +1,7 @@
 import { useSignUpMutation } from 'features/auth';
 import { useValidation } from 'features/auth/@hook/useValidation';
-import React from 'react';
+import { useDebounce } from 'features/hooks/useDebounce';
+import React, { useEffect } from 'react';
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
@@ -16,6 +17,7 @@ export const SignupForm = () => {
   const { mutate: signUp } = useSignUpMutation();
   const { mutate: validation } = useValidation();
   const { values, handleChange, errors } = useForm(initialValues);
+  const debouncedEmail = useDebounce(values.email, 500); // 이메일 입력에 대해 500ms 디바운싱 적용
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -23,7 +25,11 @@ export const SignupForm = () => {
       signUp(values);
     }
   };
-
+  useEffect(() => {
+    if (debouncedEmail.trim() !== '') {
+      validation(debouncedEmail);
+    }
+  }, [debouncedEmail, validation]);
   const isFormValid =
     Object.values(values).every((value) => (value as string).trim() !== '') &&
     Object.values(errors).every((error) => !error);
