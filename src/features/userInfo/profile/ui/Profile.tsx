@@ -4,7 +4,7 @@ import useName from 'features/userInfo/@hooks/useName';
 import React, { useState } from 'react';
 import colors from 'shared/styles/color';
 import TextInput from 'shared/ui/input/TextInput';
-import { SelectType } from 'shared/ui/select/Select';
+import { SelectType } from 'shared/ui/select/SelectButton';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
@@ -20,6 +20,7 @@ export const Profile = () => {
         <Typography variant={'subtitle3'}>더 정확한 분석을 위해 프로필이 필요해요!</Typography>
       </div>
       <TextInput
+        className='space'
         type='text'
         label='이름'
         value={name}
@@ -28,7 +29,7 @@ export const Profile = () => {
         name={'name'}
       />
       <SelectType
-        className='first-select'
+        className='space'
         label='성별'
         options={['남자', '여자']}
         onSelect={handleGenderSelect}
@@ -50,7 +51,7 @@ const ProfileWrapper = styled.div`
   .title {
     margin-bottom: 46px;
   }
-  .first-select {
+  .space {
     margin-bottom: 60px;
   }
 `;

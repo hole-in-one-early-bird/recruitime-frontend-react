@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Typography } from '../typography/Typography';
 
 interface TextInputProps {
+  className?: string;
   type: string;
   name: string;
   placeholder?: string;
@@ -17,6 +18,7 @@ interface TextInputProps {
 }
 
 const TextInput: React.FC<TextInputProps> = ({
+  className,
   type,
   name,
   placeholder,
@@ -31,7 +33,7 @@ const TextInput: React.FC<TextInputProps> = ({
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <TextInputWrapper>
+    <TextInputWrapper className={className}>
       {label && (
         <Label>
           <Typography variant={'label'}>{label}</Typography>
@@ -68,7 +70,6 @@ export default TextInput;
 
 const TextInputWrapper = styled.div`
   width: 100%;
-  margin-bottom: 46px;
 `;
 
 const InputContainer = styled.div`

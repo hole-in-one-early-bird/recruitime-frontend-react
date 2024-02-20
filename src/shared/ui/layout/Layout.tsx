@@ -31,9 +31,9 @@ const LayoutContainer = styled.div`
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
   background-color: ${colors.white};
-  overflow: hidden;
 `;
 
 const ContentContainer = styled.div`
+  border: 1px solid #ddd;
   padding: 20px;
 `;

@@ -33,8 +33,8 @@ export const SigninForm = () => {
       <Typography className='title' variant={'largeTitle'}>
         로그인
       </Typography>
-
       <TextInput
+        className='space'
         label='이메일'
         type='text'
         name='email'
@@ -45,6 +45,7 @@ export const SigninForm = () => {
         isValid={!errors.email && values.email !== ''}
       />
       <TextInput
+        className='space'
         label='비밀번호'
         type='password'
         name='password'
@@ -75,6 +76,9 @@ export const SigninForm = () => {
 };
 
 const SigninFormWrapper = styled.div`
+  .space {
+    margin-bottom: 46px;
+  }
   .title {
     margin-bottom: 66px;
   }

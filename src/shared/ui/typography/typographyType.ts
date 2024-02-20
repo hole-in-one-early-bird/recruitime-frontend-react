@@ -118,7 +118,7 @@ export const typographyStyles: TypographyVariants = {
     letterSpacing: '-0.02em',
   },
   selectBox: {
-    color: colors.blue[600],
+    color: colors.gray[300],
     fontSize: '16px',
     fontWeight: 500,
     lineHeight: '1',
