@@ -2,6 +2,7 @@ import { useAge } from 'features/userInfo/@hooks/useAge';
 import { useGender } from 'features/userInfo/@hooks/useGender';
 import useName from 'features/userInfo/@hooks/useName';
 import React, { useState } from 'react';
+import colors from 'shared/styles/color';
 import TextInput from 'shared/ui/input/TextInput';
 import { SelectType } from 'shared/ui/select/Select';
 import { Typography } from 'shared/ui/typography/Typography';
@@ -26,13 +27,14 @@ export const Profile = () => {
         placeholder='이름 입력'
         name={'name'}
       />
-      <StyledSelectType
+      <SelectType
+        className='first-select'
         label='성별'
         options={['남자', '여자']}
         onSelect={handleGenderSelect}
         selected={gender}
       />
-      <StyledSelectType
+      <SelectType
         label='나이'
         options={['20대', '30대', '40대', '50대', '60대 이상']}
         onSelect={handleAgeSelect}
@@ -43,15 +45,16 @@ export const Profile = () => {
 };
 
 const ProfileWrapper = styled.div`
+  padding: 30px 0;
+  border-bottom: 2px solid ${colors.gray[200]};
   .title {
     margin-bottom: 46px;
+  }
+  .first-select {
+    margin-bottom: 60px;
   }
 `;
 
 const StyledTypography = styled(Typography)`
-  margin: 48px 0 8px;
-`;
-
-const StyledSelectType = styled(SelectType)`
-  margin-bottom: 60px;
+  margin: 18px 0 8px;
 `;
