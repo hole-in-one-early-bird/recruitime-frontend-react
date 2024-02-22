@@ -159,6 +159,13 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '1',
     letterSpacing: '-0.02em',
   },
+  caption4: {
+    color: colors.gray[400],
+    fontSize: '15px',
+    fontWeight: 400,
+    lineHeight: '1',
+    letterSpacing: '-0.02em',
+  },
   body1: {
     color: colors.gray[700],
     fontSize: '18px',

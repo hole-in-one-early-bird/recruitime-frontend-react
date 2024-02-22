@@ -3,7 +3,7 @@ import { useGender } from 'features/userInfo/@hooks/useGender';
 import useName from 'features/userInfo/@hooks/useName';
 import React, { useState } from 'react';
 import colors from 'shared/styles/color';
-import TextInput from 'shared/ui/input/TextInput';
+import { TextInput } from 'shared/ui/input/TextInput';
 import { SelectType } from 'shared/ui/select/SelectButton';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';

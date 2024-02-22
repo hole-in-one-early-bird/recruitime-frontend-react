@@ -6,7 +6,7 @@ import { useForm } from 'shared/hooks/useForm';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
-import TextInput from 'shared/ui/input/TextInput';
+import { TextInput } from 'shared/ui/input/TextInput';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 

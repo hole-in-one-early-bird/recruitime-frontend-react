@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
-import TextInput from 'shared/ui/input/TextInput';
+import { TextInput } from 'shared/ui/input/TextInput';
 import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
@@ -18,6 +18,9 @@ export const Experience = () => {
   const { experiences, addExperience, removeExperience } = useExperienceList();
 
   const handleAddExperience = () => {
+    if (!selectedOption || !experience) {
+      return;
+    }
     addExperience(selectedOption, experience);
     handleExperienceChange(''); // 문자열 전달
     setSelectedOption('');
@@ -45,11 +48,21 @@ export const Experience = () => {
           placeholder='경험 내용 입력'
           name={'education'}
           caption='최대 15자까지 입력할 수 있어요.'
+          maxLength={15}
         />
-        <StyledButton variant={'primary'} onClick={handleAddExperience}>
+        <StyledButton
+          variant={!selectedOption || !experience ? 'inactive' : 'confirm'}
+          onClick={handleAddExperience}
+          disabled={!selectedOption || !experience}
+        >
           입력하기
         </StyledButton>
       </AddExperienceWrapper>
+      <EmptyList>
+        <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
+        <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
+      </EmptyList>
+
       {experiences.map((e, index) => (
         <ExperienceItem key={index}>
           <Typography variant={'subtitle'}>{e.option}</Typography>
@@ -57,7 +70,7 @@ export const Experience = () => {
           <img
             onClick={() => removeExperience(index)}
             src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
-            alt='characterImage'
+            alt='closeIcon'
           />
         </ExperienceItem>
       ))}
@@ -76,6 +89,7 @@ export const Experience = () => {
 
 const ExperienceWrapper = styled.div`
   position: relative;
+
   padding: 30px 0;
   .title {
     margin-bottom: 46px;
@@ -88,7 +102,7 @@ const ExperienceWrapper = styled.div`
 const AddExperienceWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: center;
+  align-items: start;
   column-gap: 10px;
   margin-bottom: 26px;
 `;
@@ -105,16 +119,17 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 8px;
 `;
 
+const EmptyList = styled.div``;
+
 const ExperienceItem = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   margin-bottom: 10px;
   padding: 20px;
   background-color: ${colors.blue[50]};
   border-radius: 10px;
-`;
-
-const CloseIcon = styled.div`
-  cursor: pointer;
+  > :last-child {
+    justify-self: end;
+  }
 `;

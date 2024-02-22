@@ -2,7 +2,7 @@ import { useEducation } from 'features/userInfo/@hooks/useEducation';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
 import colors from 'shared/styles/color';
-import TextInput from 'shared/ui/input/TextInput';
+import { TextInput } from 'shared/ui/input/TextInput';
 import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';

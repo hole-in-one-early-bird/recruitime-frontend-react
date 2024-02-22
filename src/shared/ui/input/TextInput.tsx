@@ -3,34 +3,25 @@ import colors from 'shared/styles/color';
 import styled from 'styled-components';
 import { Typography } from '../typography/Typography';
 
-interface TextInputProps {
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
-  type: string;
   name: string;
-  placeholder?: string;
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
   label?: string;
   style?: React.CSSProperties;
-  isDisabled?: boolean;
   caption?: string;
   error?: string;
   isValid?: boolean;
 }
 
-const TextInput: React.FC<TextInputProps> = ({
+export const TextInput: React.FC<TextInputProps> = ({
   className,
-  type,
   name,
-  placeholder,
-  value,
-  onChange,
   label,
   style,
-  isDisabled,
   error,
   isValid,
   caption,
+  ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -43,18 +34,14 @@ const TextInput: React.FC<TextInputProps> = ({
       )}
       <InputContainer>
         <StyledInput
-          type={type}
           name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
           $isFocused={isFocused}
           $isValid={isValid}
           $isError={!!error}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           style={style}
-          disabled={isDisabled}
+          {...props} // 나머지 props를 전달
         />
         {isValid && <CheckIcon />}
       </InputContainer>
@@ -71,8 +58,6 @@ const TextInput: React.FC<TextInputProps> = ({
     </TextInputWrapper>
   );
 };
-
-export default TextInput;
 
 const TextInputWrapper = styled.div`
   width: 100%;
