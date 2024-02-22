@@ -24,14 +24,11 @@ export const Modal: React.FC<ModalProps> = ({
   isTwoColumns,
 }) => {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
+
   if (!isOpen) return null;
-  const modalContent = (
+  return ReactDOM.createPortal(
     <Overlay onClick={onClose}>
       <ModalWrapper>
         {label && (
@@ -52,9 +49,9 @@ export const Modal: React.FC<ModalProps> = ({
           ))}
         </OptionBox>
       </ModalWrapper>
-    </Overlay>
+    </Overlay>,
+    document.body
   );
-  return ReactDOM.createPortal(modalContent, document.body);
 };
 const Overlay = styled.div`
   position: fixed;
