@@ -127,7 +127,7 @@ export const typographyStyles: TypographyVariants = {
   selectList: {
     color: colors.gray[500],
     fontSize: '16px',
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: '1',
     letterSpacing: '-0.02em',
   },
@@ -141,6 +141,13 @@ export const typographyStyles: TypographyVariants = {
   box2: {
     color: colors.gray[700],
     fontSize: '16px',
+    fontWeight: 500,
+    lineHeight: '1',
+    letterSpacing: '-0.02em',
+  },
+  box3: {
+    color: colors.gray[800],
+    fontSize: '18px',
     fontWeight: 500,
     lineHeight: '1',
     letterSpacing: '-0.02em',

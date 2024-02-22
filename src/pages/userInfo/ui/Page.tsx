@@ -9,7 +9,7 @@ export const UserInfo = () => {
   return (
     <UserInfoWrapper>
       <Profile />
-      <Education /> {/* 함수를 prop으로 전달합니다. */}
+      <Education />
       <Experience />
     </UserInfoWrapper>
   );

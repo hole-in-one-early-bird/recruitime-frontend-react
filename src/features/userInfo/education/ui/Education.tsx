@@ -8,6 +8,7 @@ import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
 const activities = ['인턴', '동아리', '교내활동', '사회활동', '자원봉사', '경력', '어학', '자격증'];
+// const activities = ['고졸', '초대졸', '대졸', '대학원졸'];
 
 export const Education = () => {
   // prop을 받아옵니다.
@@ -58,6 +59,7 @@ export const Education = () => {
         onSelect={handleSelectOption}
         selected={selectedOption}
         options={activities}
+        isTwoColumns
       />
     </EducationWrapper>
   );

@@ -11,13 +11,24 @@ interface ModalProps {
   selected?: string;
   options?: string[];
   label: string;
+  isTwoColumns?: boolean;
+}
+interface OptionBoxProps {
+  isTwoColumns?: boolean;
 }
 
 interface OptionProps {
   isSelected: boolean;
 }
-
-export const Modal: React.FC<ModalProps> = ({ isOpen, onSelect, selected, options, label, onClose }) => {
+export const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onSelect,
+  selected,
+  options,
+  label,
+  onClose,
+  isTwoColumns,
+}) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -31,17 +42,17 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onSelect, selected, option
       <ModalWrapper>
         {label && (
           <Label>
-            <Typography variant={'label'}>{label}</Typography>
+            <Typography variant={'box3'}>{label}</Typography>
           </Label>
         )}
-        <OptionBox>
+        <OptionBox isTwoColumns={isTwoColumns}>
           {options &&
             onSelect &&
             options.map((option) => (
               <Option key={option} onClick={() => onSelect(option)} isSelected={selected === option}>
                 <Typography
                   variant={'selectList'}
-                  style={{ color: selected === option ? colors.blue[400] : 'inherit' }}
+                  style={{ color: selected === option ? colors.blue[400] : colors.gray[500] }}
                 >
                   {option}
                 </Typography>
@@ -76,14 +87,18 @@ const ModalWrapper = styled.div`
   background-color: ${colors.white};
 `;
 
-const OptionBox = styled.div`
+const OptionBox = styled.div<OptionBoxProps>`
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  & > div {
+    width: ${({ isTwoColumns }) => (isTwoColumns ? '50%' : '100%')};
+  }
 `;
 
 const Option = styled.div<OptionProps>`
-  padding: 10px;
+  padding: 22px 26px 22px 0;
   color: ${({ isSelected }) => (isSelected ? colors.blue[400] : 'inherit')};
   cursor: pointer;
 `;
