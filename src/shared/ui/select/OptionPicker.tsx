@@ -7,9 +7,15 @@ interface OptionPickerProps {
   label?: string;
   onClick?: () => void;
   selectedOption?: string; // 선택된 옵션을 추가합니다.
+  children: string;
 }
 
-export const OptionPicker: React.FC<OptionPickerProps> = ({ label, onClick, selectedOption }) => {
+export const OptionPicker: React.FC<OptionPickerProps> = ({
+  label,
+  onClick,
+  selectedOption,
+  children,
+}) => {
   return (
     <OptionPickerWrapper>
       {label && (
@@ -20,12 +26,12 @@ export const OptionPicker: React.FC<OptionPickerProps> = ({ label, onClick, sele
 
       <OptionPickerBox onClick={onClick} isSelected={!!selectedOption}>
         <Typography variant={'selectBox'} color={selectedOption ? colors.blue[400] : colors.gray[300]}>
-          {selectedOption || '학력선택'}
+          {selectedOption || children}
         </Typography>
         <img
           src={process.env.PUBLIC_URL + `/images/icon/${selectedOption ? 'upIcon' : 'downIcon'}.png`}
           alt='icon'
-        />{' '}
+        />
       </OptionPickerBox>
     </OptionPickerWrapper>
   );

@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
 import colors from 'shared/styles/color';
 import ReactDOM from 'react-dom';
+import { Typography } from '../typography/Typography';
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,25 +10,32 @@ interface ModalProps {
   onSelect?: (option: string) => void;
   selected?: string;
   options?: string[];
+  label: string;
 }
 
 interface OptionProps {
   isSelected: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelect, selected, options }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onSelect, selected, options, label }) => {
   if (!isOpen) return null;
 
   const modalContent = (
     <ModalWrapper>
-      {options &&
-        onSelect &&
-        options.map((option) => (
-          <Option key={option} onClick={() => onSelect(option)} isSelected={selected === option}>
-            {option}
-          </Option>
-        ))}
-      <CloseButton onClick={onClose}>닫기</CloseButton>
+      {label && (
+        <Label>
+          <Typography variant={'label'}>{label}</Typography>
+        </Label>
+      )}
+      <OptionBox>
+        {options &&
+          onSelect &&
+          options.map((option) => (
+            <Option key={option} onClick={() => onSelect(option)} isSelected={selected === option}>
+              <Typography variant={'selectList'}>{option}</Typography>
+            </Option>
+          ))}
+      </OptionBox>
     </ModalWrapper>
   );
   return ReactDOM.createPortal(modalContent, document.body);
@@ -36,22 +44,27 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelect, selecte
 const ModalWrapper = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
-  padding: 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 30px 30px 50px;
+  border-radius: 20px 20px 0 0;
+  background-color: ${colors.white};
+`;
+
+const OptionBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const Option = styled.div<OptionProps>`
   padding: 10px;
-  color: ${({ isSelected }) => (isSelected ? colors.blue[400] : 'black')};
-  &:hover {
-    background-color: ${colors.gray[200]};
-  }
+  color: ${({ isSelected }) => (isSelected ? colors.blue[400] : 'inherit')};
+  cursor: pointer;
 `;
 
-const CloseButton = styled.button`
-  /* 스타일 정의 */
+const Label = styled.label`
+  display: block;
+  margin-bottom: 20px;
 `;
