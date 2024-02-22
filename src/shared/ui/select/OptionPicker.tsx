@@ -25,7 +25,10 @@ export const OptionPicker: React.FC<OptionPickerProps> = ({
       )}
 
       <OptionPickerBox onClick={onClick} isSelected={!!selectedOption}>
-        <Typography variant={'selectBox'} color={selectedOption ? colors.blue[400] : colors.gray[300]}>
+        <Typography
+          variant={'selectBox'}
+          style={{ color: selectedOption ? colors.blue[400] : colors.gray[300] }}
+        >
           {selectedOption || children}
         </Typography>
         <img

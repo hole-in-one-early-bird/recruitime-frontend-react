@@ -39,7 +39,12 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onSelect, selected, option
             onSelect &&
             options.map((option) => (
               <Option key={option} onClick={() => onSelect(option)} isSelected={selected === option}>
-                <Typography variant={'selectList'}>{option}</Typography>
+                <Typography
+                  variant={'selectList'}
+                  style={{ color: selected === option ? colors.blue[400] : 'inherit' }}
+                >
+                  {option}
+                </Typography>
               </Option>
             ))}
         </OptionBox>
@@ -59,6 +64,7 @@ const Overlay = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const ModalWrapper = styled.div`
   position: fixed;
   bottom: 0;

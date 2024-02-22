@@ -7,12 +7,12 @@ interface TypographyProps {
   variant: keyof typeof typographyStyles;
   children: string;
   className?: string;
-  color?: string;
+  style?: React.CSSProperties;
 }
 
-export const Typography = ({ variant, children, className, color }: TypographyProps) => {
+export const Typography = ({ variant, children, className, style }: TypographyProps) => {
   return (
-    <StyledTypography variant={variant} className={className} color={color}>
+    <StyledTypography variant={variant} className={className} style={style}>
       {children}
     </StyledTypography>
   );
@@ -27,7 +27,7 @@ const StyledTypography = styled.div<TypographyProps>`
       font-weight: ${style.fontWeight};
       line-height: ${style.lineHeight};
       letter-spacing: ${style.letterSpacing};
-      color: ${color || style.color};
+      color: ${style.color};
     `;
   }}
 `;
