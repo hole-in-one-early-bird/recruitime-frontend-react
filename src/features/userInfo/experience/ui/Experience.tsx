@@ -87,10 +87,6 @@ export const Experience = () => {
         options={activities}
         isTwoColumns
       />
-
-      <Button type='submit' variant={'primary'}>
-        프로필 저장하기
-      </Button>
     </ExperienceWrapper>
   );
 };
@@ -130,6 +126,7 @@ const StyledTypography = styled(Typography)`
 const ListBox = styled.div`
   margin-bottom: 50px;
 `;
+
 const EmptyBox = styled.div`
   margin-bottom: 50px;
   ${common.flexCenterColumn}

@@ -34,12 +34,14 @@ export const Profile = () => {
         options={['남자', '여자']}
         onSelect={handleGenderSelect}
         selected={gender}
+        width='49%'
       />
       <SelectType
         label='나이'
         options={['20대', '30대', '40대', '50대', '60대 이상']}
         onSelect={handleAgeSelect}
         selected={age}
+        width='32%'
       />
     </ProfileWrapper>
   );

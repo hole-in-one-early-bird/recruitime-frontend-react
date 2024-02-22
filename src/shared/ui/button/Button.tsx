@@ -1,6 +1,5 @@
 import React from 'react';
-import colors from 'shared/styles/color';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { variantStyles } from './buttonType';
 
 type VariantType = 'primary' | 'confirm' | 'active' | 'inactive' | 'primaryDisabled' | 'cancel';
@@ -8,6 +7,7 @@ type VariantType = 'primary' | 'confirm' | 'active' | 'inactive' | 'primaryDisab
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: VariantType;
   style?: React.CSSProperties;
+  width?: string;
 }
 
 export const Button: React.FC<Props> = ({
@@ -16,14 +16,17 @@ export const Button: React.FC<Props> = ({
   children,
   variant = 'primary',
   style,
+  width = '100%',
 }) => {
   return (
-    <StyledButton type={type} onClick={onClick} variant={variant} style={style}>
+    <StyledButton type={type} onClick={onClick} variant={variant} style={style} width={width}>
       {children}
     </StyledButton>
   );
 };
 
-const StyledButton = styled.button<{ variant: VariantType }>`
-  ${({ variant }) => variantStyles[variant] || variantStyles.primary}
+const StyledButton = styled.button<{ variant: VariantType; width: string }>`
+  padding: 18px;
+  width: ${({ width }) => width};
+  ${({ variant }) => variantStyles[variant] || variantStyles.primary};
 `;

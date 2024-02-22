@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import colors from 'shared/styles/color';
-import { common } from 'shared/styles/common';
 import styled, { css } from 'styled-components';
+import { Button } from '../button/Button';
 import { Typography } from '../typography/Typography';
 
 interface SelectTypeProps {
@@ -10,6 +10,7 @@ interface SelectTypeProps {
   onSelect: (selected: string) => void;
   selected: string;
   label?: string;
+  width?: string;
 }
 
 export const SelectType: React.FC<SelectTypeProps> = ({
@@ -18,6 +19,7 @@ export const SelectType: React.FC<SelectTypeProps> = ({
   onSelect,
   selected,
   label,
+  width,
 }) => {
   return (
     <SelectTypeWrapper className={className}>
@@ -28,14 +30,24 @@ export const SelectType: React.FC<SelectTypeProps> = ({
       )}
       <SelectButtonBox>
         {options.map((option) => (
-          <SelectButton key={option} selected={selected === option} onClick={() => onSelect(option)}>
+          <StyledButton
+            variant={`${selected === option ? 'active' : 'inactive'}`}
+            key={option}
+            selected={selected === option}
+            onClick={() => onSelect(option)}
+            width={width}
+          >
             {option}
-          </SelectButton>
+          </StyledButton>
         ))}
       </SelectButtonBox>
     </SelectTypeWrapper>
   );
 };
+const Label = styled.label`
+  display: block;
+  margin-bottom: 10px;
+`;
 
 const SelectTypeWrapper = styled.div`
   display: flex;
@@ -46,26 +58,13 @@ const SelectButtonBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  justify-content: space-between;
 `;
 
-const Label = styled.label`
-  display: block;
-  margin-bottom: 10px;
-`;
-
-const SelectButton = styled.button<{ selected: boolean }>`
-  flex: 1 1 auto;
+const StyledButton = styled(Button)<{ selected: boolean; width?: string }>`
   padding: 18px;
-  background-color: ${colors.gray[50]};
   border-radius: 10px;
   cursor: pointer;
-  min-width: 110px;
-  ${({ selected }) =>
-    selected &&
-    css`
-      background-color: ${colors.blue[100]};
-      color: ${colors.blue[600]};
-      border: 1.5px solid ${colors.blue[400]};
-    `}
+  flex: ${({ width }) => `0 0 ${width}%`}; // width를 백분율로 설정합니다.
+  text-align: center;
+  margin-bottom: 8px; // 줄 바꿈 후의 버튼과의 간격을 위해 추가합니다.
 `;

@@ -35,7 +35,7 @@ export const Education = () => {
         />
       </div>
 
-      <TextInput
+      <StyledTextInput
         type='text'
         label='전공/계열'
         value={education}
@@ -65,6 +65,10 @@ const EducationWrapper = styled.div`
   .optionPickerBox {
     margin-bottom: 36px;
   }
+`;
+
+const StyledTextInput = styled(TextInput)`
+  width: 60%;
 `;
 
 const StyledTypography = styled(Typography)`

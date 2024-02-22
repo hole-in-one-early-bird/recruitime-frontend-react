@@ -53,6 +53,7 @@ export const Modal: React.FC<ModalProps> = ({
     document.body
   );
 };
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;

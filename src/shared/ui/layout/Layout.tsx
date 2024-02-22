@@ -19,8 +19,8 @@ export const Layout = (props: Props) => {
 
   return (
     <LayoutContainer>
-      {props.headerSlot}
       <ContentContainer>
+        {props.headerSlot}
         <Outlet />
       </ContentContainer>
     </LayoutContainer>
