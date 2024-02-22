@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import colors from 'shared/styles/color';
 import styled from 'styled-components';
 import { Typography } from '../typography/Typography';
 
@@ -22,6 +23,23 @@ export const Header = () => {
   const location = useLocation();
   const { pathname } = location;
 
+  const stepMapping: { [key: string]: number } = {
+    '/profile': 1,
+    '/track': 2,
+    '/education': 3,
+    '/experience': 4,
+    '/keyword': 5,
+  };
+
+  const currentStep = stepMapping[pathname] || 0; // 현재 단계
+
+  // 5개의 세그먼트를 생성합니다.
+  const totalSteps = 5;
+  const segments = Array.from({ length: totalSteps }, (_, i) => (
+    <ProgressSegment key={i} active={i < currentStep} />
+  ));
+
+  const progressGauge = <ProgressGaugeContainer>{segments}</ProgressGaugeContainer>;
   const handlePreviousClick = () => {
     navigate(-1);
   };
@@ -41,11 +59,6 @@ export const Header = () => {
         );
       case ROUTES_PATH.mypage:
       case ROUTES_PATH.userInfo:
-      case ROUTES_PATH.profile:
-      case ROUTES_PATH.track:
-      case ROUTES_PATH.education:
-      case ROUTES_PATH.experience:
-      case ROUTES_PATH.keyword:
       case ROUTES_PATH.findAccount:
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
@@ -56,6 +69,24 @@ export const Header = () => {
             />
             <Title variant={'headerTitle'}>{title}</Title>
           </HeaderContainer>
+        );
+      case ROUTES_PATH.profile:
+      case ROUTES_PATH.track:
+      case ROUTES_PATH.education:
+      case ROUTES_PATH.experience:
+      case ROUTES_PATH.keyword:
+        return (
+          <>
+            <HeaderContainer style={{ justifyContent: 'center' }}>
+              <BackIcon
+                src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+                alt='arrowIcon'
+                onClick={handlePreviousClick}
+              />
+              <Title variant={'headerTitle'}>{title}</Title>
+            </HeaderContainer>
+            <ProgressGauge>{progressGauge}</ProgressGauge>
+          </>
         );
       case ROUTES_PATH.customizedCareer:
         return (
@@ -100,6 +131,7 @@ const HeaderContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  padding: 12px;
   .chat {
     position: absolute;
     left: 40px;
@@ -128,4 +160,32 @@ const IconContainer = styled.div`
   & > img:not(:last-child) {
     margin-right: 10px;
   }
+`;
+
+const ProgressGaugeContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 6px;
+  margin: 8px 0; // 상단과 하단의 헤더로부터의 간격을 위해 추가
+`;
+
+const ProgressSegment = styled.div<{ active: boolean }>`
+  height: 100%;
+  flex-grow: 1;
+  background-color: ${({ active }) => (active ? colors.blue[400] : colors.gray[200])};
+  margin: 0 4px;
+  border-radius: 30px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
+const ProgressGauge = styled.div`
+  padding: 10px;
 `;
