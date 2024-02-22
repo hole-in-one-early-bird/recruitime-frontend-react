@@ -13,6 +13,7 @@ interface TextInputProps {
   label?: string;
   style?: React.CSSProperties;
   isDisabled?: boolean;
+  caption?: string;
   error?: string;
   isValid?: boolean;
 }
@@ -29,6 +30,7 @@ const TextInput: React.FC<TextInputProps> = ({
   isDisabled,
   error,
   isValid,
+  caption,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -56,7 +58,11 @@ const TextInput: React.FC<TextInputProps> = ({
         />
         {isValid && <CheckIcon />}
       </InputContainer>
-
+      {caption && (
+        <Caption>
+          <Typography variant={'caption'}>{caption}</Typography>
+        </Caption>
+      )}
       {error && (
         <ErrorMsg>
           <Typography variant={'error'}>{error}</Typography>
@@ -99,6 +105,10 @@ const StyledInput = styled.input<{ $isFocused: boolean; $isError: boolean; $isVa
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
+`;
+
+const Caption = styled.div`
+  margin-top: 6px;
 `;
 
 const ErrorMsg = styled.div`

@@ -26,13 +26,15 @@ export const Education = () => {
         <StyledTypography variant={'middleTitle'}>학력 정보</StyledTypography>
         <Typography variant={'subtitle3'}>더 정확한 분석을 위해 프로필이 필요해요!</Typography>
       </div>
+      <div className='optionPickerBox'>
+        <OptionPicker
+          label='학력 선택'
+          onClick={handleOpenModal}
+          selectedOption={selectedOption}
+          children='학력선택'
+        />
+      </div>
 
-      <OptionPicker
-        label='학력 선택'
-        onClick={handleOpenModal}
-        selectedOption={selectedOption}
-        children='학력선택'
-      />
       <TextInput
         type='text'
         label='전공/계열'
@@ -59,6 +61,9 @@ const EducationWrapper = styled.div`
   border-bottom: 2px solid ${colors.gray[200]};
   .title {
     margin-bottom: 46px;
+  }
+  .optionPickerBox {
+    margin-bottom: 36px;
   }
 `;
 
