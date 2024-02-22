@@ -18,10 +18,14 @@ export const authService = {
     return response.data;
   },
   signUp: async (userData: SignupData) => {
-    const response = await axios.post(`${API.SIGNUP}`, userData);
+    const { email, password } = userData;
+    const dataToSend = { email, password };
+    console.log(dataToSend);
+    const response = await axios.post(`${API.SIGNUP}`, dataToSend);
     return response.data;
   },
   validation: async (userData: SignupData) => {
+    console.log(userData, 'email');
     const response = await axios.post(`${API.VALIDATION}`, userData.email);
     console.log(response, 'validation');
     return response.data;

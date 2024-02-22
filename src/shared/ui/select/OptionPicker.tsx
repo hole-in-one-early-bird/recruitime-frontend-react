@@ -5,9 +5,10 @@ import { Typography } from '../typography/Typography';
 
 interface OptionPickerProps {
   label?: string;
+  onClick?: () => void;
 }
 
-export const OptionPicker: React.FC<OptionPickerProps> = ({ label }) => {
+export const OptionPicker: React.FC<OptionPickerProps> = ({ label, onClick }) => {
   return (
     <OptionPickerWrapper>
       {label && (
@@ -15,7 +16,7 @@ export const OptionPicker: React.FC<OptionPickerProps> = ({ label }) => {
           <StyledTypography variant={'label'}>{label}</StyledTypography>
         </Label>
       )}
-      <OptionPickerBox>
+      <OptionPickerBox onClick={onClick}>
         <Typography variant={'selectBox'}>학력선택</Typography>
         <img src={process.env.PUBLIC_URL + '/images/icon/downIcon.png'} alt='downIcon' />
       </OptionPickerBox>

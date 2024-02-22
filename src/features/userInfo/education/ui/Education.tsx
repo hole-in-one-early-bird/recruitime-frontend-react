@@ -6,8 +6,13 @@ import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
-export const Education = () => {
-  const { education, handleEducationChange } = useEducation(''); // 초기값을 빈 문자열로 설정
+interface EducationProps {
+  onOpenModal: () => void; // 함수 타입의 prop을 추가합니다.
+}
+
+export const Education: React.FC<EducationProps> = ({ onOpenModal }) => {
+  // prop을 받아옵니다.
+  const { education, handleEducationChange } = useEducation('');
 
   return (
     <EducationWrapper>
@@ -15,7 +20,7 @@ export const Education = () => {
         <StyledTypography variant={'middleTitle'}>학력 정보</StyledTypography>
         <Typography variant={'subtitle3'}>더 정확한 분석을 위해 프로필이 필요해요!</Typography>
       </div>
-      <OptionPicker label='학력 선택' />
+      <OptionPicker label='학력 선택' onClick={onOpenModal} />
       <TextInput
         type='text'
         label='전공/계열'
