@@ -10,9 +10,9 @@ interface TypographyProps {
   color?: string;
 }
 
-export const Typography = ({ variant, children, className }: TypographyProps) => {
+export const Typography = ({ variant, children, className, color }: TypographyProps) => {
   return (
-    <StyledTypography variant={variant} className={className}>
+    <StyledTypography variant={variant} className={className} color={color}>
       {children}
     </StyledTypography>
   );

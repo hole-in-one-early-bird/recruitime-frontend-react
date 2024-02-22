@@ -22,7 +22,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelect, selecte
     <ModalWrapper>
       {options &&
         onSelect &&
-        selected &&
         options.map((option) => (
           <Option key={option} onClick={() => onSelect(option)} isSelected={selected === option}>
             {option}
