@@ -28,14 +28,14 @@ export const EducationForm = () => {
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   useEffect(() => {
-    setIsAllFieldsFilled(true);
-  }, []);
+    setIsAllFieldsFilled(education !== '' && match !== '' && selectedOption !== '');
+  }, [education, match, selectedOption]);
 
   return (
     <EducationWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>학력 정보</StyledTypography>
-        <Typography variant={'subtitle3'}>더 정확한 분석을 위해 프로필이 필요해요!</Typography>
+        <StyledTypography variant={'middleTitle'}>학력과 적성을 체크할게요!</StyledTypography>
+        <Typography variant={'subtitle3'}>전공 적성도를 체크하기 위한 과정이에요</Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker
@@ -68,7 +68,7 @@ export const EducationForm = () => {
       <Button
         variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
         disabled={!isAllFieldsFilled}
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '37px' }}
       >
         <Link to={ROUTES_PATH.track}>계속하기</Link>
       </Button>
@@ -86,7 +86,7 @@ export const EducationForm = () => {
 
 const EducationWrapper = styled.div`
   position: relative;
-  padding: 30px 0;
+  padding: 22px 0;
 
   .title {
     margin-bottom: 46px;
