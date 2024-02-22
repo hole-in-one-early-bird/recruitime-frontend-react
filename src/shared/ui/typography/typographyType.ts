@@ -32,14 +32,14 @@ export const typographyStyles: TypographyVariants = {
     fontWeight: 500,
     lineHeight: '100%',
     letterSpacing: '-0.02em',
-    color: colors.gray[600],
+    color: colors.gray[800],
   },
   subtitle2: {
     fontSize: '16px',
     fontWeight: 600,
     lineHeight: '20px',
     letterSpacing: '-0.02em',
-    color: colors.gray[600],
+    color: colors.gray[700],
   },
   subtitle3: {
     fontSize: '16px',

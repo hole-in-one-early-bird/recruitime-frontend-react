@@ -1,6 +1,8 @@
 import { useExperience } from 'features/userInfo/@hooks/useExperience';
+import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
+import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
 import TextInput from 'shared/ui/input/TextInput';
@@ -13,7 +15,13 @@ export const Experience = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const { experience, handleExperienceChange } = useExperience('');
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
+  const { experiences, addExperience, removeExperience } = useExperienceList();
 
+  const handleAddExperience = () => {
+    addExperience(selectedOption, experience);
+    handleExperienceChange(''); // 문자열 전달
+    setSelectedOption('');
+  };
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
     handleCloseModal();
@@ -33,14 +41,26 @@ export const Experience = () => {
         <StyledTextInput
           type='text'
           value={experience}
-          onChange={handleExperienceChange}
+          onChange={(e: { target: { value: string } }) => handleExperienceChange(e.target.value)}
           placeholder='경험 내용 입력'
           name={'education'}
           caption='최대 15자까지 입력할 수 있어요.'
         />
-        <StyledButton variant={'primary'}>입력하기</StyledButton>
+        <StyledButton variant={'primary'} onClick={handleAddExperience}>
+          입력하기
+        </StyledButton>
       </AddExperienceWrapper>
-
+      {experiences.map((e, index) => (
+        <ExperienceItem key={index}>
+          <Typography variant={'subtitle'}>{e.option}</Typography>
+          <Typography variant={'subtitle2'}>{e.detail}</Typography>
+          <img
+            onClick={() => removeExperience(index)}
+            src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
+            alt='characterImage'
+          />
+        </ExperienceItem>
+      ))}
       <Modal
         label='경험선택'
         isOpen={isOpen}
@@ -70,6 +90,7 @@ const AddExperienceWrapper = styled.div`
   grid-template-columns: 1fr auto;
   align-items: center;
   column-gap: 10px;
+  margin-bottom: 26px;
 `;
 
 const StyledTextInput = styled(TextInput)`
@@ -82,4 +103,18 @@ const StyledButton = styled(Button)`
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 8px;
+`;
+
+const ExperienceItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 20px;
+  background-color: ${colors.blue[50]};
+  border-radius: 10px;
+`;
+
+const CloseIcon = styled.div`
+  cursor: pointer;
 `;
