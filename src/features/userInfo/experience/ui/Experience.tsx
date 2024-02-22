@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-
+const activities = ['인턴', '동아리', '교내활동', '사회활동', '자원봉사', '경력', '어학', '자격증'];
 export const Experience = () => {
   return (
     <ExperienceWrapper>

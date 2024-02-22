@@ -1,4 +1,5 @@
 import { useEducation } from 'features/userInfo/@hooks/useEducation';
+import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
 import colors from 'shared/styles/color';
 import TextInput from 'shared/ui/input/TextInput';
@@ -7,30 +8,18 @@ import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
-const activities = ['인턴', '동아리', '교내활동', '사회활동', '자원봉사', '경력', '어학', '자격증'];
-// const activities = ['고졸', '초대졸', '대졸', '대학원졸'];
+const activities = ['고졸', '초대졸', '대졸', '대학원졸'];
 
 export const Education = () => {
-  // prop을 받아옵니다.
   const { education, handleEducationChange } = useEducation('');
-  const [isOpen, setIsOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
-  const [selectedOption, setSelectedOption] = useState(''); // 선택된 옵션을 관리합니다.
-
-  const handleOpenModal = () => {
-    // 모달을 열기 위한 핸들러 함수입니다.
-    setIsOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    // 모달을 닫기 위한 핸들러 함수입니다.
-    setIsOpen(false);
-  };
+  const [selectedOption, setSelectedOption] = useState('');
+  const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
   const handleSelectOption = (option: string) => {
-    // 옵션을 선택했을 때 처리할 핸들러 함수입니다.
     setSelectedOption(option);
-    setIsOpen(false); // 옵션을 선택하면 모달을 닫습니다.
+    handleCloseModal();
   };
+
   return (
     <EducationWrapper>
       <div className='title'>
@@ -59,7 +48,6 @@ export const Education = () => {
         onSelect={handleSelectOption}
         selected={selectedOption}
         options={activities}
-        isTwoColumns
       />
     </EducationWrapper>
   );
