@@ -18,7 +18,7 @@ export const Experience = () => {
   const { experiences, addExperience, removeExperience } = useExperienceList();
 
   const handleAddExperience = () => {
-    if (!selectedOption || !experience) {
+    if (!selectedOption || !experience || experiences.length >= 5) {
       return;
     }
     addExperience(selectedOption, experience);
@@ -51,29 +51,33 @@ export const Experience = () => {
           maxLength={15}
         />
         <StyledButton
-          variant={!selectedOption || !experience ? 'inactive' : 'confirm'}
+          variant={!selectedOption || !experience || experiences.length >= 5 ? 'inactive' : 'confirm'}
           onClick={handleAddExperience}
-          disabled={!selectedOption || !experience}
+          disabled={!selectedOption || !experience || experiences.length >= 5}
         >
           입력하기
         </StyledButton>
       </AddExperienceWrapper>
-      <EmptyList>
-        <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
-        <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
-      </EmptyList>
-
-      {experiences.map((e, index) => (
-        <ExperienceItem key={index}>
-          <Typography variant={'subtitle'}>{e.option}</Typography>
-          <Typography variant={'subtitle2'}>{e.detail}</Typography>
-          <img
-            onClick={() => removeExperience(index)}
-            src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
-            alt='closeIcon'
-          />
-        </ExperienceItem>
-      ))}
+      {experiences.length === 0 ? (
+        <EmptyBox>
+          <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
+          <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
+        </EmptyBox>
+      ) : (
+        <ListBox>
+          {experiences.map((e, index) => (
+            <ExperienceItem key={index}>
+              <Typography variant={'subtitle'}>{e.option}</Typography>
+              <Typography variant={'subtitle2'}>{e.detail}</Typography>
+              <img
+                onClick={() => removeExperience(index)}
+                src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
+                alt='closeIcon'
+              />
+            </ExperienceItem>
+          ))}
+        </ListBox>
+      )}
       <Modal
         label='경험선택'
         isOpen={isOpen}
@@ -83,6 +87,10 @@ export const Experience = () => {
         options={activities}
         isTwoColumns
       />
+
+      <Button type='submit' variant={'primary'}>
+        프로필 저장하기
+      </Button>
     </ExperienceWrapper>
   );
 };
@@ -119,7 +127,14 @@ const StyledTypography = styled(Typography)`
   margin-bottom: 8px;
 `;
 
-const EmptyList = styled.div``;
+const ListBox = styled.div`
+  margin-bottom: 50px;
+`;
+const EmptyBox = styled.div`
+  margin-bottom: 50px;
+  ${common.flexCenterColumn}
+  gap: 7px;
+`;
 
 const ExperienceItem = styled.div`
   display: grid;
