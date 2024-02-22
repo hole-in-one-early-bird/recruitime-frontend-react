@@ -6,7 +6,8 @@ import { Typography } from '../typography/Typography';
 
 const routeTitles: { [key: string]: string } = {
   [ROUTES_PATH.mypage]: '마이페이지',
-  [ROUTES_PATH.profile]: '프로필입력',
+  [ROUTES_PATH.userInfo]: '프로필 저장',
+  [ROUTES_PATH.profile]: '프로필 입력',
   [ROUTES_PATH.track]: '흥미 분야 선택',
   [ROUTES_PATH.education]: '학력 적성 체크',
   [ROUTES_PATH.experience]: '경험 입력',
@@ -39,6 +40,7 @@ export const Header = () => {
           </HeaderContainer>
         );
       case ROUTES_PATH.mypage:
+      case ROUTES_PATH.userInfo:
       case ROUTES_PATH.profile:
       case ROUTES_PATH.track:
       case ROUTES_PATH.education:

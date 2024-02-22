@@ -6,6 +6,7 @@ export const ROUTES_PATH = {
   signup: '/signup',
   findAccount: '/findAccount',
   signupSuccess: '/signupSuccess',
+  userInfo: '/userInfo',
   profile: '/profile',
   track: '/track',
   education: '/education',
