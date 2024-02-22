@@ -51,9 +51,10 @@ const StyledTypography = styled(Typography)`
 `;
 
 const OptionPickerBox = styled.div<{ isSelected: boolean }>`
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   padding: 20px;
+  gap: 20px;
   margin-bottom: 36px;
   border: 1px solid ${(props) => (props.isSelected ? colors.blue[400] : colors.gray[300])};
   border-radius: 10px;
