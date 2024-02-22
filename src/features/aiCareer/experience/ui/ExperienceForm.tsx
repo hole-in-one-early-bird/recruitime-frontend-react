@@ -2,7 +2,9 @@ import { useExperience } from 'features/userInfo/@hooks/useExperience';
 import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { activities } from 'shared/constants/data';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
@@ -12,7 +14,7 @@ import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
-export const Experience = () => {
+export const ExperienceForm = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const { experience, handleExperienceChange } = useExperience('');
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
@@ -34,13 +36,12 @@ export const Experience = () => {
   return (
     <ExperienceWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>나의 경험 작성</StyledTypography>
+        <StyledTypography variant={'middleTitle'}>경험을 입력해 주세요!</StyledTypography>
         <Typography variant={'subtitle3'}>다양한 활동 경험들을 간단히 입력해 주세요</Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker onClick={handleOpenModal} selectedOption={selectedOption} children='경험선택' />
       </div>
-
       <AddExperienceWrapper>
         <StyledTextInput
           type='text'
@@ -79,6 +80,17 @@ export const Experience = () => {
           ))}
         </ListBox>
       )}
+      <StyledButton
+        variant={'primary'}
+        style={{
+          position: 'fixed',
+          bottom: '38px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <Link to={ROUTES_PATH.track}>계속하기</Link>
+      </StyledButton>
       <Modal
         label='경험선택'
         isOpen={isOpen}
@@ -94,8 +106,7 @@ export const Experience = () => {
 
 const ExperienceWrapper = styled.div`
   position: relative;
-
-  padding: 30px 0;
+  padding: 22px 0;
   .title {
     margin-bottom: 46px;
   }

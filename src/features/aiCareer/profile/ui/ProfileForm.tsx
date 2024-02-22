@@ -65,10 +65,16 @@ export const ProfileForm = () => {
         selected={hobby}
         style={{ textAlign: 'left' }}
       />
+
       <Button
         variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
         disabled={!isAllFieldsFilled}
-        style={{ marginTop: '24px' }}
+        style={{
+          position: 'fixed',
+          bottom: '38px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
       >
         <Link to={ROUTES_PATH.track}>계속하기</Link>
       </Button>
@@ -77,6 +83,7 @@ export const ProfileForm = () => {
 };
 
 const ProfileWrapper = styled.div`
+  padding-bottom: 100px;
   .title {
     margin-bottom: 46px;
   }
@@ -87,4 +94,11 @@ const ProfileWrapper = styled.div`
 
 const StyledTypography = styled(Typography)`
   margin: 18px 0 8px;
+`;
+
+const NextButton = styled(Button)`
+  position: fixed;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
 `;

@@ -3,7 +3,7 @@ import { useEducation } from 'features/userInfo/@hooks/useEducation';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { activities } from 'shared/constants/data';
+import { activities, edu } from 'shared/constants/data';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { Button } from 'shared/ui/button/Button';
@@ -68,9 +68,14 @@ export const EducationForm = () => {
       <Button
         variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
         disabled={!isAllFieldsFilled}
-        style={{ marginTop: '37px' }}
+        style={{
+          position: 'fixed',
+          bottom: '38px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
       >
-        <Link to={ROUTES_PATH.track}>계속하기</Link>
+        <Link to={ROUTES_PATH.experience}>계속하기</Link>
       </Button>
       <Modal
         label='학력선택'
@@ -78,7 +83,7 @@ export const EducationForm = () => {
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
         selected={selectedOption}
-        options={activities}
+        options={edu}
       />
     </EducationWrapper>
   );
@@ -86,7 +91,7 @@ export const EducationForm = () => {
 
 const EducationWrapper = styled.div`
   position: relative;
-  padding: 22px 0;
+  padding: 22px 0 100px;
 
   .title {
     margin-bottom: 46px;
