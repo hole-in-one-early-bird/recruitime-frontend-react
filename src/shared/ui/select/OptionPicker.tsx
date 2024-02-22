@@ -6,6 +6,7 @@ import { Typography } from '../typography/Typography';
 interface OptionPickerProps {
   label?: string;
   onClick?: () => void;
+  selectedOption?: string; // 선택된 옵션을 추가합니다.
 }
 
 export const OptionPicker: React.FC<OptionPickerProps> = ({ label, onClick }) => {
