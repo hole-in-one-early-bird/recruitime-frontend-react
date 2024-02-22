@@ -8,10 +8,6 @@ import { AIInteractive } from 'widgets/aIInteractiveCard/ui/AIInteractive';
 export const MainContent = () => {
   return (
     <MainContentWrapper>
-      <Link to={ROUTES_PATH.mypage}>
-        <UserIcon src={process.env.PUBLIC_URL + `/images/icon/userIcon.png`} alt='userIcon' />
-      </Link>
-
       <TitleBox>
         <StyledTypography
           variant={'largeTitle'}

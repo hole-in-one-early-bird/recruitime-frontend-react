@@ -13,6 +13,17 @@ interface TypographyVariants {
 }
 
 export const typographyStyles: TypographyVariants = {
+  logo: {
+    fontSize: '20px',
+    fontWeight: 800,
+    color: colors.blue[500],
+  },
+  headerTitle: {
+    fontSize: '18px',
+    fontWeight: 600,
+    lineHeight: '20px',
+    color: colors.gray[700],
+  },
   largeTitle: {
     fontSize: '24px',
     fontWeight: 700,

@@ -10,7 +10,9 @@ import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
+
 const activities = ['인턴', '동아리', '교내활동', '사회활동', '자원봉사', '경력', '어학', '자격증'];
+
 export const Experience = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const { experience, handleExperienceChange } = useExperience('');
@@ -22,7 +24,7 @@ export const Experience = () => {
       return;
     }
     addExperience(selectedOption, experience);
-    handleExperienceChange(''); // 문자열 전달
+    handleExperienceChange('');
     setSelectedOption('');
   };
   const handleSelectOption = (option: string) => {

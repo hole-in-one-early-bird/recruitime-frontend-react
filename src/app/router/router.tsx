@@ -1,4 +1,6 @@
 import { BaseLayout } from 'app/layouts/baseLayout';
+import { Chat } from 'pages/chat';
+import { CustomizedCareer } from 'pages/customizedCareer';
 import { FindAccountPage } from 'pages/findAccount';
 import { Home } from 'pages/home';
 import { Intro } from 'pages/intro';
@@ -70,11 +72,11 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES_PATH.customizedCareer,
-        element: '',
+        element: <CustomizedCareer />,
       },
       {
         path: ROUTES_PATH.chat,
-        element: '',
+        element: <Chat />,
       },
       {
         path: ROUTES_PATH.bookmark,
