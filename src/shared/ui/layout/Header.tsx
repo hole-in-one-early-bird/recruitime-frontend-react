@@ -168,7 +168,7 @@ const ProgressGaugeContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 6px;
-  margin: 8px 0; // 상단과 하단의 헤더로부터의 간격을 위해 추가
+  margin: 8px 0;
 `;
 
 const ProgressSegment = styled.div<{ active: boolean }>`
@@ -187,5 +187,5 @@ const ProgressSegment = styled.div<{ active: boolean }>`
 `;
 
 const ProgressGauge = styled.div`
-  padding: 10px;
+  padding: 10px 0;
 `;
