@@ -1,39 +1,8 @@
 import React from 'react';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled, { keyframes } from 'styled-components';
-
-const ProccessBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 30px;
-`;
-
-const Proccess = styled.div`
-  display: flex;
-  color: ${(prop) => prop.theme.colors.gray400};
-  gap: 10px;
-  align-items: center;
-  animation: ${colorChange} 2s linear forwards;
-  :first-child {
-    font-size: ${(prop) => prop.theme.fonts.waitingDescription};
-  }
-  &:nth-child(1) {
-    animation-delay: 2s;
-  }
-  &:nth-child(2) {
-    animation-delay: 4s;
-  }
-  &:nth-child(3) {
-    animation-delay: 6s;
-  }
-  &:nth-child(4) {
-    animation-delay: 8s;
-  }
-  &:nth-child(5) {
-    animation-delay: 10s;
-  }
-`;
+import { FaCircleCheck } from 'react-icons/fa6';
+import colors from 'shared/styles/color';
 
 const profileAnalysisSteps = [
   '프로필을 읽고 있어요.',
@@ -43,75 +12,35 @@ const profileAnalysisSteps = [
   '경험을 적용하고 있어요.',
 ];
 
-type UserData = {
-  profile: {
-    id: number;
-    name: string;
-    gender: string;
-    age: number;
-    about_me: string;
-  };
-  education: {
-    id: number;
-    user_id: number;
-    education: string;
-    major: string;
-    major_check: string;
-  }[];
-  experience: {
-    id: number;
-    user_id: number;
-    experience_type: string;
-    experience_content: string;
-  }[];
-  interest: {
-    id: number;
-    user_id: number;
-    interest1: string;
-    interest2: string;
-    interest3: string;
-  }[];
-  keyword: {
-    id: number;
-    user_id: number;
-    keyword: string;
-    type: string;
-  }[];
-};
-
-type TransformedDataItem = {
-  role: string;
-  content: string;
-};
-
-const Loading = () => {
+export const Loading = () => {
   return (
     <LoadingWrapper>
       <ContentBox>
         <Character>
-          <img src={process.env.PUBLIC_URL + '/image/watingCharacter.png'} alt='characterImage' />
+          <img
+            src={process.env.PUBLIC_URL + 'images/char/watingCharacter.png'}
+            alt='watingCharacterImg'
+          />
         </Character>
         <DropShadowBox>
           <DropShadow />
           <DropShadow />
           <DropShadow />
         </DropShadowBox>
-        <Typography variant={'title1'}>리쿠르탐이 맞춤 커리어를 찾고 있어요!</Typography>
-        {/* <Title title='리쿠르탐이' />
-        <Title title='맞춤 커리어를 찾고 있어요!' />
+        <Typography variant={'title1'}>{`리쿠르탐이\n맞춤 커리어를 찾고 있어요!`}</Typography>
+
         <ProccessBox>
           {profileAnalysisSteps.map((item, index) => (
             <Proccess key={index}>
-              <FaCircleCheck /> <SubTitle subtitle={item} isHome={false} />
+              <FaCircleCheck />
+              <Typography variant={'body1'}>{item}</Typography>
             </Proccess>
           ))}
-        </ProccessBox> */}
+        </ProccessBox>
       </ContentBox>
     </LoadingWrapper>
   );
 };
-
-export default Loading;
 
 const LoadingWrapper = styled.div``;
 const ContentBox = styled.div`
@@ -138,11 +67,12 @@ const bounce1 = keyframes`
 const Character = styled.div`
   width: 100px;
   height: 100px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   animation: ${bounce1} 2s infinite;
 `;
 
 const DropShadowBox = styled.div`
+  margin-left: -5px;
   display: flex;
   gap: 10px;
   :nth-child(1) {
@@ -161,17 +91,48 @@ const DropShadowBox = styled.div`
   }
 `;
 const DropShadow = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 22px;
   width: 10px;
   height: 10px;
-  background-color: ${(prop) => prop.theme.colors.black};
+  background-color: ${colors.blue[600]};
+  border-radius: 10px;
 `;
 
 const colorChange = keyframes`
   0% {
-    color:#CCCCCC;
+    color:${colors.gray[300]};
   }
   100% {
-    color:#60A5FA;
+    color:${colors.blue[400]};
+  }
+`;
+const ProccessBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+`;
+
+const Proccess = styled.div`
+  display: flex;
+  color: ${colors.gray[400]};
+  gap: 10px;
+  align-items: center;
+  animation: ${colorChange} 2s linear forwards;
+
+  &:nth-child(1) {
+    animation-delay: 2s;
+  }
+  &:nth-child(2) {
+    animation-delay: 4s;
+  }
+  &:nth-child(3) {
+    animation-delay: 6s;
+  }
+  &:nth-child(4) {
+    animation-delay: 8s;
+  }
+  &:nth-child(5) {
+    animation-delay: 10s;
   }
 `;
