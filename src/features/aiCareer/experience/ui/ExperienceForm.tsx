@@ -106,7 +106,7 @@ export const ExperienceForm = () => {
 
 const ExperienceWrapper = styled.div`
   position: relative;
-  padding: 22px 0;
+  padding: 12px 0;
   .title {
     margin-bottom: 46px;
   }

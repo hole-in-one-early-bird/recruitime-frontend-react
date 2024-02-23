@@ -63,6 +63,7 @@ export const EducationForm = () => {
         ]}
         onSelect={handleMatchSelect}
         selected={match}
+        width='100%'
         style={{ textAlign: 'left' }}
       />
       <Button
@@ -75,7 +76,7 @@ export const EducationForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.experience}>계속하기</Link>
+        <Link to={ROUTES_PATH.keyword}>계속하기</Link>
       </Button>
       <Modal
         label='학력선택'
@@ -91,7 +92,7 @@ export const EducationForm = () => {
 
 const EducationWrapper = styled.div`
   position: relative;
-  padding: 22px 0 100px;
+  padding: 12px 0 100px;
 
   .title {
     margin-bottom: 46px;

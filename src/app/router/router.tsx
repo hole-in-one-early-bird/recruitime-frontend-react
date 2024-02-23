@@ -7,6 +7,7 @@ import { FindAccountPage } from 'pages/findAccount';
 import { Home } from 'pages/home';
 import { Intro } from 'pages/intro';
 import { Keyword } from 'pages/keyword';
+import { Loading } from 'pages/loading';
 import { Mypage } from 'pages/mypage';
 import { Profile } from 'pages/profile';
 import { SigninPage } from 'pages/signin';
@@ -77,7 +78,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES_PATH.loading,
-        element: '',
+        element: <Loading />,
       },
       {
         path: ROUTES_PATH.customizedCareer,
@@ -89,7 +90,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES_PATH.bookmark,
-        element: '',
+        // element: <Bookmark />,
       },
     ],
   },
