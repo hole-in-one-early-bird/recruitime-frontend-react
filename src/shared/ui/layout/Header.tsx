@@ -131,7 +131,7 @@ const HeaderContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 12px;
+  padding: 12px 0;
   .chat {
     position: absolute;
     left: 40px;
