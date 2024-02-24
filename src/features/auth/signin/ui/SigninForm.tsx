@@ -1,5 +1,5 @@
 import { useSignInMutation } from 'features/auth';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 export const SigninForm = () => {
   const initialValues = {
-    email: '',
+    userEmail: '',
     password: '',
   };
   const { mutate: signIn } = useSignInMutation();
@@ -21,6 +21,7 @@ export const SigninForm = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    console.log(values, 'values');
     signIn(values);
   };
 
@@ -41,8 +42,8 @@ export const SigninForm = () => {
         value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.email}
-        isValid={!errors.email && values.email !== ''}
+        error={errors.userEmail}
+        isValid={!errors.userEmail && values.userEmail !== ''}
       />
       <TextInput
         className='space'
