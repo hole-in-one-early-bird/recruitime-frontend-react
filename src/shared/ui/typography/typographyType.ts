@@ -100,6 +100,12 @@ export const typographyStyles: TypographyVariants = {
     color: colors.blue[600],
     fontWeight: 600,
   },
+  button4: {
+    color: colors.blue[400],
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '20px',
+  },
   keyword: {
     color: colors.gray[400],
     fontSize: '18px',

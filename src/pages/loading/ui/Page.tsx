@@ -3,14 +3,7 @@ import { Typography } from 'shared/ui/typography/Typography';
 import styled, { keyframes } from 'styled-components';
 import { FaCircleCheck } from 'react-icons/fa6';
 import colors from 'shared/styles/color';
-
-const profileAnalysisSteps = [
-  '프로필을 읽고 있어요.',
-  '관심 분야를 분석하고 있어요.',
-  '가까운 단어를 분석하고 있어요.',
-  '학력 · 적성을 분석하고 있어요.',
-  '경험을 적용하고 있어요.',
-];
+import { profileAnalysisSteps } from 'shared/constants/data';
 
 export const Loading = () => {
   return (
@@ -22,13 +15,15 @@ export const Loading = () => {
             alt='watingCharacterImg'
           />
         </Character>
+
         <DropShadowBox>
           <DropShadow />
           <DropShadow />
           <DropShadow />
         </DropShadowBox>
-        <Typography variant={'title1'}>{`리쿠르탐이\n맞춤 커리어를 찾고 있어요!`}</Typography>
-
+        <StyledTypography
+          variant={'largeTitle'}
+        >{`리쿠르탐이\n맞춤 커리어를 찾고 있어요!`}</StyledTypography>
         <ProccessBox>
           {profileAnalysisSteps.map((item, index) => (
             <Proccess key={index}>
@@ -110,7 +105,6 @@ const ProccessBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-top: 30px;
 `;
 
 const Proccess = styled.div`
@@ -135,4 +129,10 @@ const Proccess = styled.div`
   &:nth-child(5) {
     animation-delay: 10s;
   }
+`;
+
+const StyledTypography = styled(Typography)`
+  text-align: center;
+  margin: 10px 0 48px;
+  white-space: pre-wrap;
 `;

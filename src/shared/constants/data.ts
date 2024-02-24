@@ -36,3 +36,11 @@ export const interestAreas: InterestArea[] = [
   { name: '⚙️ 엔지니어링', id: 17 },
   { name: '💼 영업·제휴', id: 18 },
 ];
+
+export const profileAnalysisSteps = [
+  '프로필을 읽고 있어요.',
+  '관심 분야를 분석하고 있어요.',
+  '가까운 단어를 분석하고 있어요.',
+  '학력 · 적성을 분석하고 있어요.',
+  '경험을 적용하고 있어요.',
+];
