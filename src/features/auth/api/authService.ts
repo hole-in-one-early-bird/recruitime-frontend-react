@@ -2,12 +2,12 @@ import axios from 'axios';
 import { API } from 'config';
 
 export interface SigninData {
-  email: string;
+  userEmail: string;
   password: string;
 }
 
 export interface SignupData {
-  userEmail?: string;
+  email?: string;
   password?: string;
   passwordConfirm?: string;
 }
@@ -18,16 +18,20 @@ export const authService = {
     return response.data;
   },
   signUp: async (userData: SignupData) => {
-    const { userEmail, password } = userData;
-    const dataToSend = { userEmail, password };
-    console.log(dataToSend);
+    const { email, password } = userData;
+    const dataToSend = { email, password };
+
     const response = await axios.post(`${API.SIGNUP}`, dataToSend);
     return response.data;
   },
   validation: async (userData: SignupData) => {
-    console.log(userData, 'userEmail');
-    const response = await axios.post(`${API.VALIDATION}`, userData.userEmail);
+    const response = await axios.post(`${API.VALIDATION}`, userData.email);
     console.log(response, 'validation');
+    return response.data;
+  },
+  findPassword: async (signedEmail: string) => {
+    const response = await axios.get(`${API.PASSWORD_FIND}`, { params: { signedEmail } });
+    console.log(response);
     return response.data;
   },
 };

@@ -42,7 +42,6 @@ export const SignupForm = () => {
       <Typography className='title' variant={'largeTitle'}>
         회원가입
       </Typography>
-
       <TextInput
         className='space'
         label='이메일'
@@ -51,8 +50,8 @@ export const SignupForm = () => {
         value={values.userEmail}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.userEmail}
-        isValid={!errors.userEmail && values.userEmail !== ''}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
       />
 
       <TextInput

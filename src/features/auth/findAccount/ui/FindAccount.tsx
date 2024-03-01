@@ -1,7 +1,6 @@
-import { useSignUpMutation } from 'features/auth';
+import { useFindEmailMutation } from 'features/auth/@hooks/useFindEmailMutation';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from 'shared/constants/routes';
+
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
@@ -11,13 +10,12 @@ import styled from 'styled-components';
 export const FindAccount = () => {
   const initialValues = {
     email: '',
-    password: '',
   };
-  const { mutate: signUp } = useSignUpMutation();
+  const { mutate: findPassword } = useFindEmailMutation();
   const { values, handleChange, errors } = useForm(initialValues);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signUp(values);
+    findPassword(values.email);
   };
   return (
     <FindAccountWrapper>
@@ -31,8 +29,8 @@ export const FindAccount = () => {
         value={values.userEmail}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.userEmail}
-        isValid={!errors.userEmail && values.userEmail !== ''}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
       />
 
       <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
@@ -50,5 +48,5 @@ const FindAccountWrapper = styled.div`
 
 const StyledTypography = styled(Typography)`
   white-space: pre-wrap;
-  margin-bottom: 66px;
+  margin: 15px 0 66px;
 `;

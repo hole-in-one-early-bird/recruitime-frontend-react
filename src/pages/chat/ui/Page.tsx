@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 import styled from 'styled-components';

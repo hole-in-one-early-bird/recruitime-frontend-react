@@ -21,7 +21,6 @@ export const SigninForm = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(values, 'values');
     signIn(values);
   };
 
@@ -38,12 +37,12 @@ export const SigninForm = () => {
         className='space'
         label='이메일'
         type='text'
-        name='email'
-        value={values.email}
+        name='userEmail'
+        value={values.userEmail}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.userEmail}
-        isValid={!errors.userEmail && values.userEmail !== ''}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
       />
       <TextInput
         className='space'

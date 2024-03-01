@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
 
 body {
   width: 100%;
+
   //max-width: 768px;
   max-width: 480px;
   min-width: 320px;

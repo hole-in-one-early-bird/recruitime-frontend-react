@@ -1,9 +1,10 @@
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import { useExperience } from 'features/userInfo/@hooks/useExperience';
 import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
 import { useModal } from 'features/userInfo/@hooks/useModal';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { activities } from 'shared/constants/data';
+import { activities, initialValues } from 'shared/constants/data';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
@@ -15,23 +16,21 @@ import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
 export const ExperienceForm = () => {
-  const [selectedOption, setSelectedOption] = useState('');
-  const { experience, handleExperienceChange } = useExperience('');
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
-  const { experiences, addExperience, removeExperience } = useExperienceList();
+  const { userData, handleSelect, addExperience, removeExperience } = useUserData(initialValues);
 
-  const handleAddExperience = () => {
-    if (!selectedOption || !experience || experiences.length >= 5) {
-      return;
-    }
-    addExperience(selectedOption, experience);
-    handleExperienceChange('');
-    setSelectedOption('');
-  };
   const handleSelectOption = (option: string) => {
-    setSelectedOption(option);
+    handleSelect('experienceOption', option);
     handleCloseModal();
   };
+
+  const handleExperienceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleSelect('experienceDetail', e.target.value);
+  };
+
+  useEffect(() => {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
   return (
     <ExperienceWrapper>
@@ -40,37 +39,47 @@ export const ExperienceForm = () => {
         <Typography variant={'subtitle3'}>다양한 활동 경험들을 간단히 입력해 주세요</Typography>
       </div>
       <div className='optionPickerBox'>
-        <OptionPicker onClick={handleOpenModal} selectedOption={selectedOption} children='경험선택' />
+        <OptionPicker
+          onClick={handleOpenModal}
+          selectedOption={userData.experienceOption}
+          children='경험선택'
+        />
       </div>
       <AddExperienceWrapper>
         <StyledTextInput
           type='text'
-          value={experience}
-          onChange={(e: { target: { value: string } }) => handleExperienceChange(e.target.value)}
+          value={userData.experienceDetail}
+          onChange={handleExperienceChange}
           placeholder='경험 내용 입력'
-          name={'education'}
+          name={'experienceDetail'}
           caption='최대 15자까지 입력할 수 있어요.'
           maxLength={15}
         />
         <StyledButton
-          variant={!selectedOption || !experience || experiences.length >= 5 ? 'inactive' : 'confirm'}
-          onClick={handleAddExperience}
-          disabled={!selectedOption || !experience || experiences.length >= 5}
+          variant={
+            !userData.experienceOption || !userData.experienceDetail || userData.experiences.length >= 5
+              ? 'inactive'
+              : 'confirm'
+          }
+          onClick={() => addExperience(userData.experienceOption, userData.experienceDetail)}
+          disabled={
+            !userData.experienceOption || !userData.experienceDetail || userData.experiences.length >= 5
+          }
         >
           입력하기
         </StyledButton>
       </AddExperienceWrapper>
-      {experiences.length === 0 ? (
+      {userData.experiences.length === 0 ? (
         <EmptyBox>
           <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
           <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
         </EmptyBox>
       ) : (
         <ListBox>
-          {experiences.map((e, index) => (
+          {userData.experiences.map((e, index) => (
             <ExperienceItem key={index}>
-              <Typography variant={'subtitle'}>{e.option}</Typography>
-              <Typography variant={'subtitle2'}>{e.detail}</Typography>
+              <Typography variant={'subtitle'}>{e.experience_type}</Typography>
+              <Typography variant={'subtitle2'}>{e.experience_content}</Typography>
               <img
                 onClick={() => removeExperience(index)}
                 src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
@@ -89,14 +98,14 @@ export const ExperienceForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.track}>계속하기</Link>
+        <Link to={ROUTES_PATH.keyword}>계속하기</Link>
       </StyledButton>
       <Modal
         label='경험선택'
         isOpen={isOpen}
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
-        selected={selectedOption}
+        selected={userData.experienceOption}
         options={activities}
         isTwoColumns
       />

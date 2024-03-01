@@ -44,3 +44,160 @@ export const profileAnalysisSteps = [
   '학력 · 적성을 분석하고 있어요.',
   '경험을 적용하고 있어요.',
 ];
+
+export const initialValues = {
+  name: '',
+  gender: '',
+  age: '',
+  aboutMe: '',
+  interests: [],
+  education: '',
+  major: '',
+  majorCheck: '',
+  experiences: [],
+  experienceOption: '',
+  experienceDetail: '',
+  userKeywords: [],
+  // selectedKeywords: [],
+
+  isAllFieldsFilled: false,
+};
+type KeywordCategoryMap = {
+  [key: string]: { id: number; keyword: string }[];
+};
+export const keywords = {
+  keywordCategoryMap: {
+    현장형: [
+      {
+        id: 3,
+        keyword: '기계 작동',
+      },
+      {
+        id: 2,
+        keyword: '도구 다루기',
+      },
+      {
+        id: 18,
+        keyword: '항공기',
+      },
+      {
+        id: 5,
+        keyword: '기술',
+      },
+      {
+        id: 1,
+        keyword: '조립하기',
+      },
+    ],
+    탐구형: [
+      {
+        id: 37,
+        keyword: '정보 수집',
+      },
+      {
+        id: 38,
+        keyword: '통찰력',
+      },
+      {
+        id: 34,
+        keyword: '논리 구성',
+      },
+      {
+        id: 26,
+        keyword: '연구',
+      },
+      {
+        id: 25,
+        keyword: '수학',
+      },
+    ],
+    예술형: [
+      {
+        id: 41,
+        keyword: '상상력',
+      },
+      {
+        id: 48,
+        keyword: '뮤지션',
+      },
+      {
+        id: 50,
+        keyword: '무용',
+      },
+      {
+        id: 43,
+        keyword: '예술',
+      },
+      {
+        id: 51,
+        keyword: '연극',
+      },
+    ],
+    사회형: [
+      {
+        id: 64,
+        keyword: '교육',
+      },
+      {
+        id: 61,
+        keyword: '대인관계',
+      },
+      {
+        id: 72,
+        keyword: '공동체',
+      },
+      {
+        id: 78,
+        keyword: '노약자',
+      },
+      {
+        id: 79,
+        keyword: '어린이',
+      },
+    ],
+    리더형: [
+      {
+        id: 91,
+        keyword: '정치',
+      },
+      {
+        id: 99,
+        keyword: '프로젝트',
+      },
+      {
+        id: 96,
+        keyword: '결과 지향',
+      },
+      {
+        id: 83,
+        keyword: '목표 지향',
+      },
+      {
+        id: 92,
+        keyword: '효율성',
+      },
+    ],
+    사무형: [
+      {
+        id: 109,
+        keyword: '비서',
+      },
+      {
+        id: 106,
+        keyword: '회계',
+      },
+      {
+        id: 101,
+        keyword: '규칙',
+      },
+      {
+        id: 111,
+        keyword: '보고서',
+      },
+      {
+        id: 119,
+        keyword: '일관성',
+      },
+    ],
+  } as KeywordCategoryMap,
+};

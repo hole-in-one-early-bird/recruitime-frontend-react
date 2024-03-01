@@ -29,11 +29,19 @@ export const Layout = (props: Props) => {
 
 const LayoutContainer = styled.div`
   position: relative;
-  height: calc(var(--vh, 1vh) * 100);
   background-color: ${colors.white};
 `;
 
 const ContentContainer = styled.div`
-  border: 1px solid #ddd;
   padding: 20px;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+  height: calc(var(--vh, 1vh) * 100);
+  box-sizing: border-box;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 `;

@@ -1,9 +1,7 @@
-import { useHobby } from 'features/aiCareer/@hooks/useHobby';
-import { useAge } from 'features/userInfo/@hooks/useAge';
-import { useGender } from 'features/userInfo/@hooks/useGender';
-import useName from 'features/userInfo/@hooks/useName';
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { initialValues } from 'shared/constants/data';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
@@ -12,16 +10,24 @@ import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
 export const ProfileForm = () => {
-  const [name, handleNicknameChange] = useName('');
-  const { gender, handleGenderSelect } = useGender('');
-  const { age, handleAgeSelect } = useAge('');
-  const { hobby, handleHobbySelect } = useHobby('');
+  const {
+    userData,
+    handleNameChange,
+    handleSelect,
+    handleSelectInterest,
+    addExperience,
+    removeExperience,
+  } = useUserData(initialValues);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
 
-  useEffect(() => {
-    setIsAllFieldsFilled(name !== '' && gender !== '' && age !== '' && hobby !== '');
-  }, [name, gender, age, hobby]);
+  const { name, gender, age, aboutMe } = userData;
 
+  useEffect(() => {
+    setIsAllFieldsFilled(name !== '' && gender !== '' && age !== '' && aboutMe !== ''); // 'age'의 비교를 수정하고, 'aboutMe'를 추가합니다.
+  }, [name, gender, age, aboutMe]);
+  useEffect(() => {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]);
   return (
     <ProfileWrapper>
       <div className='title'>
@@ -33,7 +39,7 @@ export const ProfileForm = () => {
         type='text'
         label='이름'
         value={name}
-        onChange={handleNicknameChange}
+        onChange={handleNameChange}
         placeholder='이름 입력'
         name={'name'}
       />
@@ -41,7 +47,7 @@ export const ProfileForm = () => {
         className='space'
         label='성별'
         options={['남자', '여자']}
-        onSelect={handleGenderSelect}
+        onSelect={handleSelect.bind(null, 'gender')}
         selected={gender}
         width='49%'
       />
@@ -49,7 +55,7 @@ export const ProfileForm = () => {
         className='space'
         label='나이'
         options={['20대', '30대', '40대', '50대', '60대 이상']}
-        onSelect={handleAgeSelect}
+        onSelect={handleSelect.bind(null, 'age')}
         selected={age}
         width='32%'
       />
@@ -61,9 +67,10 @@ export const ProfileForm = () => {
           '학습과 감상을 즐겨요.',
           '커뮤니티 활동을 좋아해요.',
         ]}
-        onSelect={handleHobbySelect}
-        selected={hobby}
+        onSelect={handleSelect.bind(null, 'aboutMe')}
+        selected={aboutMe}
         style={{ textAlign: 'left' }}
+        width='100%'
       />
 
       <Button

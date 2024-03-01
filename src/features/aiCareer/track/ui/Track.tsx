@@ -2,30 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 import { Button } from 'shared/ui/button/Button';
-import { interestAreas } from 'shared/constants/data';
+import { initialValues, interestAreas } from 'shared/constants/data';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
-
-const MAX_SELECTIONS = 3;
+import { MAX_SELECTIONS, removeEmoji, useUserData } from 'features/aiCareer/@hooks/useUserData';
 
 export const TrackForm = () => {
-  const [selectedInterests, setSelectedInterests] = useState<number[]>([]);
-  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  const { userData, handleSelectInterest, handleSelect } = useUserData(initialValues);
+
+  const selectedInterests = userData.interests;
 
   useEffect(() => {
-    setIsAllFieldsFilled(selectedInterests.length > 0);
-  }, [selectedInterests]);
+    handleSelect('isAllFieldsFilled', selectedInterests.length > 0 ? 'true' : 'false');
+  }, [selectedInterests, handleSelect]);
 
-  const handleSelectInterest = (interestId: number) => {
-    setSelectedInterests((currentSelectedInterests) => {
-      if (currentSelectedInterests.includes(interestId)) {
-        return currentSelectedInterests.filter((id) => id !== interestId);
-      } else if (currentSelectedInterests.length < MAX_SELECTIONS) {
-        return [...currentSelectedInterests, interestId];
-      }
-      return currentSelectedInterests;
-    });
-  };
+  useEffect(() => {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
   return (
     <TrackWrapper>
@@ -39,19 +32,21 @@ export const TrackForm = () => {
       <InterestsContainer>
         {interestAreas.map((interest) => (
           <StyledButton
-            variant={selectedInterests.includes(interest.id) ? 'active' : 'inactive'}
+            variant={selectedInterests.includes(removeEmoji(interest.name)) ? 'active' : 'inactive'}
             key={interest.id}
             onClick={() => handleSelectInterest(interest.id)}
           >
-            <Typography variant={selectedInterests.includes(interest.id) ? 'button3Active' : 'button3'}>
+            <Typography
+              variant={selectedInterests.includes(interest.name) ? 'button3Active' : 'button3'}
+            >
               {interest.name}
             </Typography>
           </StyledButton>
         ))}
       </InterestsContainer>
       <Button
-        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!isAllFieldsFilled}
+        variant={userData.isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        disabled={!userData.isAllFieldsFilled}
         style={{
           position: 'fixed',
           bottom: '38px',

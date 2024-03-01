@@ -2,44 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 import { Button } from 'shared/ui/button/Button';
-import { interestAreas } from 'shared/constants/data';
-import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from 'shared/constants/routes';
+import { initialValues, interestAreas, keywords } from 'shared/constants/data';
 import colors from 'shared/styles/color';
+import { Keyword, useUserData } from 'features/aiCareer/@hooks/useUserData';
 
 const MIN_SELECTIONS_REQUIRED = 10;
 const MAX_SELECTIONS = 20;
 
 export const KeywordForm = () => {
-  const [selectedKeywords, setSelectedKeywords] = useState<number[]>([]);
+  const [userKeywords, setSelectedKeywords] = useState<number[]>([]);
   const [noticeText, setNoticeText] = useState(`10개 이상 선택해주세요! (0/${MAX_SELECTIONS})`);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  const { userData, handleSelectKeyword } = useUserData(initialValues);
+  const { keywordCategoryMap } = keywords;
 
   useEffect(() => {
-    setIsAllFieldsFilled(selectedKeywords.length > 9);
-  }, [selectedKeywords]);
+    setIsAllFieldsFilled(userData.userKeywords.length > 9);
+  }, [userData.userKeywords]);
+
   useEffect(() => {
-    if (selectedKeywords.length >= MIN_SELECTIONS_REQUIRED) {
+    if (userData.userKeywords.length >= MIN_SELECTIONS_REQUIRED) {
       setNoticeText(
-        `더 많은 키워드로 정확한 분석을 받아보세요! (${selectedKeywords.length}/${MAX_SELECTIONS})`
+        `더 많은 키워드로 정확한 분석을 받아보세요! (${userData.userKeywords.length}/${MAX_SELECTIONS})`
       );
     } else {
-      setNoticeText(`10개 이상 선택해주세요! (${selectedKeywords.length}/${MAX_SELECTIONS})`);
+      setNoticeText(`10개 이상 선택해주세요! (${userData.userKeywords.length}/${MAX_SELECTIONS})`);
     }
-    setIsAllFieldsFilled(selectedKeywords.length >= MIN_SELECTIONS_REQUIRED);
-  }, [selectedKeywords]);
+    setIsAllFieldsFilled(userData.userKeywords.length >= MIN_SELECTIONS_REQUIRED);
+  }, [userData.userKeywords]);
 
-  const handleSelectInterest = (interestId: number) => {
-    setSelectedKeywords((currentSelectedKeywords) => {
-      const isAlreadySelected = currentSelectedKeywords.includes(interestId);
-      if (isAlreadySelected) {
-        return currentSelectedKeywords.filter((id) => id !== interestId);
-      } else if (currentSelectedKeywords.length < MAX_SELECTIONS) {
-        return [...currentSelectedKeywords, interestId];
-      }
-      return currentSelectedKeywords;
-    });
-  };
+  useEffect(() => {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]);
+
+  const allKeywords = (Object.values(keywordCategoryMap) as unknown as Keyword[][]).reduce(
+    (acc, keywords) => [...acc, ...keywords],
+    []
+  );
+
   return (
     <KeywordsWrapper>
       <div className='title'>
@@ -51,17 +51,33 @@ export const KeywordForm = () => {
       </Notice>
 
       <KeywordsContainer>
-        {interestAreas.map((interest) => (
-          <StyledButton
-            variant={selectedKeywords.includes(interest.id) ? 'active' : 'inactive'}
-            key={interest.id}
-            onClick={() => handleSelectInterest(interest.id)}
-          >
-            <Typography variant={selectedKeywords.includes(interest.id) ? 'button3Active' : 'button3'}>
-              {interest.name}
-            </Typography>
-          </StyledButton>
-        ))}
+        <div className='keyword'>
+          {allKeywords.map((keyword) => (
+            <StyledButton
+              variant={
+                userData.userKeywords.some(
+                  (selectedKeyword) => selectedKeyword.keyword === keyword.keyword
+                )
+                  ? 'active'
+                  : 'inactive'
+              }
+              key={keyword.keyword}
+              onClick={() => handleSelectKeyword(keyword)}
+            >
+              <Typography
+                variant={
+                  userData.userKeywords.some(
+                    (selectedKeyword) => selectedKeyword.keyword === keyword.keyword
+                  )
+                    ? 'button3Active'
+                    : 'button3'
+                }
+              >
+                {keyword.keyword}
+              </Typography>
+            </StyledButton>
+          ))}
+        </div>
       </KeywordsContainer>
       <Button
         variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
@@ -73,7 +89,8 @@ export const KeywordForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.loading}>AI 맞춤 커리어 보러가기</Link>
+        AI 맞춤 커리어 보러가기
+        {/* <Link to={ROUTES_PATH.loading}>AI 맞춤 커리어 보러가기</Link> */}
       </Button>
     </KeywordsWrapper>
   );
@@ -93,9 +110,11 @@ const StyledTypography = styled(Typography)`
 `;
 
 const KeywordsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  .keyword {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 `;
 
 const StyledButton = styled(Button)``;
