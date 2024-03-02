@@ -19,6 +19,17 @@ export const setAccessTokenCookie = (accessToken: any) => {
   document.cookie = `accessToken=${accessToken}; expires=${expirationDate.toUTCString()}; path=/`;
 };
 
+export const getAuthTokenFromCookie = () => {
+  const cookies = document.cookie.split(';');
+  const tokenCookie = cookies.find((cookie) => cookie.trim().startsWith('accessToken='));
+
+  if (tokenCookie) {
+    return tokenCookie.split('=')[1];
+  }
+
+  return null;
+};
+
 export function getCookie(key: string) {
   const cookies = document.cookie.split(';');
   for (const cookie of cookies) {

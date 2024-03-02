@@ -1,6 +1,4 @@
 import { useUserData } from 'features/aiCareer/@hooks/useUserData';
-import { useExperience } from 'features/userInfo/@hooks/useExperience';
-import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -107,7 +105,7 @@ export const ExperienceForm = () => {
         onSelect={handleSelectOption}
         selected={userData.experienceOption}
         options={activities}
-        isTwoColumns
+        $isTwoColumns
       />
     </ExperienceWrapper>
   );

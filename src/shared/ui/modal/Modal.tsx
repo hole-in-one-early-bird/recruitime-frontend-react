@@ -11,7 +11,7 @@ interface ModalProps {
   selected?: string;
   options?: string[];
   label: string;
-  isTwoColumns?: boolean;
+  $isTwoColumns?: boolean;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -21,7 +21,7 @@ export const Modal: React.FC<ModalProps> = ({
   options,
   label,
   onClose,
-  isTwoColumns,
+  $isTwoColumns,
 }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -36,9 +36,9 @@ export const Modal: React.FC<ModalProps> = ({
             <Typography variant={'box3'}>{label}</Typography>
           </Label>
         )}
-        <OptionBox isTwoColumns={isTwoColumns}>
+        <OptionBox $isTwoColumns={$isTwoColumns}>
           {options?.map((option) => (
-            <Option key={option} onClick={() => onSelect?.(option)} isSelected={selected === option}>
+            <Option key={option} onClick={() => onSelect?.(option)} $isSelected={selected === option}>
               <Typography
                 variant={'selectList'}
                 style={{ color: selected === option ? colors.blue[400] : colors.gray[500] }}
@@ -77,18 +77,18 @@ const ModalWrapper = styled.div`
   background-color: ${colors.white};
 `;
 
-const OptionBox = styled.div<{ isTwoColumns?: boolean }>`
+const OptionBox = styled.div<{ $isTwoColumns?: boolean }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   & > div {
-    width: ${({ isTwoColumns }) => (isTwoColumns ? '50%' : '100%')};
+    width: ${({ $isTwoColumns }) => ($isTwoColumns ? '50%' : '100%')};
   }
 `;
 
-const Option = styled.div<{ isSelected: boolean }>`
+const Option = styled.div<{ $isSelected: boolean }>`
   padding: 22px 26px 22px 0;
-  color: ${({ isSelected }) => (isSelected ? colors.blue[400] : 'inherit')};
+  color: ${({ $isSelected }) => ($isSelected ? colors.blue[400] : 'inherit')};
   cursor: pointer;
 `;
 

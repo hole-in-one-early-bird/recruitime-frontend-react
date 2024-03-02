@@ -1,6 +1,5 @@
 import { useMatch } from 'features/aiCareer/@hooks/useMatch';
 import { useUserData } from 'features/aiCareer/@hooks/useUserData';
-import { useEducation } from 'features/userInfo/@hooks/useEducation';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';

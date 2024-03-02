@@ -1,17 +1,27 @@
-import { useAge } from 'features/userInfo/@hooks/useAge';
-import { useGender } from 'features/userInfo/@hooks/useGender';
-import useName from 'features/userInfo/@hooks/useName';
+import { UserInfoData, useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
 import React from 'react';
 import colors from 'shared/styles/color';
 import { TextInput } from 'shared/ui/input/TextInput';
 import { SelectType } from 'shared/ui/select/SelectButton';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
+// Profile.tsx
+interface ProfileProps {
+  userInfoData: {
+    name: string;
+    gender: string;
+    age: string;
+  };
+  handlers: {
+    handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleAgeSelect: (selected: string) => void;
+    handleGenderSelect: (selected: string) => void;
+  };
+}
 
-export const Profile = () => {
-  const [name, handleNicknameChange] = useName('');
-  const { gender, handleGenderSelect } = useGender('');
-  const { age, handleAgeSelect } = useAge('');
+export const Profile: React.FC<ProfileProps> = ({ userInfoData, handlers }) => {
+  const { name, gender, age } = userInfoData;
+  const { handleNameChange, handleAgeSelect, handleGenderSelect } = handlers;
 
   return (
     <ProfileWrapper>
@@ -24,7 +34,7 @@ export const Profile = () => {
         type='text'
         label='이름'
         value={name}
-        onChange={handleNicknameChange}
+        onChange={handleNameChange}
         placeholder='이름 입력'
         name={'name'}
       />
@@ -46,7 +56,6 @@ export const Profile = () => {
     </ProfileWrapper>
   );
 };
-
 const ProfileWrapper = styled.div`
   padding: 30px 0;
   border-bottom: 2px solid ${colors.gray[200]};
