@@ -3,5 +3,5 @@ export const API = {
   SIGNUP: `${process.env.REACT_APP_PUBLIC_BASE_URL}/test/users/register`,
   VALIDATION: `${process.env.REACT_APP_PUBLIC_BASE_URL}/test/users/check_duplicate_email`,
   PASSWORD_FIND: `${process.env.REACT_APP_PUBLIC_BASE_URL}/test/users/password/find`,
-  USERINFO: `${process.env.REACT_APP_PUBLIC_BASE_URL}/test/jobs/profile`,
+  USERINFO: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/profile`,
 };

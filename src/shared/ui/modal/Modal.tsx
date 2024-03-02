@@ -1,17 +1,23 @@
-import React, { FC, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-import colors from 'shared/styles/color';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import colors from 'shared/styles/color';
+import { common } from 'shared/styles/common';
+import styled from 'styled-components';
+import { Button } from '../button/Button';
 import { Typography } from '../typography/Typography';
 
 interface ModalProps {
   isOpen: boolean;
-  onClose: () => void;
   onSelect?: (option: string) => void;
   selected?: string;
   options?: string[];
-  label: string;
+  label?: string;
+  onClose?: () => void;
   $isTwoColumns?: boolean;
+}
+
+interface PopupModalProps extends ModalProps {
+  content: React.ReactNode;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -54,6 +60,39 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
+export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return ReactDOM.createPortal(
+    <Overlay onClick={onClose}>
+      <PopupModalWrapper>
+        <TypoContainer>
+          <Typography variant={'body4'} children={'나의 개인 정보를 불러올까요?'} />
+          <Typography
+            variant={'body4'}
+            children={`회원님이 저장하신 개인정보가\n자동으로 입력됩니다.`}
+            style={{ color: colors.gray[500] }}
+          />
+        </TypoContainer>
+
+        <ButtonContainer>
+          <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }}>
+            아니요
+          </Button>
+          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }}>
+            네
+          </Button>
+        </ButtonContainer>
+      </PopupModalWrapper>
+    </Overlay>,
+    document.body
+  );
+};
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -77,6 +116,18 @@ const ModalWrapper = styled.div`
   background-color: ${colors.white};
 `;
 
+const PopupModalWrapper = styled.div`
+  width: 100%;
+  max-width: 365px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 33px 25px 16px;
+  border-radius: 20px;
+  background-color: ${colors.white};
+`;
+
 const OptionBox = styled.div<{ $isTwoColumns?: boolean }>`
   display: flex;
   flex-direction: row;
@@ -95,4 +146,14 @@ const Option = styled.div<{ $isSelected: boolean }>`
 const Label = styled.label`
   display: block;
   margin-bottom: 20px;
+`;
+
+const TypoContainer = styled.div`
+  text-align: center;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 23px;
+  ${common.flexCenterRow}
+  gap: 9px;
 `;

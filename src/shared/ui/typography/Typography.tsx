@@ -19,6 +19,7 @@ export const Typography = ({ variant, children, className, style }: TypographyPr
 };
 
 const StyledTypography = styled.div<TypographyProps>`
+  white-space: pre-wrap;
   ${({ variant, color }) => {
     // 스타일 객체를 직접 구성하여 `css` 함수에 전달
     const style = typographyStyles[variant] || typographyStyles.body1;

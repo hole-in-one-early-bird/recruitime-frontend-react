@@ -1,11 +1,15 @@
+import { useModal } from 'features/userInfo/@hooks/useModal';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import { Modal, PopupModal } from 'shared/ui/modal/Modal';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 import { AIInteractive } from 'widgets/aIInteractiveCard/ui/AIInteractive';
 
 export const MainContent = () => {
+  const { isOpen, handleOpenModal, handleCloseModal } = useModal();
+
   return (
     <MainContentWrapper>
       <Link to={ROUTES_PATH.profile}>
@@ -30,6 +34,8 @@ export const MainContent = () => {
           />
         </ContentBox>
       </Link>
+      <button onClick={handleOpenModal}>Open Modal</button>
+      <PopupModal isOpen={isOpen} onClose={handleCloseModal} content={'content'} />
     </MainContentWrapper>
   );
 };
