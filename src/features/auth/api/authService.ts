@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API } from 'config';
 
 export interface SigninData {
-  userEmail: string;
+  email: string;
   password: string;
 }
 
@@ -12,10 +12,29 @@ export interface SignupData {
   passwordConfirm?: string;
 }
 
+export const setAccessTokenCookie = (accessToken: any) => {
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 7);
+
+  document.cookie = `accessToken=${accessToken}; expires=${expirationDate.toUTCString()}; path=/`;
+};
+
+export function getCookie(key: string) {
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [cookieKey, cookieValue] = cookie.split('=').map((part) => part.trim());
+    if (cookieKey === key) {
+      return cookieValue;
+    }
+  }
+  return null;
+}
+
 export const authService = {
   signIn: async (userData: SigninData) => {
     const response = await axios.post(`${API.SIGNIN}`, userData);
-    return response.data;
+    const { accessToken } = response.data.data;
+    setAccessTokenCookie(accessToken);
   },
   signUp: async (userData: SignupData) => {
     const { email, password } = userData;
@@ -24,9 +43,11 @@ export const authService = {
     const response = await axios.post(`${API.SIGNUP}`, dataToSend);
     return response.data;
   },
-  validation: async (userData: SignupData) => {
-    const response = await axios.post(`${API.VALIDATION}`, userData.email);
-    console.log(response, 'validation');
+  validation: async (email: string) => {
+    const formData = new FormData();
+    formData.append('email', email);
+
+    const response = await axios.post(`${API.VALIDATION}`, formData);
     return response.data;
   },
   findPassword: async (signedEmail: string) => {

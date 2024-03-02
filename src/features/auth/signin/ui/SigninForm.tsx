@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 export const SigninForm = () => {
   const initialValues = {
-    userEmail: '',
+    email: '',
     password: '',
   };
   const { mutate: signIn } = useSignInMutation();
@@ -37,8 +37,8 @@ export const SigninForm = () => {
         className='space'
         label='이메일'
         type='text'
-        name='userEmail'
-        value={values.userEmail}
+        name='email'
+        value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
         error={errors.email}

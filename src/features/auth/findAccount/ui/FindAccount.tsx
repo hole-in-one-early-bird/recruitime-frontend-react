@@ -26,7 +26,7 @@ export const FindAccount = () => {
         label='이메일'
         type='text'
         name='email'
-        value={values.userEmail}
+        value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
         error={errors.email}
