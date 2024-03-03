@@ -12,29 +12,30 @@ export const MainContent = () => {
 
   return (
     <MainContentWrapper>
-      <Link to={ROUTES_PATH.profile}>
-        <TitleBox>
-          <StyledTypography
-            variant={'largeTitle'}
-          >{`AI 커리어 탐색이 리쿠르탐과 \n커리어 탐색을 함께하세요`}</StyledTypography>
-          <Typography variant={'subtitle'}>맞춤 커리어 추천과 이력서 코칭을 받아보세요🔥</Typography>
-        </TitleBox>
-        <ContentBox>
+      <TitleBox>
+        <StyledTypography
+          variant={'largeTitle'}
+        >{`AI 커리어 탐색이 리쿠르탐과 \n커리어 탐색을 함께하세요`}</StyledTypography>
+        <Typography variant={'subtitle'}>맞춤 커리어 추천과 이력서 코칭을 받아보세요🔥</Typography>
+      </TitleBox>
+      <ContentBox>
+        {' '}
+        <Link to={ROUTES_PATH.profile}>
           <AIInteractive
             titleChildren={'맞춤형 AI 커리어 추천'}
             subChildren={'나에게 딱 맞는 커리어 가이드'}
             alt={'character'}
             src={'char/recruitime'}
-          />
-          <AIInteractive
-            titleChildren={'맞춤형 AI 이력서 코칭'}
-            subChildren={'막막한 자기소개서 첫 걸음부터'}
-            alt={'note'}
-            src={'icon/note'}
-          />
-        </ContentBox>
-      </Link>
-      <button onClick={handleOpenModal}>Open Modal</button>
+          />{' '}
+        </Link>
+        <AIInteractive
+          titleChildren={'맞춤형 AI 이력서 코칭'}
+          subChildren={'막막한 자기소개서 첫 걸음부터'}
+          alt={'note'}
+          src={'icon/note'}
+        />
+      </ContentBox>
+
       <PopupModal isOpen={isOpen} onClose={handleCloseModal} content={'content'} />
     </MainContentWrapper>
   );
