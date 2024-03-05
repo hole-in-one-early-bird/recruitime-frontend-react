@@ -28,9 +28,6 @@ export const SigninForm = () => {
     Object.values(values).every((value) => (value as string).trim() !== '') &&
     Object.values(errors).every((error) => !error);
 
-  useEffect(() => {
-    console.log(values, errors, isFormValid);
-  }, [values]);
   return (
     <SigninFormWrapper>
       <Typography className='title' variant={'largeTitle'}>
