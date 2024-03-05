@@ -42,7 +42,7 @@ export const SignupForm = () => {
 
   return (
     <SignupFormWrapper>
-      <Typography className='title' variant={'largeTitle'}>
+      <Typography className='title' variant={'largeTitle'} style={{ marginTop: '15px' }}>
         회원가입
       </Typography>
       <TextInput

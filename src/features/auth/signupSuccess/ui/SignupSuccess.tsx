@@ -12,7 +12,7 @@ export const SignupSuccess = () => {
     <SignupSuccessWrapper>
       <CompleteContainer>
         <Typography className='title' variant={'largeTitle'}>
-          회원가입이 완료되었어요!
+          로그인이 완료되었어요!
         </Typography>
         <DesContainer>
           <div className='des'>
