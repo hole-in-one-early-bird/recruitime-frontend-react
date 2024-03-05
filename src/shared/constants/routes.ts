@@ -1,0 +1,18 @@
+export const ROUTES_PATH = {
+  intro: '/intro',
+  home: '/home',
+  mypage: '/mypage',
+  signin: '/signin',
+  signup: '/signup',
+  findAccount: '/findAccount',
+  signupSuccess: '/signupSuccess',
+  profile: '/profile',
+  track: '/track',
+  education: '/education',
+  experience: '/experience',
+  keyword: '/keyword',
+  loading: '/loading',
+  customizedCareer: '/customizedCareer',
+  chat: '/chat',
+  bookmark: '/bookmark',
+} as const;
