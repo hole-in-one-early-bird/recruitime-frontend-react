@@ -42,7 +42,7 @@ export const variantStyles = {
   `,
   cancel: css`
     ${primaryCommonStyles}
-    border: 1px solid #E0E0E0;
+
     color: #838383;
   `,
 };

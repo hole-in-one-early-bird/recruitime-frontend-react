@@ -24,7 +24,7 @@ export const OptionPicker: React.FC<OptionPickerProps> = ({
         </Label>
       )}
 
-      <OptionPickerBox onClick={onClick} isSelected={!!selectedOption}>
+      <OptionPickerBox onClick={onClick} $isSelected={!!selectedOption}>
         <Typography
           variant={'selectBox'}
           style={{ color: selectedOption ? colors.blue[400] : colors.gray[300] }}
@@ -50,12 +50,12 @@ const StyledTypography = styled(Typography)`
   flex: 0 0 auto;
 `;
 
-const OptionPickerBox = styled.div<{ isSelected: boolean }>`
+const OptionPickerBox = styled.div<{ $isSelected: boolean }>`
   display: inline-flex;
   justify-content: space-between;
   padding: 20px;
   gap: 20px;
-  border: 1px solid ${(props) => (props.isSelected ? colors.blue[400] : colors.gray[300])};
+  border: 1px solid ${(props) => (props.$isSelected ? colors.blue[400] : colors.gray[300])};
   border-radius: 10px;
   cursor: pointer;
 `;

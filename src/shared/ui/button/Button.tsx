@@ -16,7 +16,7 @@ export const Button: React.FC<Props> = ({
   children,
   variant = 'primary',
   style,
-  width = '100%',
+  width = 'auto',
 }) => {
   return (
     <StyledButton type={type} onClick={onClick} variant={variant} style={style} width={width}>

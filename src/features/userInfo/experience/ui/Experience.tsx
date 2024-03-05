@@ -1,7 +1,7 @@
-import { useExperience } from 'features/userInfo/@hooks/useExperience';
-import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
 import { useModal } from 'features/userInfo/@hooks/useModal';
+import { UserInfoData, useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
 import React, { useState } from 'react';
+import { activities } from 'shared/constants/data';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
@@ -10,21 +10,40 @@ import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-const activities = ['인턴', '동아리', '교내활동', '사회활동', '자원봉사', '경력', '어학', '자격증'];
-export const Experience = () => {
+interface Experience {
+  activity: string;
+  content: string;
+}
+// Experience.tsx
+interface ExperienceProps {
+  userInfoData: {
+    experience: string;
+    experiences: Experience[];
+  };
+  handlers: {
+    addExperience: (activity: string, content: string) => void;
+    removeExperience: (index: number) => void;
+    handleExperienceChange: (value: string) => void;
+  };
+}
+
+export const Experience: React.FC<ExperienceProps> = ({ userInfoData, handlers }) => {
+  const { experience, experiences } = userInfoData;
+  const { addExperience, removeExperience, handleExperienceChange } = handlers;
+
   const [selectedOption, setSelectedOption] = useState('');
-  const { experience, handleExperienceChange } = useExperience('');
+
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
-  const { experiences, addExperience, removeExperience } = useExperienceList();
 
   const handleAddExperience = () => {
     if (!selectedOption || !experience || experiences.length >= 5) {
       return;
     }
     addExperience(selectedOption, experience);
-    handleExperienceChange(''); // 문자열 전달
+    handleExperienceChange('');
     setSelectedOption('');
   };
+
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
     handleCloseModal();
@@ -44,9 +63,9 @@ export const Experience = () => {
         <StyledTextInput
           type='text'
           value={experience}
-          onChange={(e: { target: { value: string } }) => handleExperienceChange(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleExperienceChange(e.target.value)}
           placeholder='경험 내용 입력'
-          name={'education'}
+          name={'experience'}
           caption='최대 15자까지 입력할 수 있어요.'
           maxLength={15}
         />
@@ -67,8 +86,8 @@ export const Experience = () => {
         <ListBox>
           {experiences.map((e, index) => (
             <ExperienceItem key={index}>
-              <Typography variant={'subtitle'}>{e.option}</Typography>
-              <Typography variant={'subtitle2'}>{e.detail}</Typography>
+              <Typography variant={'subtitle'}>{e.activity}</Typography>
+              <Typography variant={'subtitle2'}>{e.content}</Typography>
               <img
                 onClick={() => removeExperience(index)}
                 src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
@@ -85,12 +104,11 @@ export const Experience = () => {
         onSelect={handleSelectOption}
         selected={selectedOption}
         options={activities}
-        isTwoColumns
+        $isTwoColumns
       />
     </ExperienceWrapper>
   );
 };
-
 const ExperienceWrapper = styled.div`
   position: relative;
 

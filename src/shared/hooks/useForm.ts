@@ -1,5 +1,5 @@
 import { SignupData } from 'features/auth/api/authService';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const useForm = (initialValues: any) => {
   const [values, setValues] = useState(initialValues);

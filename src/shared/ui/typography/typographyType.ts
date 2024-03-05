@@ -13,6 +13,17 @@ interface TypographyVariants {
 }
 
 export const typographyStyles: TypographyVariants = {
+  logo: {
+    fontSize: '20px',
+    fontWeight: 800,
+    color: colors.blue[500],
+  },
+  headerTitle: {
+    fontSize: '18px',
+    fontWeight: 600,
+    lineHeight: '20px',
+    color: colors.gray[700],
+  },
   largeTitle: {
     fontSize: '24px',
     fontWeight: 700,
@@ -85,10 +96,16 @@ export const typographyStyles: TypographyVariants = {
     fontWeight: 500,
     lineHeight: '20px',
   },
-  // button3Active: {
-  //   color: colors.blue[600],
-  //   fontWeight: 600,
-  // },
+  button3Active: {
+    color: colors.blue[600],
+    fontWeight: 600,
+  },
+  button4: {
+    color: colors.blue[400],
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '20px',
+  },
   keyword: {
     color: colors.gray[400],
     fontSize: '18px',
@@ -186,6 +203,12 @@ export const typographyStyles: TypographyVariants = {
     fontWeight: 400,
     lineHeight: '22px',
     letterSpacing: '-0.02em',
+  },
+  body4: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '24px',
+    letterSpacing: '-0.16px',
   },
   label: {
     color: colors.gray[800],
