@@ -1,5 +1,5 @@
 import { useSignInMutation } from 'features/auth';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
@@ -17,7 +17,7 @@ export const SigninForm = () => {
   };
   const { mutate: signIn } = useSignInMutation();
 
-  const { values, handleChange, errors } = useForm(initialValues);
+  const { values, handleChange, errors } = useForm(initialValues, ['email', 'password']);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -28,6 +28,9 @@ export const SigninForm = () => {
     Object.values(values).every((value) => (value as string).trim() !== '') &&
     Object.values(errors).every((error) => !error);
 
+  useEffect(() => {
+    console.log(values, errors, isFormValid);
+  }, [values]);
   return (
     <SigninFormWrapper>
       <Typography className='title' variant={'largeTitle'}>

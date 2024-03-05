@@ -16,7 +16,11 @@ export const SignupForm = () => {
   };
   const { mutate: signUp } = useSignUpMutation();
   const { mutate: validation } = useValidation();
-  const { values, handleChange, errors } = useForm(initialValues);
+  const { values, handleChange, errors } = useForm(initialValues, [
+    'email',
+    'password',
+    'passwordConfirm',
+  ]);
   const debouncedEmail = useDebounce(values.email, 500);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
