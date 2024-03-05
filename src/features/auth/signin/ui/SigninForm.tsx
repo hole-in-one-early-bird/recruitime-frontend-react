@@ -1,16 +1,18 @@
 import { useSignInMutation } from 'features/auth';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { useForm } from 'shared/hooks/useForm';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
+import ToastPopup from 'shared/ui/toast/ToastPopup';
 import { Typography } from 'shared/ui/typography/Typography';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const SigninForm = () => {
+  const navigate = useNavigate();
   const initialValues = {
     email: '',
     password: '',
@@ -18,6 +20,18 @@ export const SigninForm = () => {
   const { mutate: signIn } = useSignInMutation();
 
   const { values, handleChange, errors } = useForm(initialValues, ['email', 'password']);
+  const location = useLocation();
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.signupSuccess) {
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+        navigate('.', { state: {} });
+      }, 2000); // 2초 후에 토스트 팝업 숨기기
+    }
+  }, [location, navigate]);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -71,6 +85,7 @@ export const SigninForm = () => {
           <StyledTypography variant={'caption'}>계정 찾기</StyledTypography>
         </Link>
       </AuthOptions>
+      <ToastPopupBox> {showToast && <ToastPopup>회원가입이 완료되었습니다!</ToastPopup>}</ToastPopupBox>
     </SigninFormWrapper>
   );
 };
@@ -87,9 +102,37 @@ const SigninFormWrapper = styled.div`
 const AuthOptions = styled.div`
   ${common.flexCenterRow}
   gap: 28px;
+  margin-bottom: 20px;
 `;
 
 const StyledTypography = styled(Typography)`
   padding: 2px;
   border-bottom: 1px solid ${colors.gray[400]};
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+`;
+
+const ToastPopupBox = styled.div`
+  animation: ${fadeIn} 0.5s, ${fadeOut} 0.5s 1.5s;
+  animation-fill-mode: forwards;
 `;

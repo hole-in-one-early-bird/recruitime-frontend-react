@@ -8,7 +8,7 @@ export const useSignUpMutation = () => {
     mutationFn: authService.signUp,
     onSuccess: (data) => {
       console.log('성공', data);
-      navigate('/signIn');
+      navigate('/signIn', { state: { signupSuccess: true } });
     },
     onError: (error) => {
       console.error('실패', error);
