@@ -5,6 +5,9 @@ import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
 import colors from 'shared/styles/color';
 import { Typography } from 'shared/ui/typography/Typography';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import useCustomizedCareerStore from 'shared/zustand/store';
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
+import { initialValues } from 'shared/constants/data';
 
 interface UserData {
   id: number;
@@ -22,28 +25,24 @@ export const CustomizedCareer = () => {
   const [useResult, setUseResult] = useState<UserData | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [bookId, setBookId] = useState<number | null>(null);
-
-  const carrerData = {
-    name: '이준렬',
-    job: '기획자',
-    des: '기획자설명',
-    department: '기획자학과',
-    certificate: '기획자자격증',
-    reason: '기획자는 멋지다',
-  };
+  const resultData = useCustomizedCareerStore((state) => state.userData);
+  const { userData } = useUserData(initialValues);
+  useEffect(() => {
+    console.log(userData);
+  });
 
   const accordionSections = [
     {
       header: '관련 학과',
-      content: carrerData.department,
+      content: resultData.relatedMajor,
     },
     {
       header: '관련 자격증',
-      content: carrerData.certificate,
+      content: resultData.certifications,
     },
     {
       header: '왜 이 커리어가 추천 되었나요?',
-      content: carrerData.reason,
+      content: resultData.recommendationReason,
     },
   ];
   const toggleAccordion = (index: any) => {
@@ -57,7 +56,7 @@ export const CustomizedCareer = () => {
         <Typography
           variant={'largeTitle'}
           className='space'
-        >{`${useResult?.user_name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
+        >{`${userData.name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
         <ContentBox>
           <Content>
             <AiChat>
@@ -79,11 +78,11 @@ export const CustomizedCareer = () => {
             <CareerBox>
               <Job>
                 <Typography variant={'title2'} style={{ color: colors.white }}>
-                  {carrerData.job}
+                  {resultData.jobName}
                 </Typography>
               </Job>
               <Des>
-                <Typography variant={'body2'}>{carrerData.des}</Typography>
+                <Typography variant={'body2'}>{resultData.jobDescription}</Typography>
               </Des>
             </CareerBox>
             <AccordionContainer>
@@ -99,7 +98,7 @@ export const CustomizedCareer = () => {
             </AccordionContainer>
           </ResultBox>
         </ContentBox>
-        <Link to={ROUTES_PATH.chat}>
+        <Link to={ROUTES_PATH.loading}>
           <ReplyButton>
             <img src={process.env.PUBLIC_URL + '/images/icon/refreshIcon.svg'} alt='refreshIcon' />
             <Typography variant={'button4'} style={{ fontWeight: '500', color: colors.white }}>

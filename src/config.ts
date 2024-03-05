@@ -6,4 +6,5 @@ export const API = {
   USERINFO: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/profile`,
   RECOMMENDATION: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/recommendations`,
   KEYWORD: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/keyword`,
+  CHAT: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/chat`,
 };

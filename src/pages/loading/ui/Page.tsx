@@ -10,13 +10,14 @@ import { API } from 'config';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { useUserData } from 'features/aiCareer/@hooks/useUserData';
+import useCustomizedCareerStore from 'shared/zustand/store';
 
 export const Loading = () => {
   const navigate = useNavigate();
   const { userData } = useUserData(initialValues);
-  const handleAiCareer = async () => {
-    sessionStorage.clear();
+  const setUserData = useCustomizedCareerStore((state) => state.setUserData);
 
+  const handleAiCareer = async () => {
     const { isAllFieldsFilled, experienceOption, experienceDetail, ...userDataWithoutExcludedFields } =
       userData;
 
@@ -35,9 +36,8 @@ export const Loading = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      setUserData(response.data.data);
       navigate(ROUTES_PATH.customizedCareer);
-      console.log('Recommendations response:', response.data);
     } catch (error) {
       console.error('Error getting recommendations:', error);
     }
