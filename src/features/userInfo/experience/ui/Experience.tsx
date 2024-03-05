@@ -2,6 +2,7 @@ import { useExperience } from 'features/userInfo/@hooks/useExperience';
 import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
+import { activities } from 'shared/constants/data';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
@@ -10,8 +11,6 @@ import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-
-const activities = ['인턴', '동아리', '교내활동', '사회활동', '자원봉사', '경력', '어학', '자격증'];
 
 export const Experience = () => {
   const [selectedOption, setSelectedOption] = useState('');

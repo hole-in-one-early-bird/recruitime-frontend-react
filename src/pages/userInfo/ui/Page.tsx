@@ -25,11 +25,11 @@ export const UserInfo = () => {
   useEffect(() => {
     const checkProfileComplete = name !== '' && gender !== '' && age !== '';
     const checkEducationComplete = education !== '';
-    // const checkExperienceComplete = experiences.length > 0;
+    const checkExperienceComplete = experiences.length > 0;
 
     setProfileComplete(checkProfileComplete);
     setEducationComplete(checkEducationComplete);
-    // setExperienceComplete(checkExperienceComplete);
+    setExperienceComplete(checkExperienceComplete);
   }, [name, gender, age, education, experiences]);
 
   const isAllDataComplete = isProfileComplete && isEducationComplete && isExperienceComplete;

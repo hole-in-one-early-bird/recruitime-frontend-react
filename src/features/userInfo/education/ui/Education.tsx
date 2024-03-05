@@ -1,14 +1,13 @@
 import { useEducation } from 'features/userInfo/@hooks/useEducation';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
+import { activities } from 'shared/constants/data';
 import colors from 'shared/styles/color';
 import { TextInput } from 'shared/ui/input/TextInput';
 import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-
-const activities = ['고졸', '초대졸', '대졸', '대학원졸'];
 
 export const Education = () => {
   const { education, handleEducationChange } = useEducation('');

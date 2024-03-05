@@ -11,6 +11,7 @@ interface SelectTypeProps {
   selected: string;
   label?: string;
   width?: string;
+  style?: React.CSSProperties;
 }
 
 export const SelectType: React.FC<SelectTypeProps> = ({
@@ -20,6 +21,7 @@ export const SelectType: React.FC<SelectTypeProps> = ({
   selected,
   label,
   width,
+  style,
 }) => {
   return (
     <SelectTypeWrapper className={className}>
@@ -31,6 +33,7 @@ export const SelectType: React.FC<SelectTypeProps> = ({
       <SelectButtonBox>
         {options.map((option) => (
           <StyledButton
+            style={style}
             variant={`${selected === option ? 'active' : 'inactive'}`}
             key={option}
             selected={selected === option}

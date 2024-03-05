@@ -7,7 +7,7 @@ export interface SigninData {
 }
 
 export interface SignupData {
-  email?: string;
+  userEmail?: string;
   password?: string;
   passwordConfirm?: string;
 }
@@ -18,15 +18,15 @@ export const authService = {
     return response.data;
   },
   signUp: async (userData: SignupData) => {
-    const { email, password } = userData;
-    const dataToSend = { email, password };
+    const { userEmail, password } = userData;
+    const dataToSend = { userEmail, password };
     console.log(dataToSend);
     const response = await axios.post(`${API.SIGNUP}`, dataToSend);
     return response.data;
   },
   validation: async (userData: SignupData) => {
-    console.log(userData, 'email');
-    const response = await axios.post(`${API.VALIDATION}`, userData.email);
+    console.log(userData, 'userEmail');
+    const response = await axios.post(`${API.VALIDATION}`, userData.userEmail);
     console.log(response, 'validation');
     return response.data;
   },

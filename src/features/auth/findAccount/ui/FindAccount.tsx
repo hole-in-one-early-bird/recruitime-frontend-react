@@ -28,11 +28,11 @@ export const FindAccount = () => {
         label='이메일'
         type='text'
         name='email'
-        value={values.email}
+        value={values.userEmail}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.email}
-        isValid={!errors.email && values.email !== ''}
+        error={errors.userEmail}
+        isValid={!errors.userEmail && values.userEmail !== ''}
       />
 
       <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
