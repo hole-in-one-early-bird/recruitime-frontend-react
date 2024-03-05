@@ -204,6 +204,12 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '22px',
     letterSpacing: '-0.02em',
   },
+  body4: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '24px',
+    letterSpacing: '-0.16px',
+  },
   label: {
     color: colors.gray[800],
     fontSize: '16px',

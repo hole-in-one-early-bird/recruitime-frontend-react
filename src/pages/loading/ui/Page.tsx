@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled, { keyframes } from 'styled-components';
 import { FaCircleCheck } from 'react-icons/fa6';
 import colors from 'shared/styles/color';
-import { profileAnalysisSteps } from 'shared/constants/data';
+import { initialValues, profileAnalysisSteps } from 'shared/constants/data';
+import { getAuthTokenFromCookie } from 'features/auth/api/authService';
+import axios from 'axios';
+import { API } from 'config';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
+import useCustomizedCareerStore from 'shared/zustand/store';
 
 export const Loading = () => {
+  const navigate = useNavigate();
+  const { userData } = useUserData(initialValues);
+  const setUserData = useCustomizedCareerStore((state) => state.setUserData);
+
+  const handleAiCareer = async () => {
+    const { isAllFieldsFilled, experienceOption, experienceDetail, ...userDataWithoutExcludedFields } =
+      userData;
+
+    const userDataWithoutEmoji = {
+      ...userDataWithoutExcludedFields,
+      majorCheck: userData.majorCheck ? userData.majorCheck.replace(/[\uD800-\uDFFF].\s/, '') : '',
+    };
+    const token = getAuthTokenFromCookie();
+    if (!token) {
+      console.error('Access token not found.');
+      return;
+    }
+    try {
+      const response = await axios.post(API.RECOMMENDATION, userDataWithoutEmoji, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserData(response.data.data);
+      navigate(ROUTES_PATH.customizedCareer);
+    } catch (error) {
+      console.error('Error getting recommendations:', error);
+    }
+  };
+
+  useEffect(() => {
+    handleAiCareer();
+  }, []);
+
   return (
     <LoadingWrapper>
       <ContentBox>

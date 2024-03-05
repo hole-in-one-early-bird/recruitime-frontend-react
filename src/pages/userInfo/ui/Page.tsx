@@ -1,8 +1,8 @@
-import { useAge } from 'features/userInfo/@hooks/useAge';
-import { useEducation } from 'features/userInfo/@hooks/useEducation';
-import { useExperienceList } from 'features/userInfo/@hooks/useExperienceList';
-import { useGender } from 'features/userInfo/@hooks/useGender';
-import useName from 'features/userInfo/@hooks/useName';
+import axios from 'axios';
+import { API } from 'config';
+import { getAuthTokenFromCookie } from 'features/auth/api/authService';
+
+import { useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
 import { Education } from 'features/userInfo/education/ui/Education';
 import { Experience } from 'features/userInfo/experience/ui/Experience';
 import { Profile } from 'features/userInfo/profile/ui/Profile';
@@ -12,37 +12,49 @@ import { Button } from 'shared/ui/button/Button';
 import styled from 'styled-components';
 
 export const UserInfo = () => {
-  const [isProfileComplete, setProfileComplete] = useState(false);
-  const [isEducationComplete, setEducationComplete] = useState(false);
-  const [isExperienceComplete, setExperienceComplete] = useState(false);
+  const { userInfoData, handlers } = useUserInfoData('');
+  const isAllDataComplete = () => {
+    return (
+      userInfoData.name !== '' &&
+      userInfoData.gender !== '' &&
+      userInfoData.age !== '' &&
+      userInfoData.highestDegree !== '' &&
+      userInfoData.major !== '' &&
+      userInfoData.experiences.length >= 0
+    );
+  };
 
-  const [name] = useName('');
-  const { gender } = useGender('');
-  const { age } = useAge('');
-  const { education } = useEducation('');
-  const { experiences } = useExperienceList();
+  const handleSaveProfile = async () => {
+    const { experience, ...userInfoDataWithoutExperience } = userInfoData;
 
-  useEffect(() => {
-    const checkProfileComplete = name !== '' && gender !== '' && age !== '';
-    const checkEducationComplete = education !== '';
-    const checkExperienceComplete = experiences.length > 0;
+    const token = getAuthTokenFromCookie();
+    console.log(token);
+    if (!token) {
+      console.error('Access token not found.');
+      return;
+    }
 
-    setProfileComplete(checkProfileComplete);
-    setEducationComplete(checkEducationComplete);
-    setExperienceComplete(checkExperienceComplete);
-  }, [name, gender, age, education, experiences]);
-
-  const isAllDataComplete = isProfileComplete && isEducationComplete && isExperienceComplete;
+    try {
+      const response = await axios.post(API.USERINFO, userInfoDataWithoutExperience, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Profile saved successfully:', response.data);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
+  };
 
   return (
     <UserInfoWrapper>
-      <Profile />
-      <Education />
-      <Experience />
+      <Profile userInfoData={userInfoData} handlers={handlers} />
+      <Education userInfoData={userInfoData} handlers={handlers} />
+      <Experience userInfoData={userInfoData} handlers={handlers} />
       <Button
         type='submit'
-        variant={isAllDataComplete ? 'primary' : 'primaryDisabled'}
-        disabled={!isAllDataComplete}
+        variant={isAllDataComplete() ? 'primary' : 'primaryDisabled'}
+        onClick={handleSaveProfile}
       >
         프로필 저장하기
       </Button>

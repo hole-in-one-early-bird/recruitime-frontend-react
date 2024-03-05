@@ -12,7 +12,7 @@ import styled from 'styled-components';
 
 export const SigninForm = () => {
   const initialValues = {
-    userEmail: '',
+    email: '',
     password: '',
   };
   const { mutate: signIn } = useSignInMutation();
@@ -21,7 +21,6 @@ export const SigninForm = () => {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(values, 'values');
     signIn(values);
   };
 
@@ -42,8 +41,8 @@ export const SigninForm = () => {
         value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.userEmail}
-        isValid={!errors.userEmail && values.userEmail !== ''}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
       />
       <TextInput
         className='space'

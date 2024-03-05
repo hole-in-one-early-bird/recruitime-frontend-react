@@ -17,7 +17,7 @@ export const SignupForm = () => {
   const { mutate: signUp } = useSignUpMutation();
   const { mutate: validation } = useValidation();
   const { values, handleChange, errors } = useForm(initialValues);
-  const debouncedEmail = useDebounce(values.email, 300); // 이메일 입력에 대해 500ms 디바운싱 적용
+  const debouncedEmail = useDebounce(values.email, 500);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -29,7 +29,6 @@ export const SignupForm = () => {
   useEffect(() => {
     if (debouncedEmail.trim() !== '') {
       const result = validation(debouncedEmail);
-      console.log(result);
     }
   }, [debouncedEmail, validation]);
 
@@ -42,17 +41,16 @@ export const SignupForm = () => {
       <Typography className='title' variant={'largeTitle'}>
         회원가입
       </Typography>
-
       <TextInput
         className='space'
         label='이메일'
         type='text'
         name='email'
-        value={values.userEmail}
+        value={values.email}
         onChange={handleChange}
         placeholder={'이메일을 입력해주세요'}
-        error={errors.userEmail}
-        isValid={!errors.userEmail && values.userEmail !== ''}
+        error={errors.email}
+        isValid={!errors.email && values.email !== ''}
       />
 
       <TextInput

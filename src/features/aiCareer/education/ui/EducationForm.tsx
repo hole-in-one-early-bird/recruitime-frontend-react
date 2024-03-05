@@ -1,9 +1,9 @@
 import { useMatch } from 'features/aiCareer/@hooks/useMatch';
-import { useEducation } from 'features/userInfo/@hooks/useEducation';
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import { useModal } from 'features/userInfo/@hooks/useModal';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { activities, edu } from 'shared/constants/data';
+import { activities, edu, initialValues } from 'shared/constants/data';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { Button } from 'shared/ui/button/Button';
@@ -16,20 +16,31 @@ import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
 export const EducationForm = () => {
-  const { education, handleEducationChange } = useEducation('');
-  const { match, handleMatchSelect } = useMatch('');
-  const [selectedOption, setSelectedOption] = useState('');
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
+  const { userData, handleSelect } = useUserData(initialValues);
 
   const handleSelectOption = (option: string) => {
-    setSelectedOption(option);
+    handleSelect('education', option);
     handleCloseModal();
   };
 
-  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  const handleEducationChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleSelect('major', e.target.value);
+  };
+
+  const handleMatchSelect = (option: string) => {
+    handleSelect('majorCheck', option);
+  };
+
   useEffect(() => {
-    setIsAllFieldsFilled(education !== '' && match !== '' && selectedOption !== '');
-  }, [education, match, selectedOption]);
+    const isAllFieldsFilled =
+      userData.education !== '' && userData.major !== '' && userData.majorCheck !== '';
+    handleSelect('isAllFieldsFilled', isAllFieldsFilled ? 'true' : 'false');
+  }, [userData.education, userData.major, userData.majorCheck, handleSelect]);
+
+  useEffect(() => {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
   return (
     <EducationWrapper>
@@ -41,7 +52,7 @@ export const EducationForm = () => {
         <OptionPicker
           label='학력 선택'
           onClick={handleOpenModal}
-          selectedOption={selectedOption}
+          selectedOption={userData.education}
           children='학력선택'
         />
       </div>
@@ -49,7 +60,7 @@ export const EducationForm = () => {
         className='space'
         type='text'
         label='전공/계열'
-        value={education}
+        value={userData.major}
         onChange={handleEducationChange}
         placeholder='전공 및 계열 입력'
         name={'education'}
@@ -57,18 +68,18 @@ export const EducationForm = () => {
       <SelectType
         label='어떤 취미를 가지고 있나요?'
         options={[
-          '😍 전공 이 적성에 잘 맞아요!',
+          '😍 전공이 적성에 잘 맞아요!',
           '😳 보통이에요 / 잘 모르겠어요.',
           '😰 전공이 적성과는 맞지 않아요.',
         ]}
         onSelect={handleMatchSelect}
-        selected={match}
+        selected={userData.majorCheck}
         width='100%'
         style={{ textAlign: 'left' }}
       />
       <Button
-        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!isAllFieldsFilled}
+        variant={userData.isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        disabled={!userData.isAllFieldsFilled}
         style={{
           position: 'fixed',
           bottom: '38px',
@@ -76,14 +87,14 @@ export const EducationForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.keyword}>계속하기</Link>
+        <Link to={ROUTES_PATH.experience}>계속하기</Link>
       </Button>
       <Modal
         label='학력선택'
         isOpen={isOpen}
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
-        selected={selectedOption}
+        selected={userData.education}
         options={edu}
       />
     </EducationWrapper>

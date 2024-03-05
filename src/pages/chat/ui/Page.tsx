@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 import styled from 'styled-components';
@@ -6,6 +5,11 @@ import React from 'react';
 
 import { common } from 'shared/styles/common';
 import { ChatInput } from 'shared/ui/input/ChatInput';
+import { color } from 'html2canvas/dist/types/css/types/color';
+import colors from 'shared/styles/color';
+import axios from 'axios';
+import { API } from 'config';
+import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 
 type InputData = {
   job_name: string;
@@ -61,8 +65,57 @@ export const Chat = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = getAuthTokenFromCookie();
+      const msg = {
+        message: '연봉이 얼마야?',
+      };
+      try {
+        const response = await axios.post(API.CHAT, msg, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setChatData([
+          { id: 1, content: response.data, isUser: true },
+          {
+            id: 2,
+            content: (
+              <span>
+                안녕하세요! 커리어 <span style={{ fontWeight: '700' }}>챗봇 쿠르</span>에요!
+                <br />
+                <span style={{ fontWeight: '700' }}>{response.data}</span>와 관련된 궁금한 이야기가
+                있으신가요? 제게 물어보세요!
+              </span>
+            ),
+            isUser: false,
+          },
+        ]);
+        setJob({ job_name: response.data });
+      } catch (error) {
+        console.error('에러:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   return (
     <ChatWrapper>
+      <ChatBox ref={chatBoxRef}>
+        {chatData.map((chat, index) => (
+          <ChatBubble key={chat.id} $isUser={chat.isUser}>
+            <BotContainer $isUser={chat.isUser}>
+              <ProfileInfo $isUser={chat.isUser}>
+                <img src={process.env.PUBLIC_URL + '/image/chatCharacter.png'} alt='characterImage' />
+              </ProfileInfo>
+              <UserBubble $isUser={chat.isUser}>{chat.content}</UserBubble>
+            </BotContainer>
+          </ChatBubble>
+        ))}
+      </ChatBox>
       <BottomChat>
         <StyledChatInput
           name={'message'}
@@ -76,11 +129,68 @@ export const Chat = () => {
   );
 };
 
-const ChatWrapper = styled.div``;
+const ChatWrapper = styled.div`
+  position: relative;
+`;
+
+const ChatBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 280px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 5px; /* 스크롤 막대의 너비 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${colors.gray[500]}; /* 스크롤 막대의 색상 */
+    border-radius: 4px; /* 스크롤 막대의 모서리를 둥글게 만듭니다. */
+  }
+`;
+
+const BotContainer = styled.div<{ $isUser: boolean }>`
+  display: flex;
+  gap: 10px;
+  justify-content: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
+`;
+
+const ChatBubble = styled.div<{ $isUser: boolean }>`
+  max-width: 400px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  line-height: 2.3rem;
+  align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
+`;
+
+const UserBubble = styled(ChatBubble)<{ $isUser: boolean }>`
+  width: 100%;
+
+  color: ${({ $isUser }) => ($isUser ? colors.white : colors.gray[800])};
+  background-color: ${({ $isUser }) => ($isUser ? colors.blue[500] : colors.gray[100])};
+`;
+
+const ProfileInfo = styled.div<{ $isUser: boolean }>`
+  display: flex;
+  display: ${(props) => (props.$isUser ? 'none' : 'block')};
+  img {
+    width: 60px;
+  }
+`;
 
 const BottomChat = styled.div`
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 14px 17px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
   ${common.flexCenterRow};
   gap: 12px;
+  border-top: 1px solid ${colors.gray[400]};
 `;
 
 const StyledChatInput = styled(ChatInput)``;

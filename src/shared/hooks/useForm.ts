@@ -1,5 +1,5 @@
 import { SignupData } from 'features/auth/api/authService';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const useForm = (initialValues: any) => {
   const [values, setValues] = useState(initialValues);
@@ -10,8 +10,8 @@ export const useForm = (initialValues: any) => {
     const errors: Partial<SignupData> = {};
 
     // 이메일 필드 유효성 검사
-    if (formValues.userEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.userEmail)) {
-      errors.userEmail = '이메일 형식이 유효하지 않습니다.';
+    if (formValues.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
+      errors.email = '이메일 형식이 유효하지 않습니다.';
     }
 
     // 비밀번호 필드 유효성 검사

@@ -7,27 +7,63 @@ export interface SigninData {
 }
 
 export interface SignupData {
-  userEmail?: string;
+  email?: string;
   password?: string;
   passwordConfirm?: string;
+}
+
+export const setAccessTokenCookie = (accessToken: any) => {
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 7);
+
+  document.cookie = `accessToken=${accessToken}; expires=${expirationDate.toUTCString()}; path=/`;
+};
+
+export const getAuthTokenFromCookie = () => {
+  const cookies = document.cookie.split(';');
+  const tokenCookie = cookies.find((cookie) => cookie.trim().startsWith('accessToken='));
+
+  if (tokenCookie) {
+    return tokenCookie.split('=')[1];
+  }
+
+  return null;
+};
+
+export function getCookie(key: string) {
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [cookieKey, cookieValue] = cookie.split('=').map((part) => part.trim());
+    if (cookieKey === key) {
+      return cookieValue;
+    }
+  }
+  return null;
 }
 
 export const authService = {
   signIn: async (userData: SigninData) => {
     const response = await axios.post(`${API.SIGNIN}`, userData);
-    return response.data;
+    const { accessToken } = response.data.data;
+    setAccessTokenCookie(accessToken);
   },
   signUp: async (userData: SignupData) => {
-    const { userEmail, password } = userData;
-    const dataToSend = { userEmail, password };
-    console.log(dataToSend);
+    const { email, password } = userData;
+    const dataToSend = { email, password };
+
     const response = await axios.post(`${API.SIGNUP}`, dataToSend);
     return response.data;
   },
-  validation: async (userData: SignupData) => {
-    console.log(userData, 'userEmail');
-    const response = await axios.post(`${API.VALIDATION}`, userData.userEmail);
-    console.log(response, 'validation');
+  validation: async (email: string) => {
+    const formData = new FormData();
+    formData.append('email', email);
+
+    const response = await axios.post(`${API.VALIDATION}`, formData);
+    return response.data;
+  },
+  findPassword: async (signedEmail: string) => {
+    const response = await axios.get(`${API.PASSWORD_FIND}`, { params: { signedEmail } });
+    console.log(response);
     return response.data;
   },
 };

@@ -1,7 +1,7 @@
-import { useEducation } from 'features/userInfo/@hooks/useEducation';
 import { useModal } from 'features/userInfo/@hooks/useModal';
+import { UserInfoData, useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
 import React, { useState } from 'react';
-import { activities } from 'shared/constants/data';
+import { edu } from 'shared/constants/data';
 import colors from 'shared/styles/color';
 import { TextInput } from 'shared/ui/input/TextInput';
 import { Modal } from 'shared/ui/modal/Modal';
@@ -9,14 +9,28 @@ import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
-export const Education = () => {
-  const { education, handleEducationChange } = useEducation('');
+// Education.tsx
+interface EducationProps {
+  userInfoData: {
+    major: string;
+  };
+  handlers: {
+    handleMajorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleEducationChange: (selected: string) => void;
+  };
+}
+
+export const Education: React.FC<EducationProps> = ({ userInfoData, handlers }) => {
+  const { major } = userInfoData;
+  const { handleMajorChange, handleEducationChange } = handlers;
+
   const [selectedOption, setSelectedOption] = useState('');
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
     handleCloseModal();
+    handleEducationChange(option);
   };
 
   return (
@@ -37,8 +51,8 @@ export const Education = () => {
       <StyledTextInput
         type='text'
         label='전공/계열'
-        value={education}
-        onChange={handleEducationChange}
+        value={major}
+        onChange={handleMajorChange}
         placeholder='전공 및 계열 입력'
         name={'education'}
       />
@@ -48,7 +62,7 @@ export const Education = () => {
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
         selected={selectedOption}
-        options={activities}
+        options={edu}
       />
     </EducationWrapper>
   );

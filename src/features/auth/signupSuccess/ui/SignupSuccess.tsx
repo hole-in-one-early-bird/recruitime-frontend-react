@@ -25,7 +25,7 @@ export const SignupSuccess = () => {
       </CompleteContainer>
       <AuthOption>
         <Button variant={'primary'} style={{ marginBottom: '16px' }}>
-          <Link to={ROUTES_PATH.profile}>프로필입력하기</Link>
+          <Link to={ROUTES_PATH.userInfo}>프로필입력하기</Link>
         </Button>
         <Link to={ROUTES_PATH.home}>
           <Typography className='next' variant={'caption'}>
