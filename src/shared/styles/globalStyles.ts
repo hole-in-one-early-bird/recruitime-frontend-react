@@ -20,7 +20,6 @@ const GlobalStyles = createGlobalStyle`
 }
 
 body {
-  border: 1px solid #ddd;
   width: 100%;
   //max-width: 768px;
   max-width: 480px;

@@ -3,35 +3,30 @@ import colors from 'shared/styles/color';
 import styled from 'styled-components';
 import { Typography } from '../typography/Typography';
 
-interface TextInputProps {
-  type: string;
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
   name: string;
-  placeholder?: string;
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
   label?: string;
   style?: React.CSSProperties;
-  isDisabled?: boolean;
+  caption?: string;
   error?: string;
   isValid?: boolean;
 }
 
-const TextInput: React.FC<TextInputProps> = ({
-  type,
+export const TextInput: React.FC<TextInputProps> = ({
+  className,
   name,
-  placeholder,
-  value,
-  onChange,
   label,
   style,
-  isDisabled,
   error,
   isValid,
+  caption,
+  ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <TextInputWrapper>
+    <TextInputWrapper className={className}>
       {label && (
         <Label>
           <Typography variant={'label'}>{label}</Typography>
@@ -39,22 +34,22 @@ const TextInput: React.FC<TextInputProps> = ({
       )}
       <InputContainer>
         <StyledInput
-          type={type}
           name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
           $isFocused={isFocused}
           $isValid={isValid}
           $isError={!!error}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           style={style}
-          disabled={isDisabled}
+          {...props} // 나머지 props를 전달
         />
         {isValid && <CheckIcon />}
       </InputContainer>
-
+      {caption && (
+        <Caption>
+          <Typography variant={'caption'}>{caption}</Typography>
+        </Caption>
+      )}
       {error && (
         <ErrorMsg>
           <Typography variant={'error'}>{error}</Typography>
@@ -64,11 +59,8 @@ const TextInput: React.FC<TextInputProps> = ({
   );
 };
 
-export default TextInput;
-
 const TextInputWrapper = styled.div`
   width: 100%;
-  margin-bottom: 46px;
 `;
 
 const InputContainer = styled.div`
@@ -98,6 +90,10 @@ const StyledInput = styled.input<{ $isFocused: boolean; $isError: boolean; $isVa
 const Label = styled.label`
   display: block;
   margin-bottom: 10px;
+`;
+
+const Caption = styled.div`
+  margin-top: 6px;
 `;
 
 const ErrorMsg = styled.div`
