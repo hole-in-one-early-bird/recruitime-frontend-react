@@ -173,4 +173,11 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '1',
     letterSpacing: '0.02em',
   },
+  error: {
+    color: colors.error,
+    fontSize: '12px',
+    fontWeight: 500,
+    lineHeight: '1',
+    letterSpacing: '0.02em',
+  },
 };

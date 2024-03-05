@@ -1,4 +1,4 @@
-import { FindAccount } from 'features/auth';
+import { FindAccount } from 'features/auth/findAccount/ui/FindAccount';
 import React from 'react';
 
 export const FindAccountPage = () => {
