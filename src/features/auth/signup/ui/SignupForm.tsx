@@ -16,13 +16,11 @@ export const SignupForm = () => {
     passwordConfirm: '',
   };
   const { mutate: signUp } = useSignUpMutation();
-  const { mutate: validation } = useValidation();
   const { values, handleChange, errors } = useForm(initialValues, [
     'email',
     'password',
     'passwordConfirm',
   ]);
-  const debouncedEmail = useDebounce(values.email, 500);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -30,12 +28,6 @@ export const SignupForm = () => {
       signUp(values);
     }
   };
-
-  useEffect(() => {
-    if (debouncedEmail.trim() !== '') {
-      const result = validation(debouncedEmail);
-    }
-  }, [debouncedEmail, validation]);
 
   const isFormValid =
     Object.values(values).every((value) => (value as string).trim() !== '') &&
