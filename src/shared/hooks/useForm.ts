@@ -7,7 +7,7 @@ export const useForm = (initialValues: any, validationFields: any) => {
   const [errors, setErrors] = useState<SignupData>({});
   const { mutate: validateEmail, lastValidationResult } = useValidation();
 
-  const validate = async (formValues: SignupData) => {
+  const validate = async (formValues: SignupData, isLoginPage: boolean = false) => {
     const errors: Partial<SignupData> = {};
     // 이메일 필드 유효성 검사
     if (validationFields.includes('email') && formValues.email) {
