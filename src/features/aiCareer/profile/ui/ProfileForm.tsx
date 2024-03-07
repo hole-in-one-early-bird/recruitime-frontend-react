@@ -83,7 +83,7 @@ export const ProfileForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.track}>계속하기</Link>
+        {isAllFieldsFilled ? <Link to={ROUTES_PATH.track}>계속하기</Link> : '계속하기'}
       </Button>
     </ProfileWrapper>
   );
