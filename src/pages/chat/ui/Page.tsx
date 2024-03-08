@@ -10,6 +10,7 @@ import colors from 'shared/styles/color';
 import axios from 'axios';
 import { API } from 'config';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
+import { Typography } from 'shared/ui/typography/Typography';
 
 type InputData = {
   job_name: string;
@@ -20,10 +21,23 @@ type ChatMessage = {
   content: string | JSX.Element;
   isUser: boolean;
 };
+const Data = [
+  {
+    id: 1,
+    content: '직업이름',
+    isUser: true,
+  },
+  {
+    id: 2,
+    content:
+      '안녕하세요! 커리어 챗봇 쿠르에요! 커리어와 관련된 궁금한 이야기가 있으신가요? 제게 물어보세요!',
+    isUser: false,
+  },
+];
 
 export const Chat = () => {
   const [job, setJob] = useState<InputData>({ job_name: '' });
-  const [chatData, setChatData] = useState<ChatMessage[]>([]);
+  const [chatData, setChatData] = useState<ChatMessage[]>(Data);
   const [userId, setUserId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
 
@@ -66,54 +80,75 @@ export const Chat = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = getAuthTokenFromCookie();
-      const msg = {
-        message: '연봉이 얼마야?',
-      };
-      try {
-        const response = await axios.post(API.CHAT, msg, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     const token = getAuthTokenFromCookie();
+  //     const msg = {
+  //       message: '연봉이 얼마야?',
+  //     };
+  //     try {
+  //       const response = await axios.post(API.CHAT, msg, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
 
-        setChatData([
-          { id: 1, content: response.data, isUser: true },
-          {
-            id: 2,
-            content: (
-              <span>
-                안녕하세요! 커리어 <span style={{ fontWeight: '700' }}>챗봇 쿠르</span>에요!
-                <br />
-                <span style={{ fontWeight: '700' }}>{response.data}</span>와 관련된 궁금한 이야기가
-                있으신가요? 제게 물어보세요!
-              </span>
-            ),
-            isUser: false,
-          },
-        ]);
-        setJob({ job_name: response.data });
-      } catch (error) {
-        console.error('에러:', error);
-      }
-    };
+  //       setChatData([
+  //         { id: 1, content: response.data, isUser: true },
+  //         {
+  //           id: 2,
+  //           content: (
+  //             <span>
+  //               안녕하세요! 커리어 <span style={{ fontWeight: '700' }}>챗봇 쿠르</span>에요!
+  //               <br />
+  //               <span style={{ fontWeight: '700' }}>{response.data}</span>와 관련된 궁금한 이야기가
+  //               있으신가요? 제게 물어보세요!
+  //             </span>
+  //           ),
+  //           isUser: false,
+  //         },
+  //       ]);
+  //       setJob({ job_name: response.data });
+  //     } catch (error) {
+  //       console.error('에러:', error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, []);
+  //   fetchUserData();
+  // }, []);
   return (
     <ChatWrapper>
       <ChatBox ref={chatBoxRef}>
-        {chatData.map((chat, index) => (
-          <ChatBubble key={chat.id} $isUser={chat.isUser}>
-            <BotContainer $isUser={chat.isUser}>
-              <ProfileInfo $isUser={chat.isUser}>
-                <img src={process.env.PUBLIC_URL + '/image/chatCharacter.png'} alt='characterImage' />
-              </ProfileInfo>
-              <UserBubble $isUser={chat.isUser}>{chat.content}</UserBubble>
-            </BotContainer>
-          </ChatBubble>
+        {/* 채팅 내용 표시 */}
+        {Data.map((message) => (
+          <div key={message.id} className={message.isUser ? 'userMessage' : 'botMessage'}>
+            {message.isUser ? (
+              <>
+                <UserContainer>
+                  <UserBubble>
+                    <Typography variant={'body3'} style={{ color: colors.white }}>
+                      {message.content}
+                    </Typography>
+                    {/* <Typography variant={'body3'}>{message.content}</Typography> */}
+                  </UserBubble>
+                </UserContainer>
+              </>
+            ) : (
+              <>
+                <BotContainer>
+                  <ProfileInfo>
+                    <img
+                      src={process.env.PUBLIC_URL + '/images/char/recruitime.png'}
+                      alt='characterImage'
+                    />
+                  </ProfileInfo>
+                  <BotBubble>
+                    <Typography variant={'body3'}>{message.content}</Typography>
+                  </BotBubble>
+                </BotContainer>
+              </>
+            )}
+          </div>
         ))}
       </ChatBox>
       <BottomChat>
@@ -130,53 +165,57 @@ export const Chat = () => {
 };
 
 const ChatWrapper = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 20px;
 `;
 
 const ChatBox = styled.div`
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: calc(100vh - 280px);
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 5px; /* 스크롤 막대의 너비 */
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: ${colors.gray[500]}; /* 스크롤 막대의 색상 */
-    border-radius: 4px; /* 스크롤 막대의 모서리를 둥글게 만듭니다. */
-  }
 `;
 
-const BotContainer = styled.div<{ $isUser: boolean }>`
+const BotContainer = styled.div`
   display: flex;
-  gap: 10px;
-  justify-content: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
-`;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 16px;
 
-const ChatBubble = styled.div<{ $isUser: boolean }>`
-  max-width: 400px;
-  padding: 15px 20px;
-  border-radius: 10px;
-  font-size: 1.6rem;
-  line-height: 2.3rem;
-  align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
-`;
-
-const UserBubble = styled(ChatBubble)<{ $isUser: boolean }>`
-  width: 100%;
-
-  color: ${({ $isUser }) => ($isUser ? colors.white : colors.gray[800])};
-  background-color: ${({ $isUser }) => ($isUser ? colors.blue[500] : colors.gray[100])};
-`;
-
-const ProfileInfo = styled.div<{ $isUser: boolean }>`
-  display: flex;
-  display: ${(props) => (props.$isUser ? 'none' : 'block')};
   img {
-    width: 60px;
+    width: 40px; // 캐릭터 이미지 크기 조절
+    height: 40px;
+    margin-right: 8px; // 캐릭터 이미지와 대화 말풍선 사이 간격
   }
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 16px;
+`;
+
+const ProfileInfo = styled.div`
+  margin-right: 12px; // 프로필 이미지와 대화 말풍선 사이 간격
+`;
+
+const UserBubble = styled.div`
+  background-color: ${colors.blue[500]}; // 사용자 대화 말풍선 배경색
+  color: ${colors.white}; // 사용자 대화 말풍선 텍스트 색상
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 60%; // 대화 말풍선 최대 너비
+`;
+
+const BotBubble = styled.div`
+  background-color: ${colors.gray[50]}; // 사용자 대화 말풍선 배경색
+  color: ${colors.white}; // 사용자 대화 말풍선 텍스트 색상
+  padding: 12px 18px;
+  border-radius: 8px;
+  max-width: 60%; // 대화 말풍선 최대 너비
 `;
 
 const BottomChat = styled.div`
@@ -188,9 +227,13 @@ const BottomChat = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
+  background-color: ${colors.white};
   ${common.flexCenterRow};
   gap: 12px;
   border-top: 1px solid ${colors.gray[400]};
 `;
 
-const StyledChatInput = styled(ChatInput)``;
+const StyledChatInput = styled(ChatInput)`
+  flex: 1;
+  margin-right: 10px;
+`;
