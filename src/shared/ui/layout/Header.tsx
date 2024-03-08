@@ -109,10 +109,10 @@ export const Header = () => {
             <Title variant={'headerTitle'}>{title}</Title>
             <IconContainer>
               <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.png'} alt='shareIcon' />
-              <img
+              {/* <img
                 src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.png'}
                 alt='inActiveBookmarkIcon'
-              />
+              /> */}
             </IconContainer>
           </HeaderContainer>
         );
@@ -143,7 +143,7 @@ const HeaderContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 020px;
+  padding: 10px 10px;
   .chat {
     position: absolute;
     left: 40px;
