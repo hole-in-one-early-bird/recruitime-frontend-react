@@ -13,10 +13,6 @@ export const TrackForm = () => {
   const selectedInterests = userData.interests;
 
   useEffect(() => {
-    handleSelect('isAllFieldsFilled', selectedInterests.length > 0 ? 'true' : 'false');
-  }, [selectedInterests, handleSelect]);
-
-  useEffect(() => {
     sessionStorage.setItem('userData', JSON.stringify(userData));
   }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
@@ -45,7 +41,7 @@ export const TrackForm = () => {
         ))}
       </InterestsContainer>
       <Button
-        variant={userData.isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
         disabled={!userData.isAllFieldsFilled}
         style={{
           position: 'fixed',
@@ -54,7 +50,7 @@ export const TrackForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.education}>계속하기</Link>
+        {selectedInterests.length > 0 ? <Link to={ROUTES_PATH.education}>계속하기</Link> : '계속하기'}
       </Button>
     </TrackWrapper>
   );
