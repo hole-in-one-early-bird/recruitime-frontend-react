@@ -34,15 +34,18 @@ export const CustomizedCareer = () => {
   const accordionSections = [
     {
       header: '관련 학과',
-      content: resultData.relatedMajor,
+      // content: resultData.relatedMajor,
+      content: 'a',
     },
     {
       header: '관련 자격증',
-      content: resultData.certifications,
+      content: 'a',
+      //  content: resultData.certifications,
     },
     {
       header: '왜 이 커리어가 추천 되었나요?',
-      content: resultData.recommendationReason,
+      content: 'a',
+      // content: resultData.recommendationReason,
     },
   ];
   const toggleAccordion = (index: any) => {
@@ -78,11 +81,11 @@ export const CustomizedCareer = () => {
             <CareerBox>
               <Job>
                 <Typography variant={'title2'} style={{ color: colors.white }}>
-                  {resultData.jobName}
+                  {resultData?.jobName}
                 </Typography>
               </Job>
               <Des>
-                <Typography variant={'body2'}>{resultData.jobDescription}</Typography>
+                <Typography variant={'body2'}>{resultData?.jobDescription}</Typography>
               </Des>
             </CareerBox>
             <AccordionContainer>
