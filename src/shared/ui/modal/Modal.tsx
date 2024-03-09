@@ -20,8 +20,9 @@ interface ModalProps {
 
 interface PopupModalProps extends ModalProps {
   content: React.ReactNode;
-  link?: string;
-  onClick?: () => void;
+
+  onClickYes: () => void | Promise<void>;
+  onClickNo: () => void | Promise<void>;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -64,7 +65,13 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose, link, onClick }) => {
+export const PopupModal: React.FC<PopupModalProps> = ({
+  isOpen,
+  content,
+  onClose,
+  onClickYes,
+  onClickNo,
+}) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
@@ -84,11 +91,11 @@ export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose
         </TypoContainer>
 
         <ButtonContainer>
-          <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }}>
-            <Link to={`${link}`}>아니요</Link>
+          <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }} onClick={onClickNo}>
+            아니요
           </Button>
 
-          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }} onClick={onClick}>
+          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }} onClick={onClickYes}>
             네
           </Button>
         </ButtonContainer>

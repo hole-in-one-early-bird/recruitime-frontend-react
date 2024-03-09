@@ -56,6 +56,30 @@ export const MainContent = () => {
       throw error;
     }
   };
+
+  const handleNoClick = () => {
+    // "아니요"를 눌렀을 때 초기화 작업 수행
+    useUserStore.setState({
+      userDataStore: {
+        name: '',
+        gender: '',
+        age: '',
+        aboutMe: '',
+        interests: [],
+        education: '',
+        major: '',
+        majorCheck: '',
+        experiences: [],
+        experienceOption: '',
+        experienceDetail: '',
+        userKeywords: [],
+      },
+    });
+
+    // ROUTES_PATH.profile로 이동
+    navigate(ROUTES_PATH.profile);
+  };
+
   return (
     <MainContentWrapper>
       <TitleBox>
@@ -85,8 +109,8 @@ export const MainContent = () => {
           isOpen={isOpen}
           onClose={handleCloseModal}
           content={'content'}
-          link={ROUTES_PATH.profile}
-          onClick={getProfileData}
+          onClickYes={getProfileData}
+          onClickNo={handleNoClick}
         />
       )}
     </MainContentWrapper>
