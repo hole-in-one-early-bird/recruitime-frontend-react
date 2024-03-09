@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import styled from 'styled-components';
@@ -18,6 +20,8 @@ interface ModalProps {
 
 interface PopupModalProps extends ModalProps {
   content: React.ReactNode;
+  link?: string;
+  onClick?: () => void;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -60,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose }) => {
+export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose, link, onClick }) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
@@ -81,9 +85,10 @@ export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose
 
         <ButtonContainer>
           <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }}>
-            아니요
+            <Link to={`${link}`}>아니요</Link>
           </Button>
-          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }}>
+
+          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }} onClick={onClick}>
             네
           </Button>
         </ButtonContainer>
