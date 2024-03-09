@@ -1,4 +1,3 @@
-import { initialValues } from 'shared/constants/data';
 import create from 'zustand';
 
 export type UserDataType = {
@@ -22,16 +21,30 @@ export interface Experience {
 }
 
 export type Keyword = {
-  id: number;
   keyword: string;
   type: string;
 };
+
 export interface UserStore {
-  userData: UserDataType;
-  setUserData: (data: UserDataType) => void;
+  userDataStore: UserDataType;
+  setUserDataStore: (data: Partial<UserDataType>) => void;
 }
 
 export const useUserStore = create<UserStore>((set) => ({
-  userData: initialValues,
-  setUserData: (data) => set((prevData) => ({ userData: { ...prevData.userData, ...data } })),
+  userDataStore: {
+    name: '',
+    gender: '',
+    age: '',
+    aboutMe: '',
+    interests: [],
+    education: '',
+    major: '',
+    majorCheck: '',
+    experiences: [],
+    experienceOption: '',
+    experienceDetail: '',
+    userKeywords: [],
+  },
+
+  setUserDataStore: (data) => set((state) => ({ userDataStore: { ...state.userDataStore, ...data } })),
 }));

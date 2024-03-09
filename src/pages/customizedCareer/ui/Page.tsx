@@ -26,10 +26,7 @@ export const CustomizedCareer = () => {
   const [userId, setUserId] = useState<number | null>(null);
   const [bookId, setBookId] = useState<number | null>(null);
   const resultData = useCustomizedCareerStore((state) => state.userData);
-  const { userData } = useUserData(initialValues);
-  useEffect(() => {
-    console.log(userData);
-  });
+  const { userDataStore } = useUserData(initialValues);
 
   const accordionSections = [
     {
@@ -51,7 +48,6 @@ export const CustomizedCareer = () => {
   const toggleAccordion = (index: any) => {
     setOpenSection((prevOpenSection) => (prevOpenSection === index ? null : index));
   };
-  // 북마크
 
   return (
     <CustomizedCareerWrapper>
@@ -59,7 +55,7 @@ export const CustomizedCareer = () => {
         <Typography
           variant={'largeTitle'}
           className='space'
-        >{`${userData.name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
+        >{`${userDataStore.name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
         <ContentBox>
           <Content>
             <AiChat>
