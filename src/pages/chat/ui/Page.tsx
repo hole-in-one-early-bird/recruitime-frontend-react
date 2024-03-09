@@ -21,6 +21,7 @@ type ChatMessage = {
   content: string | JSX.Element;
   isUser: boolean;
 };
+
 const Data = [
   {
     id: 1,
@@ -81,8 +82,18 @@ export const Chat = () => {
   };
 
   const handleImgClick = async () => {
+    const token = getAuthTokenFromCookie();
+    console.log(token);
     try {
-      const response = await axios.post(`${API.CHAT}`, { message: inputValue });
+      const response = await axios.post(
+        `${API.CHAT}`,
+        { message: inputValue },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       console.log('Chat request successful:', response.data);
     } catch (error) {
@@ -103,7 +114,6 @@ export const Chat = () => {
                     <Typography variant={'body3'} style={{ color: colors.white }}>
                       {message.content}
                     </Typography>
-                    {/* <Typography variant={'body3'}>{message.content}</Typography> */}
                   </UserBubble>
                 </UserContainer>
               </>
