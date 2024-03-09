@@ -27,6 +27,7 @@ type ChatMessage = {
 
 export const Chat = () => {
   const { chatBoxRef, setChatBoxRef } = useChatStore();
+  const [isChatProcessing, setChatProcessing] = useState(false); // 추가
 
   const [job, setJob] = useState<InputData>({ job_name: '' });
 
@@ -59,7 +60,6 @@ export const Chat = () => {
     : process.env.PUBLIC_URL + '/images/icon/CircleArrowIcon.svg'; // 기본 아이콘 경로
 
   const chatRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (chatRef && chatRef.current) {
