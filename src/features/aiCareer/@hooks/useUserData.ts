@@ -24,9 +24,7 @@ interface UserData {
   experiences: Experience[];
   experienceOption: string;
   experienceDetail: string;
-
   userKeywords: Keyword[];
-  isAllFieldsFilled: boolean;
 }
 
 interface UseUserData {

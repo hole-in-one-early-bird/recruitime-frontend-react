@@ -80,42 +80,16 @@ export const Chat = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     const token = getAuthTokenFromCookie();
-  //     const msg = {
-  //       message: '연봉이 얼마야?',
-  //     };
-  //     try {
-  //       const response = await axios.post(API.CHAT, msg, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
+  const handleImgClick = async () => {
+    try {
+      const response = await axios.post(`${API.CHAT}`, { message: inputValue });
 
-  //       setChatData([
-  //         { id: 1, content: response.data, isUser: true },
-  //         {
-  //           id: 2,
-  //           content: (
-  //             <span>
-  //               안녕하세요! 커리어 <span style={{ fontWeight: '700' }}>챗봇 쿠르</span>에요!
-  //               <br />
-  //               <span style={{ fontWeight: '700' }}>{response.data}</span>와 관련된 궁금한 이야기가
-  //               있으신가요? 제게 물어보세요!
-  //             </span>
-  //           ),
-  //           isUser: false,
-  //         },
-  //       ]);
-  //       setJob({ job_name: response.data });
-  //     } catch (error) {
-  //       console.error('에러:', error);
-  //     }
-  //   };
+      console.log('Chat request successful:', response.data);
+    } catch (error) {
+      console.error('Error sending chat request:', error);
+    }
+  };
 
-  //   fetchUserData();
-  // }, []);
   return (
     <ChatWrapper>
       <ChatBox ref={chatBoxRef}>
@@ -158,7 +132,9 @@ export const Chat = () => {
           value={inputValue}
           onChange={handleInputChange}
         />
-        <img src={iconSrc} alt='circleArrowIcon' />
+        <div onClick={handleImgClick}>
+          <img src={iconSrc} alt='circleArrowIcon' />
+        </div>
       </BottomChat>
     </ChatWrapper>
   );

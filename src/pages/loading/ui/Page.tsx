@@ -18,8 +18,7 @@ export const Loading = () => {
   const setUserData = useCustomizedCareerStore((state) => state.setUserData);
 
   const handleAiCareer = async () => {
-    const { isAllFieldsFilled, experienceOption, experienceDetail, ...userDataWithoutExcludedFields } =
-      userData;
+    const { experienceOption, experienceDetail, ...userDataWithoutExcludedFields } = userData;
 
     const userDataWithoutEmoji = {
       ...userDataWithoutExcludedFields,

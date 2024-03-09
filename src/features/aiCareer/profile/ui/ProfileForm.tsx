@@ -25,9 +25,11 @@ export const ProfileForm = () => {
   useEffect(() => {
     setIsAllFieldsFilled(name !== '' && gender !== '' && age !== '' && aboutMe !== ''); // 'age'의 비교를 수정하고, 'aboutMe'를 추가합니다.
   }, [name, gender, age, aboutMe]);
+
   useEffect(() => {
     sessionStorage.setItem('userData', JSON.stringify(userData));
   }, [userData]);
+
   return (
     <ProfileWrapper>
       <div className='title'>

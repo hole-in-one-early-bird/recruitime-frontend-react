@@ -42,7 +42,7 @@ export const TrackForm = () => {
       </InterestsContainer>
       <Button
         variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
-        disabled={!userData.isAllFieldsFilled}
+        disabled={!selectedInterests}
         style={{
           position: 'fixed',
           bottom: '38px',
