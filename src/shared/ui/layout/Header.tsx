@@ -91,7 +91,7 @@ export const Header = () => {
           <HeaderContainer style={{ justifyContent: 'space-between' }}>
             <Typography variant={'logo'}>RECRUTAM</Typography>
             <Link to={ROUTES_PATH.home}>
-              <img src={process.env.PUBLIC_URL + '/images/icon/homeIcon.png'} alt='homeIcon' />
+              <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.png'} alt='userIcon' />
             </Link>
           </HeaderContainer>
         );
