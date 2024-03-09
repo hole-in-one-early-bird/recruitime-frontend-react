@@ -1,7 +1,9 @@
-import React from 'react';
+import html2canvas from 'html2canvas';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
+import { useChatStore } from 'shared/zustand/chatStore';
 import styled from 'styled-components';
 import { Typography } from '../typography/Typography';
 
@@ -19,6 +21,9 @@ const routeTitles: { [key: string]: string } = {
 };
 
 export const Header = () => {
+  const { chatBoxRef, setChatBoxRef } = useChatStore();
+  const [isCaptureChatEnabled, setCaptureChatEnabled] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
@@ -51,6 +56,29 @@ export const Header = () => {
     } catch (err) {
       alert('링크 복사에 실패했습니다.');
       console.error('Failed to copy: ', err);
+    }
+  };
+
+  const downloadImage = (dataUrl: string, filename: string) => {
+    // `<a>` 태그를 생성합니다.
+    const link = document.createElement('a');
+    // 데이터 URL을 `href` 속성에 설정합니다.
+    link.href = dataUrl;
+    // 다운로드할 파일 이름을 `download` 속성에 설정합니다.
+    link.download = filename;
+    // `<a>` 태그를 클릭하여 다운로드를 시작합니다.
+    link.click();
+  };
+
+  const captureChat = async () => {
+    if (chatBoxRef && chatBoxRef.current) {
+      try {
+        const canvas = await html2canvas(chatBoxRef.current);
+        const image = canvas.toDataURL('image/png');
+        downloadImage(image, 'chat-capture.png');
+      } catch (error) {
+        console.error('채팅 캡처에 실패했습니다:', error);
+      }
     }
   };
 
@@ -142,7 +170,11 @@ export const Header = () => {
               <HomeIcon src={`${process.env.PUBLIC_URL}/images/icon/homeIcon.png`} alt='homeIcon' />
             </Link>
             <Title variant={'headerTitle'}>{title}</Title>
-            <SaveIcon src={`${process.env.PUBLIC_URL}/images/icon/saveIcon.png`} alt='saveIcon' />
+            <SaveIcon
+              onClick={captureChat}
+              src={`${process.env.PUBLIC_URL}/images/icon/saveIcon.png`}
+              alt='saveIcon'
+            />
           </HeaderContainer>
         );
       default:
@@ -173,7 +205,9 @@ const BackIcon = styled.img`
 
 const HomeIcon = styled.img``;
 
-const SaveIcon = styled.img``;
+const SaveIcon = styled.img`
+  cursor: pointer;
+`;
 
 const Title = styled(Typography)`
   flex-grow: 1;
