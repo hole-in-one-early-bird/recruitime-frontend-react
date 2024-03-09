@@ -4,11 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 export const useSignInMutation = () => {
   const navigate = useNavigate();
+
   return useMutation({
     mutationFn: authService.signIn,
     onSuccess: (data) => {
-      console.log(data);
-      navigate('/signupSuccess');
+      if (data.data.loginMemberResponse && !data.data.loginMemberResponse.firstLogin) {
+        navigate('/home');
+      } else {
+        navigate('/signupSuccess');
+      }
     },
     onError: (error) => {
       console.error('실패', error);
