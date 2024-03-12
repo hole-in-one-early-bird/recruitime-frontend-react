@@ -10,6 +10,10 @@ import colors from 'shared/styles/color';
 import axios from 'axios';
 import { API } from 'config';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
+import { Typography } from 'shared/ui/typography/Typography';
+import { useUserStore } from 'shared/zustand/userStore';
+import useCustomizedCareerStore from 'shared/zustand/store';
+import { useChatStore } from 'shared/zustand/chatStore';
 
 type InputData = {
   job_name: string;
@@ -17,103 +21,134 @@ type InputData = {
 
 type ChatMessage = {
   id: number;
-  content: string | JSX.Element;
+  content: string;
   isUser: boolean;
 };
 
 export const Chat = () => {
+  const { chatBoxRef, setChatBoxRef } = useChatStore();
+  const [isChatProcessing, setChatProcessing] = useState(false); // 추가
+
   const [job, setJob] = useState<InputData>({ job_name: '' });
-  const [chatData, setChatData] = useState<ChatMessage[]>([]);
+
   const [userId, setUserId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
+  const { userDataStore, setUserDataStore } = useUserStore();
+  const resultData = useCustomizedCareerStore((state) => state.userData);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleInputChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setInputValue(e.target.value);
   };
 
+  const [chatData, setChatData] = useState<ChatMessage[]>([
+    {
+      id: 1,
+      content: resultData?.jobName,
+      isUser: true,
+    },
+    {
+      id: 2,
+      content:
+        '안녕하세요! 커리어 챗봇 쿠르에요! 커리어와 관련된 궁금한 이야기가 있으신가요? 제게 물어보세요!',
+      isUser: false,
+    },
+  ]);
+
   const iconSrc = inputValue
     ? process.env.PUBLIC_URL + '/images/icon/activeCircleArrowIcon.svg' // 활성화된 아이콘 경로
     : process.env.PUBLIC_URL + '/images/icon/CircleArrowIcon.svg'; // 기본 아이콘 경로
 
-  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    if (chatRef && chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [chatData]);
-
-  const downloadImage = (dataUrl: string, filename: string) => {
-    // `<a>` 태그를 생성합니다.
-    const link = document.createElement('a');
-    // 데이터 URL을 `href` 속성에 설정합니다.
-    link.href = dataUrl;
-    // 다운로드할 파일 이름을 `download` 속성에 설정합니다.
-    link.download = filename;
-    // `<a>` 태그를 클릭하여 다운로드를 시작합니다.
-    link.click();
-  };
-
-  const captureChat = async () => {
-    if (chatBoxRef.current) {
-      try {
-        const canvas = await html2canvas(chatBoxRef.current);
-        const image = canvas.toDataURL('image/png');
-        downloadImage(image, 'chat-capture.png');
-      } catch (error) {
-        console.error('Failed to capture the chat:', error);
-      }
-    }
-  };
+  }, [chatRef]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = getAuthTokenFromCookie();
-      const msg = {
-        message: '연봉이 얼마야?',
-      };
-      try {
-        const response = await axios.post(API.CHAT, msg, {
+    setChatBoxRef(chatRef);
+  }, [setChatBoxRef, chatRef]);
+
+  const handleImgClick = async () => {
+    setInputValue('');
+    const token = getAuthTokenFromCookie();
+
+    // Add user's input to chatData
+    const newUserMessage = {
+      id: chatData.length + 1,
+      content: inputValue,
+      isUser: true,
+    };
+
+    setChatData((prevChatData) => [...prevChatData, newUserMessage]);
+
+    try {
+      const response = await axios.post(
+        `${API.CHAT}`,
+        { message: inputValue },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
+        }
+      );
 
-        setChatData([
-          { id: 1, content: response.data, isUser: true },
-          {
-            id: 2,
-            content: (
-              <span>
-                안녕하세요! 커리어 <span style={{ fontWeight: '700' }}>챗봇 쿠르</span>에요!
-                <br />
-                <span style={{ fontWeight: '700' }}>{response.data}</span>와 관련된 궁금한 이야기가
-                있으신가요? 제게 물어보세요!
-              </span>
-            ),
-            isUser: false,
-          },
-        ]);
-        setJob({ job_name: response.data });
-      } catch (error) {
-        console.error('에러:', error);
-      }
-    };
+      // Add chatbot's response to chatData
+      const newChatbotMessage = {
+        id: chatData.length + 2,
+        content: response.data?.data?.responseMessage || 'No response message',
+        isUser: false,
+      };
 
-    fetchUserData();
-  }, []);
+      setChatData((prevChatData) => [...prevChatData, newChatbotMessage]);
+
+      console.log('Chat request successful:', response.data);
+    } catch (error) {
+      console.error('Error sending chat request:', error);
+    }
+  };
+
+  const handleKeyPress = (e: { key: string }) => {
+    if (e.key === 'Enter') {
+      handleImgClick();
+      setIsInputFocused(false);
+    }
+  };
+
   return (
     <ChatWrapper>
       <ChatBox ref={chatBoxRef}>
-        {chatData.map((chat, index) => (
-          <ChatBubble key={chat.id} $isUser={chat.isUser}>
-            <BotContainer $isUser={chat.isUser}>
-              <ProfileInfo $isUser={chat.isUser}>
-                <img src={process.env.PUBLIC_URL + '/image/chatCharacter.png'} alt='characterImage' />
-              </ProfileInfo>
-              <UserBubble $isUser={chat.isUser}>{chat.content}</UserBubble>
-            </BotContainer>
-          </ChatBubble>
+        {/* 채팅 내용 표시 */}
+        {chatData.map((message) => (
+          <div key={message.id} className={message.isUser ? 'userMessage' : 'botMessage'}>
+            {message.isUser ? (
+              <>
+                <UserContainer>
+                  <UserBubble>
+                    <Typography variant={'body3'} style={{ color: colors.white }}>
+                      {message.content}
+                    </Typography>
+                  </UserBubble>
+                </UserContainer>
+              </>
+            ) : (
+              <>
+                <BotContainer>
+                  <ProfileInfo>
+                    <img
+                      src={process.env.PUBLIC_URL + '/images/char/recruitime.png'}
+                      alt='characterImage'
+                    />
+                  </ProfileInfo>
+                  <BotBubble>
+                    <Typography variant={'body3'}>{message.content}</Typography>
+                  </BotBubble>
+                </BotContainer>
+              </>
+            )}
+          </div>
         ))}
       </ChatBox>
       <BottomChat>
@@ -122,61 +157,69 @@ export const Chat = () => {
           placeholder='메세지를 입력해주세요'
           value={inputValue}
           onChange={handleInputChange}
+          onFocus={() => setIsInputFocused(true)}
+          onKeyPress={(e: any) => handleKeyPress(e)}
         />
-        <img src={iconSrc} alt='circleArrowIcon' />
+        <div onClick={handleImgClick}>
+          <img src={iconSrc} alt='circleArrowIcon' />
+        </div>
       </BottomChat>
     </ChatWrapper>
   );
 };
 
 const ChatWrapper = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 `;
 
 const ChatBox = styled.div`
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: calc(100vh - 280px);
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: 5px; /* 스크롤 막대의 너비 */
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: ${colors.gray[500]}; /* 스크롤 막대의 색상 */
-    border-radius: 4px; /* 스크롤 막대의 모서리를 둥글게 만듭니다. */
-  }
+  padding-bottom: 100px;
 `;
 
-const BotContainer = styled.div<{ $isUser: boolean }>`
+const BotContainer = styled.div`
   display: flex;
-  gap: 10px;
-  justify-content: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
-`;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 16px;
 
-const ChatBubble = styled.div<{ $isUser: boolean }>`
-  max-width: 400px;
-  padding: 15px 20px;
-  border-radius: 10px;
-  font-size: 1.6rem;
-  line-height: 2.3rem;
-  align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
-`;
-
-const UserBubble = styled(ChatBubble)<{ $isUser: boolean }>`
-  width: 100%;
-
-  color: ${({ $isUser }) => ($isUser ? colors.white : colors.gray[800])};
-  background-color: ${({ $isUser }) => ($isUser ? colors.blue[500] : colors.gray[100])};
-`;
-
-const ProfileInfo = styled.div<{ $isUser: boolean }>`
-  display: flex;
-  display: ${(props) => (props.$isUser ? 'none' : 'block')};
   img {
-    width: 60px;
+    width: 40px; // 캐릭터 이미지 크기 조절
+    height: 40px;
+    margin-right: 8px; // 캐릭터 이미지와 대화 말풍선 사이 간격
   }
+`;
+
+const UserContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 16px;
+`;
+
+const ProfileInfo = styled.div`
+  margin-right: 12px; // 프로필 이미지와 대화 말풍선 사이 간격
+`;
+
+const UserBubble = styled.div`
+  background-color: ${colors.blue[500]}; // 사용자 대화 말풍선 배경색
+  color: ${colors.white}; // 사용자 대화 말풍선 텍스트 색상
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 60%; // 대화 말풍선 최대 너비
+`;
+
+const BotBubble = styled.div`
+  background-color: ${colors.gray[50]}; // 사용자 대화 말풍선 배경색
+  color: ${colors.white}; // 사용자 대화 말풍선 텍스트 색상
+  padding: 12px 18px;
+  border-radius: 8px;
+  max-width: 60%; // 대화 말풍선 최대 너비
 `;
 
 const BottomChat = styled.div`
@@ -188,9 +231,13 @@ const BottomChat = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
+  background-color: ${colors.white};
   ${common.flexCenterRow};
   gap: 12px;
   border-top: 1px solid ${colors.gray[400]};
 `;
 
-const StyledChatInput = styled(ChatInput)``;
+const StyledChatInput = styled(ChatInput)`
+  flex: 1;
+  margin-right: 10px;
+`;

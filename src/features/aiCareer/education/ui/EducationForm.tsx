@@ -17,7 +17,7 @@ import styled from 'styled-components';
 
 export const EducationForm = () => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
-  const { userData, handleSelect } = useUserData(initialValues);
+  const { userDataStore, handleSelect } = useUserData(initialValues);
 
   const handleSelectOption = (option: string) => {
     handleSelect('education', option);
@@ -32,15 +32,8 @@ export const EducationForm = () => {
     handleSelect('majorCheck', option);
   };
 
-  useEffect(() => {
-    const isAllFieldsFilled =
-      userData.education !== '' && userData.major !== '' && userData.majorCheck !== '';
-    handleSelect('isAllFieldsFilled', isAllFieldsFilled ? 'true' : 'false');
-  }, [userData.education, userData.major, userData.majorCheck, handleSelect]);
-
-  useEffect(() => {
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
+  const isAllFieldsFilled =
+    userDataStore.education !== '' && userDataStore.major !== '' && userDataStore.majorCheck !== '';
 
   return (
     <EducationWrapper>
@@ -52,7 +45,7 @@ export const EducationForm = () => {
         <OptionPicker
           label='학력 선택'
           onClick={handleOpenModal}
-          selectedOption={userData.education}
+          selectedOption={userDataStore.education}
           children='학력선택'
         />
       </div>
@@ -60,7 +53,7 @@ export const EducationForm = () => {
         className='space'
         type='text'
         label='전공/계열'
-        value={userData.major}
+        value={userDataStore.major}
         onChange={handleEducationChange}
         placeholder='전공 및 계열 입력'
         name={'education'}
@@ -73,13 +66,13 @@ export const EducationForm = () => {
           '😰 전공이 적성과는 맞지 않아요.',
         ]}
         onSelect={handleMatchSelect}
-        selected={userData.majorCheck}
+        selected={userDataStore.majorCheck}
         width='100%'
         style={{ textAlign: 'left' }}
       />
       <Button
-        variant={userData.isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!userData.isAllFieldsFilled}
+        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        disabled={!isAllFieldsFilled}
         style={{
           position: 'fixed',
           bottom: '38px',
@@ -87,14 +80,14 @@ export const EducationForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.experience}>계속하기</Link>
+        {isAllFieldsFilled ? <Link to={ROUTES_PATH.experience}>계속하기</Link> : '계속하기'}
       </Button>
       <Modal
         label='학력선택'
         isOpen={isOpen}
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
-        selected={userData.education}
+        selected={userDataStore.education}
         options={edu}
       />
     </EducationWrapper>

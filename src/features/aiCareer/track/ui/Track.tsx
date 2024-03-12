@@ -8,17 +8,11 @@ import { ROUTES_PATH } from 'shared/constants/routes';
 import { MAX_SELECTIONS, removeEmoji, useUserData } from 'features/aiCareer/@hooks/useUserData';
 
 export const TrackForm = () => {
-  const { userData, handleSelectInterest, handleSelect } = useUserData(initialValues);
+  const { userDataStore, handleSelectInterest, handleSelect } = useUserData(initialValues);
 
-  const selectedInterests = userData.interests;
+  const selectedInterests = userDataStore.interests;
 
-  useEffect(() => {
-    handleSelect('isAllFieldsFilled', selectedInterests.length > 0 ? 'true' : 'false');
-  }, [selectedInterests, handleSelect]);
-
-  useEffect(() => {
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
+  // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
   return (
     <TrackWrapper>
@@ -45,8 +39,8 @@ export const TrackForm = () => {
         ))}
       </InterestsContainer>
       <Button
-        variant={userData.isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!userData.isAllFieldsFilled}
+        variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
+        disabled={!selectedInterests}
         style={{
           position: 'fixed',
           bottom: '38px',
@@ -54,7 +48,7 @@ export const TrackForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.education}>계속하기</Link>
+        {selectedInterests.length > 0 ? <Link to={ROUTES_PATH.education}>계속하기</Link> : '계속하기'}
       </Button>
     </TrackWrapper>
   );

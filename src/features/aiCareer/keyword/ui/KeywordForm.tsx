@@ -4,45 +4,47 @@ import styled from 'styled-components';
 import { Button } from 'shared/ui/button/Button';
 import { initialValues } from 'shared/constants/data';
 import colors from 'shared/styles/color';
-import { Keyword, useUserData } from 'features/aiCareer/@hooks/useUserData';
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import axios from 'axios';
 import { API } from 'config';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 import { Loading } from 'pages/loading';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import { Keyword } from 'shared/zustand/userStore';
 
 const MIN_SELECTIONS_REQUIRED = 10;
 const MAX_SELECTIONS = 20;
 
 export const KeywordForm = () => {
-  const [userKeywords, setSelectedKeywords] = useState<number[]>([]);
   const [noticeText, setNoticeText] = useState(`10개 이상 선택해주세요! (0/${MAX_SELECTIONS})`);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-  const { userData, handleSelectKeyword } = useUserData(initialValues);
   const [keyword, setKeyword] = useState({ keywordCategoryMap: {} });
+  const { userDataStore, handleSelectKeyword } = useUserData(initialValues, keyword);
 
   const { keywordCategoryMap } = keyword;
 
   useEffect(() => {
-    setIsAllFieldsFilled(userData.userKeywords.length > 9);
-  }, [userData.userKeywords]);
+    setIsAllFieldsFilled(userDataStore.userKeywords.length > 9);
+  }, [userDataStore.userKeywords]);
 
   useEffect(() => {
-    if (userData.userKeywords.length >= MIN_SELECTIONS_REQUIRED) {
-      setNoticeText(
-        `더 많은 키워드로 정확한 분석을 받아보세요! (${userData.userKeywords.length}/${MAX_SELECTIONS})`
-      );
+    console.log(userDataStore.userKeywords);
+    const count = userDataStore.userKeywords.length;
+
+    if (count >= MIN_SELECTIONS_REQUIRED) {
+      setNoticeText(`더 많은 키워드로 정확한 분석을 받아보세요! (${count}/${MAX_SELECTIONS})`);
     } else {
-      setNoticeText(`10개 이상 선택해주세요! (${userData.userKeywords.length}/${MAX_SELECTIONS})`);
+      setNoticeText(`10개 이상 선택해주세요! (${count}/${MAX_SELECTIONS})`);
     }
-    setIsAllFieldsFilled(userData.userKeywords.length >= MIN_SELECTIONS_REQUIRED);
-  }, [userData.userKeywords]);
 
-  useEffect(() => {
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-  }, [userData]);
+    setIsAllFieldsFilled(count >= MIN_SELECTIONS_REQUIRED);
+  }, [userDataStore.userKeywords]);
 
+  const allKeywords = (Object.values(keywordCategoryMap) as unknown as Keyword[][]).reduce(
+    (acc, keywords) => [...acc, ...keywords],
+    []
+  );
   useEffect(() => {
     const fetchKeywords = async () => {
       try {
@@ -57,40 +59,6 @@ export const KeywordForm = () => {
     fetchKeywords();
   }, []);
 
-  const allKeywords = (Object.values(keywordCategoryMap) as unknown as Keyword[][]).reduce(
-    (acc, keywords) => [...acc, ...keywords],
-    []
-  );
-
-  // const handleAiCareerButtonClick = async () => {
-  //   sessionStorage.clear();
-
-  //   const { isAllFieldsFilled, experienceOption, experienceDetail, ...userDataWithoutExcludedFields } =
-  //     userData;
-
-  //   const userDataWithoutEmoji = {
-  //     ...userDataWithoutExcludedFields,
-  //     majorCheck: userData.majorCheck ? userData.majorCheck.replace(/[\uD800-\uDFFF].\s/, '') : '',
-  //   };
-  //   const token = getAuthTokenFromCookie();
-  //   if (!token) {
-  //     console.error('Access token not found.');
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.post(API.RECOMMENDATION, userDataWithoutEmoji, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     navigate(ROUTES_PATH.loading);
-  //     console.log('Recommendations response:', response.data);
-  //   } catch (error) {
-  //     console.error('Error getting recommendations:', error);
-  //   }
-  // };
-
   return (
     <KeywordsWrapper>
       <div className='title'>
@@ -103,47 +71,42 @@ export const KeywordForm = () => {
 
       <KeywordsContainer>
         <div className='keyword'>
-          {allKeywords.map((keyword) => (
+          {allKeywords.map((kw) => (
             <StyledButton
               variant={
-                userData.userKeywords.some(
-                  (selectedKeyword) => selectedKeyword.keyword === keyword.keyword
-                )
+                userDataStore.userKeywords.some((selected) => selected.keyword === kw.keyword)
                   ? 'active'
                   : 'inactive'
               }
-              key={keyword.keyword}
-              onClick={() => handleSelectKeyword(keyword)}
+              key={kw.keyword}
+              onClick={() => handleSelectKeyword(kw)}
             >
               <Typography
                 variant={
-                  userData.userKeywords.some(
-                    (selectedKeyword) => selectedKeyword.keyword === keyword.keyword
-                  )
+                  userDataStore.userKeywords.some((selected) => selected.keyword === kw.keyword)
                     ? 'button3Active'
                     : 'button3'
                 }
               >
-                {keyword.keyword}
+                {kw.keyword}
               </Typography>
             </StyledButton>
           ))}
         </div>
       </KeywordsContainer>
-      <Link to={ROUTES_PATH.loading}>
-        <Button
-          variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-          disabled={!isAllFieldsFilled}
-          style={{
-            position: 'fixed',
-            bottom: '38px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          AI 맞춤 커리어 보러가기
-        </Button>
-      </Link>
+
+      <Button
+        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        disabled={!isAllFieldsFilled}
+        style={{
+          position: 'fixed',
+          bottom: '38px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        {isAllFieldsFilled ? <Link to={ROUTES_PATH.loading}>AI 맞춤 커리어 보러가기 </Link> : '계속하기'}
+      </Button>
     </KeywordsWrapper>
   );
 };

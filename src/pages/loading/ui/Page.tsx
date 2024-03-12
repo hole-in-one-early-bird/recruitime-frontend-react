@@ -14,22 +14,21 @@ import useCustomizedCareerStore from 'shared/zustand/store';
 
 export const Loading = () => {
   const navigate = useNavigate();
-  const { userData } = useUserData(initialValues);
+  const { userDataStore } = useUserData(initialValues);
   const setUserData = useCustomizedCareerStore((state) => state.setUserData);
 
   const handleAiCareer = async () => {
-    const { isAllFieldsFilled, experienceOption, experienceDetail, ...userDataWithoutExcludedFields } =
-      userData;
+    const { experienceOption, experienceDetail, ...userDataWithoutExcludedFields } = userDataStore;
 
     const userDataWithoutEmoji = {
       ...userDataWithoutExcludedFields,
-      majorCheck: userData.majorCheck ? userData.majorCheck.replace(/[\uD800-\uDFFF].\s/, '') : '',
+      majorCheck: userDataStore.majorCheck
+        ? userDataStore.majorCheck.replace(/[\uD800-\uDFFF].\s/, '')
+        : '',
     };
+
     const token = getAuthTokenFromCookie();
-    if (!token) {
-      console.error('Access token not found.');
-      return;
-    }
+    console.log(token);
     try {
       const response = await axios.post(API.RECOMMENDATION, userDataWithoutEmoji, {
         headers: {

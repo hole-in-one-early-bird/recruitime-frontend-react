@@ -58,9 +58,6 @@ export const initialValues = {
   experienceOption: '',
   experienceDetail: '',
   userKeywords: [],
-  // selectedKeywords: [],
-
-  isAllFieldsFilled: false,
 };
 type KeywordCategoryMap = {
   [key: string]: { id: number; keyword: string }[];

@@ -1,38 +1,16 @@
-import { useState, ChangeEvent } from 'react';
-import { interestAreas, keywords } from 'shared/constants/data';
-
-interface Experience {
-  experience_type: string;
-  experience_content: string;
-}
-
-export type Keyword = {
-  id: number;
-  keyword: string;
-  type: string;
-};
-
-interface UserData {
-  name: string;
-  gender: string;
-  age: string;
-  aboutMe: string;
-  interests: string[];
-  education: string;
-  major: string;
-  majorCheck: string;
-  experiences: Experience[];
-  experienceOption: string;
-  experienceDetail: string;
-
-  userKeywords: Keyword[];
-  isAllFieldsFilled: boolean;
+import { interestAreas } from 'shared/constants/data';
+import { Experience, Keyword, UserDataType, UserStore, useUserStore } from 'shared/zustand/userStore';
+interface KeywordCategoryMap {
+  [key: string]: Keyword[];
 }
 
 interface UseUserData {
-  userData: UserData;
+  userDataStore: UserDataType;
   handleNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSelect: (field: string, selected: string | string[] | Experience[] | number[]) => void;
+  handleSelect: (
+    field: keyof UserDataType, // 여기를 수정
+    selected: string | string[] | Experience[] | Keyword[] // 여기를 수정
+  ) => void;
   handleSelectInterest: (interestId: number) => void;
   handleSelectKeyword: (keyword: Keyword) => void;
   addExperience: (option: string, detail: string) => void;
@@ -47,18 +25,15 @@ export const removeEmoji = (text: string): string => {
   return text.substring(text.indexOf(' ') + 1);
 };
 
-export function useUserData(initialValues: UserData): UseUserData {
-  const storedDataItem = sessionStorage.getItem('userData');
-  const storedData = storedDataItem ? JSON.parse(storedDataItem) : null;
-  const [userData, setUserData] = useState<UserData>(storedData || initialValues);
+export function useUserData(
+  initialValues: UserDataType,
+  keywordCategoryMap?: { keywordCategoryMap: KeywordCategoryMap } | undefined
+): UseUserData {
+  const { userDataStore, setUserDataStore } = useUserStore();
 
-  const handleSelect = (field: string, selected: string | string[] | Experience[] | number[]) => {
-    setUserData((prevData) => ({
-      ...prevData,
-      [field]: selected,
-    }));
+  const handleSelect = (field: keyof UserDataType, selected: UserDataType[typeof field]) => {
+    setUserDataStore({ [field]: selected });
   };
-
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     if (input.length <= 5) {
@@ -72,7 +47,9 @@ export function useUserData(initialValues: UserData): UseUserData {
     const interestName = removeEmoji(
       interestAreas.find((interest) => interest.id === interestId)?.name || ''
     );
-    let newInterests = [...userData.interests];
+
+    let newInterests = [...userDataStore.interests];
+
     if (newInterests.includes(interestName)) {
       newInterests = newInterests.filter((name) => name !== interestName);
     } else if (newInterests.length < MAX_SELECTIONS) {
@@ -81,60 +58,65 @@ export function useUserData(initialValues: UserData): UseUserData {
     handleSelect('interests', newInterests); // interests 필드를 업데이트합니다.
   };
 
-  const handleSelectKeyword = (keyword: Keyword) => {
-    setUserData((prevData) => {
-      const isAlreadySelected = prevData.userKeywords.some(
-        (selectedKeyword) => selectedKeyword.keyword === keyword.keyword
-      );
+  const findKeywordType = (keywordName: string): string | undefined => {
+    if (keywordCategoryMap && 'keywordCategoryMap' in keywordCategoryMap) {
+      const categories = keywordCategoryMap.keywordCategoryMap;
 
-      if (isAlreadySelected) {
-        const newSelectedKeywords = prevData.userKeywords.filter(
-          (selectedKeyword) => selectedKeyword.keyword !== keyword.keyword
-        );
-        return { ...prevData, userKeywords: newSelectedKeywords };
-      } else if (prevData.userKeywords.length < MAX_KEYWORD_SELECTIONS) {
-        const newKeywordType = findKeywordType(keyword.id); // Determine the type dynamically
-        const newKeyword = { keyword: keyword.keyword, type: newKeywordType };
-        const newSelectedKeywords = [...prevData.userKeywords, newKeyword];
-        return {
-          ...prevData,
-          userKeywords: newSelectedKeywords,
-        } as UserData; // Type assertion to match UserData
-      }
+      for (const category in categories) {
+        if (categories.hasOwnProperty(category)) {
+          const keywords = categories[category];
+          const foundKeyword = keywords.find((kw: Keyword) => kw.keyword === keywordName);
 
-      return prevData;
-    });
-  };
-
-  // Function to find the keyword type by id
-  const findKeywordType = (keywordId: number): string => {
-    for (const category in keywords.keywordCategoryMap) {
-      const categoryKeywords = keywords.keywordCategoryMap[category];
-      const selectedKeyword = categoryKeywords.find(
-        (keyword: { id: number }) => keyword.id === keywordId
-      );
-
-      if (selectedKeyword) {
-        return category; // Return the category as the type
+          if (foundKeyword) {
+            return category;
+          }
+        }
       }
     }
+    return undefined;
+  };
+  const handleSelectKeyword = (keyword: Keyword): void => {
+    const prevData = userDataStore;
+    const isAlreadySelected = prevData.userKeywords.some(
+      (selectedKeyword: Keyword) => selectedKeyword.keyword === keyword.keyword
+    );
 
-    // Default to an empty string if the type is not found
-    return '';
+    if (!isAlreadySelected && prevData.userKeywords.length < MAX_KEYWORD_SELECTIONS) {
+      const newKeywordType = findKeywordType(keyword.keyword);
+
+      if (newKeywordType) {
+        const newKeyword: Keyword = {
+          keyword: keyword.keyword,
+          type: newKeywordType,
+        };
+
+        const newSelectedKeywords = [...prevData.userKeywords, newKeyword];
+        setUserDataStore({ ...prevData, userKeywords: newSelectedKeywords });
+      } else {
+        console.error(`Type not found for keyword: ${keyword.keyword}`);
+      }
+    } else {
+      // If already selected, remove the keyword
+      const updatedKeywords = prevData.userKeywords.filter(
+        (selectedKeyword: Keyword) => selectedKeyword.keyword !== keyword.keyword
+      );
+
+      setUserDataStore({ ...prevData, userKeywords: updatedKeywords });
+    }
   };
 
   const addExperience = (experience_type: string, experience_content: string) => {
-    const newExperiences = [...userData.experiences, { experience_type, experience_content }];
+    const newExperiences = [...userDataStore.experiences, { experience_type, experience_content }];
     handleSelect('experiences', newExperiences);
   };
 
   const removeExperience = (index: number) => {
-    const newExperiences = userData.experiences.filter((_, i) => i !== index);
+    const newExperiences = userDataStore.experiences.filter((_, i) => i !== index);
     handleSelect('experiences', newExperiences);
   };
 
   return {
-    userData,
+    userDataStore,
     handleNameChange,
     handleSelectKeyword,
     handleSelect,

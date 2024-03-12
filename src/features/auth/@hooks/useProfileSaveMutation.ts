@@ -7,7 +7,6 @@ export const useProfileSaveMutation = () => {
   return useMutation({
     mutationFn: authService.saveProfile,
     onSuccess: (data) => {
-      console.log('프로필 저장 성공');
       navigate('/home', { state: { saveSuccess: true } });
     },
     onError: (error) => {

@@ -26,10 +26,7 @@ export const CustomizedCareer = () => {
   const [userId, setUserId] = useState<number | null>(null);
   const [bookId, setBookId] = useState<number | null>(null);
   const resultData = useCustomizedCareerStore((state) => state.userData);
-  const { userData } = useUserData(initialValues);
-  useEffect(() => {
-    console.log(userData);
-  });
+  const { userDataStore } = useUserData(initialValues);
 
   const accordionSections = [
     {
@@ -38,17 +35,18 @@ export const CustomizedCareer = () => {
     },
     {
       header: '관련 자격증',
+
       content: resultData.certifications,
     },
     {
       header: '왜 이 커리어가 추천 되었나요?',
+
       content: resultData.recommendationReason,
     },
   ];
   const toggleAccordion = (index: any) => {
     setOpenSection((prevOpenSection) => (prevOpenSection === index ? null : index));
   };
-  // 북마크
 
   return (
     <CustomizedCareerWrapper>
@@ -56,7 +54,7 @@ export const CustomizedCareer = () => {
         <Typography
           variant={'largeTitle'}
           className='space'
-        >{`${userData.name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
+        >{`${userDataStore.name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
         <ContentBox>
           <Content>
             <AiChat>
@@ -78,11 +76,11 @@ export const CustomizedCareer = () => {
             <CareerBox>
               <Job>
                 <Typography variant={'title2'} style={{ color: colors.white }}>
-                  {resultData.jobName}
+                  {resultData?.jobName}
                 </Typography>
               </Job>
               <Des>
-                <Typography variant={'body2'}>{resultData.jobDescription}</Typography>
+                <Typography variant={'body2'}>{resultData?.jobDescription}</Typography>
               </Des>
             </CareerBox>
             <AccordionContainer>

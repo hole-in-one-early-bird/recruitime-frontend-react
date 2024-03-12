@@ -8,11 +8,12 @@ type AIInteractiveProps = {
   subChildren: string;
   alt: string;
   src: string;
+  onClick?: () => void;
 };
 
-export const AIInteractive = ({ titleChildren, subChildren, alt, src }: AIInteractiveProps) => {
+export const AIInteractive = ({ titleChildren, subChildren, alt, src, onClick }: AIInteractiveProps) => {
   return (
-    <AIInteractiveWrapper>
+    <AIInteractiveWrapper onClick={onClick}>
       <div className='title'>
         <Typography variant={'title3'}>{titleChildren}</Typography>
         <Typography variant={'subtitle2'}>{subChildren}</Typography>
