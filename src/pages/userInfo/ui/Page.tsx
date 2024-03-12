@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API } from 'config';
+import { useProfileSaveMutation } from 'features/auth/@hooks/useProfileSaveMutation';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 
 import { useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
@@ -13,6 +14,8 @@ import styled from 'styled-components';
 
 export const UserInfo = () => {
   const { userInfoData, handlers } = useUserInfoData('');
+  const { mutate: saveProfile } = useProfileSaveMutation();
+
   const isAllDataComplete = () => {
     return (
       userInfoData.name !== '' &&
@@ -24,28 +27,6 @@ export const UserInfo = () => {
     );
   };
 
-  const handleSaveProfile = async () => {
-    const { experience, ...userInfoDataWithoutExperience } = userInfoData;
-
-    const token = getAuthTokenFromCookie();
-    console.log(token);
-    if (!token) {
-      console.error('Access token not found.');
-      return;
-    }
-
-    try {
-      const response = await axios.post(API.USERINFO, userInfoDataWithoutExperience, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log('Profile saved successfully:', response.data);
-    } catch (error) {
-      console.error('Error saving profile:', error);
-    }
-  };
-
   return (
     <UserInfoWrapper>
       <Profile userInfoData={userInfoData} handlers={handlers} />
@@ -54,7 +35,8 @@ export const UserInfo = () => {
       <Button
         type='submit'
         variant={isAllDataComplete() ? 'primary' : 'primaryDisabled'}
-        onClick={handleSaveProfile}
+        onClick={() => isAllDataComplete() && saveProfile(userInfoData)}
+        disabled={!isAllDataComplete()}
       >
         프로필 저장하기
       </Button>

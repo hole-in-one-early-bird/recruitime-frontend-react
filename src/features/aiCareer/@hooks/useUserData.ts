@@ -72,7 +72,9 @@ export function useUserData(initialValues: UserData): UseUserData {
     const interestName = removeEmoji(
       interestAreas.find((interest) => interest.id === interestId)?.name || ''
     );
+
     let newInterests = [...userData.interests];
+
     if (newInterests.includes(interestName)) {
       newInterests = newInterests.filter((name) => name !== interestName);
     } else if (newInterests.length < MAX_SELECTIONS) {

@@ -32,13 +32,11 @@ export const EducationForm = () => {
     handleSelect('majorCheck', option);
   };
 
-  useEffect(() => {
-    const isAllFieldsFilled =
-      userData.education !== '' && userData.major !== '' && userData.majorCheck !== '';
-    handleSelect('isAllFieldsFilled', isAllFieldsFilled ? 'true' : 'false');
-  }, [userData.education, userData.major, userData.majorCheck, handleSelect]);
+  const isAllFieldsFilled =
+    userData.education !== '' && userData.major !== '' && userData.majorCheck !== '';
 
   useEffect(() => {
+    console.log(isAllFieldsFilled);
     sessionStorage.setItem('userData', JSON.stringify(userData));
   }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
@@ -78,8 +76,8 @@ export const EducationForm = () => {
         style={{ textAlign: 'left' }}
       />
       <Button
-        variant={userData.isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!userData.isAllFieldsFilled}
+        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        disabled={!isAllFieldsFilled}
         style={{
           position: 'fixed',
           bottom: '38px',
@@ -87,7 +85,7 @@ export const EducationForm = () => {
           transform: 'translateX(-50%)',
         }}
       >
-        <Link to={ROUTES_PATH.experience}>계속하기</Link>
+        {isAllFieldsFilled ? <Link to={ROUTES_PATH.experience}>계속하기</Link> : '계속하기'}
       </Button>
       <Modal
         label='학력선택'

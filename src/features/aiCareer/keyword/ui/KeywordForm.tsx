@@ -130,20 +130,19 @@ export const KeywordForm = () => {
           ))}
         </div>
       </KeywordsContainer>
-      <Link to={ROUTES_PATH.loading}>
-        <Button
-          variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-          disabled={!isAllFieldsFilled}
-          style={{
-            position: 'fixed',
-            bottom: '38px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          AI 맞춤 커리어 보러가기
-        </Button>
-      </Link>
+
+      <Button
+        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+        disabled={!isAllFieldsFilled}
+        style={{
+          position: 'fixed',
+          bottom: '38px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        {isAllFieldsFilled ? <Link to={ROUTES_PATH.loading}>AI 맞춤 커리어 보러가기 </Link> : '계속하기'}
+      </Button>
     </KeywordsWrapper>
   );
 };
