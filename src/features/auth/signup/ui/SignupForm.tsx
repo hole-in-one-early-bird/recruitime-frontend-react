@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
+
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
 
@@ -15,9 +16,11 @@ export const SignupForm = () => {
     passwordConfirm: '',
   };
   const { mutate: signUp } = useSignUpMutation();
-  const { mutate: validation } = useValidation();
-  const { values, handleChange, errors } = useForm(initialValues);
-  const debouncedEmail = useDebounce(values.email, 500);
+  const { values, handleChange, errors } = useForm(initialValues, [
+    'email',
+    'password',
+    'passwordConfirm',
+  ]);
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -26,19 +29,13 @@ export const SignupForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (debouncedEmail.trim() !== '') {
-      const result = validation(debouncedEmail);
-    }
-  }, [debouncedEmail, validation]);
-
   const isFormValid =
     Object.values(values).every((value) => (value as string).trim() !== '') &&
     Object.values(errors).every((error) => !error);
 
   return (
     <SignupFormWrapper>
-      <Typography className='title' variant={'largeTitle'}>
+      <Typography className='title' variant={'largeTitle'} style={{ marginTop: '15px' }}>
         회원가입
       </Typography>
       <TextInput

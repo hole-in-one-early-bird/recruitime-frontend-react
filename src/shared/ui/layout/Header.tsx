@@ -57,6 +57,18 @@ export const Header = () => {
             </Link>
           </HeaderContainer>
         );
+      case ROUTES_PATH.signup:
+        return (
+          <>
+            <HeaderContainer style={{ justifyContent: 'center' }}>
+              <BackIcon
+                src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+                alt='arrowIcon'
+                onClick={handlePreviousClick}
+              />
+            </HeaderContainer>
+          </>
+        );
       case ROUTES_PATH.mypage:
       case ROUTES_PATH.userInfo:
       case ROUTES_PATH.findAccount:
@@ -131,7 +143,7 @@ const HeaderContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 12px 0;
+  padding: 10px 020px;
   .chat {
     position: absolute;
     left: 40px;

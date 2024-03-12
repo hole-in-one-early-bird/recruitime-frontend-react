@@ -245,4 +245,11 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '1',
     letterSpacing: '-0.02em',
   },
+  toast: {
+    color: colors.white,
+    fontSize: '18px',
+    fontWeight: 500,
+    lineHeight: '20px',
+    letterSpacing: '-0.02em',
+  },
 };
