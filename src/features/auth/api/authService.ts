@@ -64,7 +64,6 @@ export const authService = {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response.data);
     return response.data;
   },
   findPassword: async (signedEmail: string) => {
