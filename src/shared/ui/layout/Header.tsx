@@ -44,6 +44,16 @@ export const Header = () => {
     navigate(-1);
   };
 
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      alert('링크가 클립보드에 복사되었습니다.');
+    } catch (err) {
+      alert('링크 복사에 실패했습니다.');
+      console.error('Failed to copy: ', err);
+    }
+  };
+
   const renderHeaderContent = () => {
     const title = routeTitles[pathname] || '';
 
@@ -108,11 +118,15 @@ export const Header = () => {
             </Link>
             <Title variant={'headerTitle'}>{title}</Title>
             <IconContainer>
-              <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.png'} alt='shareIcon' />
-              <img
+              <div onClick={copyToClipboard}>
+                {' '}
+                <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.png'} alt='shareIcon' />
+              </div>
+
+              {/* <img
                 src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.png'}
                 alt='inActiveBookmarkIcon'
-              />
+              /> */}
             </IconContainer>
           </HeaderContainer>
         );
@@ -143,7 +157,7 @@ const HeaderContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 020px;
+  padding: 10px 0;
   .chat {
     position: absolute;
     left: 40px;
