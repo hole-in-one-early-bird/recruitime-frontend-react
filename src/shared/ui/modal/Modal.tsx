@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import styled from 'styled-components';
@@ -18,6 +20,9 @@ interface ModalProps {
 
 interface PopupModalProps extends ModalProps {
   content: React.ReactNode;
+
+  onClickYes: () => void | Promise<void>;
+  onClickNo: () => void | Promise<void>;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -60,7 +65,13 @@ export const Modal: React.FC<ModalProps> = ({
   );
 };
 
-export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose }) => {
+export const PopupModal: React.FC<PopupModalProps> = ({
+  isOpen,
+  content,
+  onClose,
+  onClickYes,
+  onClickNo,
+}) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
@@ -80,10 +91,11 @@ export const PopupModal: React.FC<PopupModalProps> = ({ isOpen, content, onClose
         </TypoContainer>
 
         <ButtonContainer>
-          <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }}>
+          <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }} onClick={onClickNo}>
             아니요
           </Button>
-          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }}>
+
+          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }} onClick={onClickYes}>
             네
           </Button>
         </ButtonContainer>
