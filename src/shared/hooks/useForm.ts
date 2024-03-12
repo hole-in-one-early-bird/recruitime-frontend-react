@@ -2,14 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { API } from 'config';
 import { useValidation } from 'features/auth/@hooks/useValidation';
-import { authService, checkDuplicates, SignupData } from 'features/auth/api/authService';
+import { authService, SignupData } from 'features/auth/api/authService';
 import { useState } from 'react';
 
 export const useForm = (initialValues: any, validationFields: any) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<SignupData>({});
-  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
-  // const { mutate, lastValidationResult } = useValidation();
 
   const checkDuplicates = async (email: string) => {
     try {
@@ -23,13 +21,10 @@ export const useForm = (initialValues: any, validationFields: any) => {
       return response.data;
     } catch (error: any) {
       console.log(error.response.status);
-      if (error.response && error.response.status === 400) {
-        setIsEmailDuplicate(true);
-      }
     }
   };
 
-  const validate = async (formValues: SignupData, isLoginPage: boolean = false) => {
+  const validate = async (formValues: SignupData) => {
     const errors: Partial<SignupData> = {};
     // 이메일 필드 유효성 검사
     if (validationFields.includes('email') && formValues.email) {

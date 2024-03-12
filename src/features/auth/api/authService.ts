@@ -87,14 +87,3 @@ export const authService = {
     }
   },
 };
-
-export const checkDuplicates = async (email: string) => {
-  const formData = new FormData();
-  formData.append('email', email);
-  const response = await axios.post(`${API.VALIDATION}`, formData, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.data;
-};
