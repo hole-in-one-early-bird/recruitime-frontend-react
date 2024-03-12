@@ -12,7 +12,7 @@ export default function ToastPopup({ children }: { children: string }) {
 }
 
 const ToastPopupBox = styled.div`
-  padding: 22px;
+  padding: 20px;
   border-radius: 30px;
   background-color: ${colors.blue[400]};
   text-align: center;

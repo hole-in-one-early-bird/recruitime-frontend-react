@@ -55,6 +55,12 @@ export const typographyStyles: TypographyVariants = {
     letterSpacing: '-0.48px',
     lineHeight: '100%',
   },
+  body1: {
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+    letterSpacing: '-0.02em',
+  },
 
   label: {
     color: colors.gray[800],
@@ -243,13 +249,13 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '1',
     letterSpacing: '-0.02em',
   },
-  body1: {
-    color: colors.gray[700],
-    fontSize: '18px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
+  // body1: {
+  //   color: colors.gray[700],
+  //   fontSize: '18px',
+  //   fontWeight: 500,
+  //   lineHeight: '1',
+  //   letterSpacing: '-0.02em',
+  // },
   body2: {
     color: colors.gray[700],
     fontSize: '16px',
