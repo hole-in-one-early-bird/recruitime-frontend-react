@@ -7,9 +7,10 @@ interface ChatInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   name: string;
   style?: React.CSSProperties;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
-export const ChatInput: React.FC<ChatInputProps> = ({ className, style, ...props }) => {
+export const ChatInput: React.FC<ChatInputProps> = ({ className, style, ref, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -18,6 +19,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ className, style, ...props
         <StyledInput
           style={style}
           $isFocused={isFocused}
+          ref={ref}
           {...props} // 나머지 props를 전달
         />
       </InputContainer>

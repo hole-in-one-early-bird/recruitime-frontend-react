@@ -31,18 +31,17 @@ export const CustomizedCareer = () => {
   const accordionSections = [
     {
       header: '관련 학과',
-      // content: resultData.relatedMajor,
-      content: 'a',
+      content: resultData.relatedMajor,
     },
     {
       header: '관련 자격증',
-      content: 'a',
-      //  content: resultData.certifications,
+
+      content: resultData.certifications,
     },
     {
       header: '왜 이 커리어가 추천 되었나요?',
-      content: 'a',
-      // content: resultData.recommendationReason,
+
+      content: resultData.recommendationReason,
     },
   ];
   const toggleAccordion = (index: any) => {

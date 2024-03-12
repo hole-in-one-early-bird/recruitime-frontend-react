@@ -11,6 +11,9 @@ import axios from 'axios';
 import { API } from 'config';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 import { Typography } from 'shared/ui/typography/Typography';
+import { useUserStore } from 'shared/zustand/userStore';
+import useCustomizedCareerStore from 'shared/zustand/store';
+import { useChatStore } from 'shared/zustand/chatStore';
 
 type InputData = {
   job_name: string;
@@ -18,72 +21,69 @@ type InputData = {
 
 type ChatMessage = {
   id: number;
-  content: string | JSX.Element;
+  content: string;
   isUser: boolean;
 };
 
-const Data = [
-  {
-    id: 1,
-    content: '직업이름',
-    isUser: true,
-  },
-  {
-    id: 2,
-    content:
-      '안녕하세요! 커리어 챗봇 쿠르에요! 커리어와 관련된 궁금한 이야기가 있으신가요? 제게 물어보세요!',
-    isUser: false,
-  },
-];
-
 export const Chat = () => {
+  const { chatBoxRef, setChatBoxRef } = useChatStore();
+  const [isChatProcessing, setChatProcessing] = useState(false); // 추가
+
   const [job, setJob] = useState<InputData>({ job_name: '' });
-  const [chatData, setChatData] = useState<ChatMessage[]>(Data);
+
   const [userId, setUserId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
+  const { userDataStore, setUserDataStore } = useUserStore();
+  const resultData = useCustomizedCareerStore((state) => state.userData);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleInputChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setInputValue(e.target.value);
   };
 
+  const [chatData, setChatData] = useState<ChatMessage[]>([
+    {
+      id: 1,
+      content: resultData?.jobName,
+      isUser: true,
+    },
+    {
+      id: 2,
+      content:
+        '안녕하세요! 커리어 챗봇 쿠르에요! 커리어와 관련된 궁금한 이야기가 있으신가요? 제게 물어보세요!',
+      isUser: false,
+    },
+  ]);
+
   const iconSrc = inputValue
     ? process.env.PUBLIC_URL + '/images/icon/activeCircleArrowIcon.svg' // 활성화된 아이콘 경로
     : process.env.PUBLIC_URL + '/images/icon/CircleArrowIcon.svg'; // 기본 아이콘 경로
 
-  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    if (chatRef && chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [chatData]);
+  }, [chatRef]);
 
-  const downloadImage = (dataUrl: string, filename: string) => {
-    // `<a>` 태그를 생성합니다.
-    const link = document.createElement('a');
-    // 데이터 URL을 `href` 속성에 설정합니다.
-    link.href = dataUrl;
-    // 다운로드할 파일 이름을 `download` 속성에 설정합니다.
-    link.download = filename;
-    // `<a>` 태그를 클릭하여 다운로드를 시작합니다.
-    link.click();
-  };
-
-  const captureChat = async () => {
-    if (chatBoxRef.current) {
-      try {
-        const canvas = await html2canvas(chatBoxRef.current);
-        const image = canvas.toDataURL('image/png');
-        downloadImage(image, 'chat-capture.png');
-      } catch (error) {
-        console.error('Failed to capture the chat:', error);
-      }
-    }
-  };
+  useEffect(() => {
+    setChatBoxRef(chatRef);
+  }, [setChatBoxRef, chatRef]);
 
   const handleImgClick = async () => {
+    setInputValue('');
     const token = getAuthTokenFromCookie();
-    console.log(token);
+
+    // Add user's input to chatData
+    const newUserMessage = {
+      id: chatData.length + 1,
+      content: inputValue,
+      isUser: true,
+    };
+
+    setChatData((prevChatData) => [...prevChatData, newUserMessage]);
+
     try {
       const response = await axios.post(
         `${API.CHAT}`,
@@ -95,9 +95,25 @@ export const Chat = () => {
         }
       );
 
+      // Add chatbot's response to chatData
+      const newChatbotMessage = {
+        id: chatData.length + 2,
+        content: response.data?.data?.responseMessage || 'No response message',
+        isUser: false,
+      };
+
+      setChatData((prevChatData) => [...prevChatData, newChatbotMessage]);
+
       console.log('Chat request successful:', response.data);
     } catch (error) {
       console.error('Error sending chat request:', error);
+    }
+  };
+
+  const handleKeyPress = (e: { key: string }) => {
+    if (e.key === 'Enter') {
+      handleImgClick();
+      setIsInputFocused(false);
     }
   };
 
@@ -105,7 +121,7 @@ export const Chat = () => {
     <ChatWrapper>
       <ChatBox ref={chatBoxRef}>
         {/* 채팅 내용 표시 */}
-        {Data.map((message) => (
+        {chatData.map((message) => (
           <div key={message.id} className={message.isUser ? 'userMessage' : 'botMessage'}>
             {message.isUser ? (
               <>
@@ -141,6 +157,8 @@ export const Chat = () => {
           placeholder='메세지를 입력해주세요'
           value={inputValue}
           onChange={handleInputChange}
+          onFocus={() => setIsInputFocused(true)}
+          onKeyPress={(e: any) => handleKeyPress(e)}
         />
         <div onClick={handleImgClick}>
           <img src={iconSrc} alt='circleArrowIcon' />
@@ -153,7 +171,6 @@ export const Chat = () => {
 const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
   margin-top: 20px;
 `;
 
@@ -162,6 +179,7 @@ const ChatBox = styled.div`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 100px;
 `;
 
 const BotContainer = styled.div`
