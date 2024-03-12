@@ -42,7 +42,7 @@ export const useForm = (initialValues: any, validationFields: any) => {
     if (
       validationFields.includes('password') &&
       formValues.password &&
-      !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,10}$/.test(formValues.password)
+      !/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{1,10}$/.test(formValues.password)
     ) {
       errors.password = '비밀번호는 영문, 숫자가 포함된 1~10자여야 합니다.';
     }
