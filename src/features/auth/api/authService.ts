@@ -46,6 +46,8 @@ export const authService = {
     const response = await axios.post(`${API.SIGNIN}`, userData);
     const { accessToken } = response.data.data;
     setAccessTokenCookie(accessToken);
+    console.log(response.data);
+    return response.data;
   },
   signUp: async (userData: SignupData) => {
     const { email, password } = userData;
@@ -57,13 +59,32 @@ export const authService = {
   validation: async (email: string) => {
     const formData = new FormData();
     formData.append('email', email);
-
-    const response = await axios.post(`${API.VALIDATION}`, formData);
+    const response = await axios.post(`${API.VALIDATION}`, formData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response.data);
     return response.data;
   },
   findPassword: async (signedEmail: string) => {
-    const response = await axios.get(`${API.PASSWORD_FIND}`, { params: { signedEmail } });
+    const response = await axios.get(API.PASSWORD_FIND, { params: { signedEmail } });
     console.log(response);
     return response.data;
+  },
+  saveProfile: async (userInfoData: any) => {
+    const token = getAuthTokenFromCookie();
+    const { experience, ...userInfoDataWithoutExperience } = userInfoData;
+
+    try {
+      const response = await axios.post(API.USERINFO, userInfoDataWithoutExperience, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   },
 };

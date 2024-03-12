@@ -12,7 +12,7 @@ export const FindAccount = () => {
     email: '',
   };
   const { mutate: findPassword } = useFindEmailMutation();
-  const { values, handleChange, errors } = useForm(initialValues);
+  const { values, handleChange, errors } = useForm(initialValues, ['email']);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     findPassword(values.email);
