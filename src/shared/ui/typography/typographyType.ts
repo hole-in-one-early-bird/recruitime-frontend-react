@@ -7,12 +7,55 @@ interface TypographyVariant {
   letterSpacing?: string;
   color?: string;
 }
-
+// headline1: "headline1",
+//   headline2: "headline2",
+//   bodyText: "bodyText",
+//   bodyTextBold: "bodyTextBold",
+//   captionText: "captionText",
+//   buttonText: "buttonText",
+//   pageTitle: "pageTitle",
+//   subTitle: "subTitle",
+//   overline: "overline",
+//   errorMessage: "errorMessage",
+//   navigationText: "navigationText",
+//   cardTitle: "cardTitle",
+//   cardContent: "cardContent",
+//   listItem: "listItem",
+//   sectionHeader: "sectionHeader",
+//   inputText: "inputText",
+//   placeholderText: "placeholderText",
+//   tooltipText: "tooltipText",
+//   badgeText: "badgeText",
+//   highlightedText: "highlightedText",
+//   calloutText: "calloutText",
+//   linkText: "linkText",
+//   footerText: "footerText",
+//   breadcrumbText: "breadcrumbText",
+//   tagText: "tagText",
+//   infoText: "infoText",
+//   successText: "successText",
+//   warningText: "warningText",
+//   errorText: "errorText"
 interface TypographyVariants {
   [variant: string]: TypographyVariant;
 }
-
+// medium:500, semibold:600, bold:700, extrabold:800
 export const typographyStyles: TypographyVariants = {
+  headline1: {
+    fontSize: '24px',
+    fontWeight: 700,
+    // 2%
+    letterSpacing: '-0.02rem',
+    lineHeight: '32px',
+  },
+  headline2: {
+    fontSize: '16px',
+    fontWeight: 500,
+    // 2%
+    letterSpacing: '-0.48px',
+    lineHeight: '100%',
+  },
+
   logo: {
     fontSize: '20px',
     fontWeight: 800,

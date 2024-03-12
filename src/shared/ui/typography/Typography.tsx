@@ -5,7 +5,7 @@ import { typographyStyles } from './typographyType';
 // Props 타입 정의
 interface TypographyProps {
   variant: keyof typeof typographyStyles;
-  children: string;
+  children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
 }

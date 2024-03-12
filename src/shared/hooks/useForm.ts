@@ -24,14 +24,14 @@ export const useForm = (initialValues: any, validationFields: any) => {
     }
   };
 
-  const validate = async (formValues: SignupData) => {
+  const validate = async (formValues: SignupData, isLoginPage?: boolean) => {
     const errors: Partial<SignupData> = {};
     // 이메일 필드 유효성 검사
     if (validationFields.includes('email') && formValues.email) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
         errors.email = '이메일 형식이 유효하지 않습니다.';
-      } else {
-        // 여기서 중복 여부 확인
+      } else if (!isLoginPage) {
+        // 회원가입 시에만 중복 여부 확인
         const isEmailDuplicate = await checkDuplicates(formValues.email);
         if (!isEmailDuplicate) {
           errors.email = '사용할 수 없는 이메일입니다.';
@@ -64,9 +64,9 @@ export const useForm = (initialValues: any, validationFields: any) => {
     setValues(updatedValues);
 
     // 회원가입 시에만 중복 검사를 수행합니다.
-    if (!isLoginPage && name === 'email') {
+    if (name === 'email') {
       // 유효성 검사가 완료될 때까지 기다립니다.
-      const validationErrors = await validate(updatedValues);
+      const validationErrors = await validate(updatedValues, isLoginPage);
       setErrors(validationErrors);
     }
   };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import colors from 'shared/styles/color';
 import { Button } from 'shared/ui/button/Button';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
@@ -8,38 +9,62 @@ import styled from 'styled-components';
 export const Intro = () => {
   return (
     <IntroWrapper>
-      <StyledTypography
-        variant={'largeTitle'}
-      >{`안녕하세요!\n커리어 탐색 리쿠르탐이에요`}</StyledTypography>
-      <Typography variant={'subtitle'}>AI 커리어 관련 서비스를 이용해보세요🔥</Typography>
-      <img src={process.env.PUBLIC_URL + '/images/char/introRecruitime.png'} alt='characterImage' />
-      <Link to={ROUTES_PATH.signin}>
-        <Button
-          variant={'primary'}
-          style={{
-            position: 'fixed',
-            bottom: '40px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          시작하기
-        </Button>
-      </Link>
+      <StyledTypography variant={'headline1'}>
+        {`안녕하세요!\n커리어 탐색 `}
+        <span style={{ color: colors.blue[500] }}>리쿠르탐</span>
+        {`이에요`}
+      </StyledTypography>
+      <div className='sub'>
+        <Typography variant={'headline2'} style={{ color: colors.gray[600] }}>
+          AI 커리어 관련 서비스를 이용해보세요
+        </Typography>
+        <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.png'} alt='fireIcon' />
+      </div>
+      <div className='bg'>
+        <img src={process.env.PUBLIC_URL + '/images/char/introRecruitime.png'} alt='characterImage' />
+      </div>
+      <div>
+        <Link to={ROUTES_PATH.signin}>
+          <Button
+            variant={'primary'}
+            style={{
+              position: 'absolute',
+              bottom: '40px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+          >
+            시작하기
+          </Button>
+        </Link>
+      </div>
     </IntroWrapper>
   );
 };
 
 const IntroWrapper = styled.div`
-  position: relative;
-  img {
-    position: absolute;
-    top: 200px;
-    right: -47px;
+  .bg {
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 156px;
+      right: -47px;
+    }
+  }
+
+  .sub {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    img {
+      transform: translateY(-2px);
+    }
   }
 `;
 
 const StyledTypography = styled(Typography)`
-  margin-top: 50px;
+  color: ${colors.gray[900]};
+  margin: 30px 0 2px;
   white-space: pre-wrap;
 `;
