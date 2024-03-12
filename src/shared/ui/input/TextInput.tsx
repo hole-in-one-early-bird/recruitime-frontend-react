@@ -77,13 +77,14 @@ const StyledInput = styled.input<{ $isFocused: boolean; $isError: boolean; $isVa
   border-radius: 10px;
   outline: none;
   transition: border 0.3s ease;
-
+  color: ${colors.gray[700]};
   &:disabled {
     border: 1px solid ${colors.gray[200]};
   }
 
   &::placeholder {
-    color: ${({ $isFocused }) => ($isFocused ? colors.gray[800] : colors.gray[300])};
+    color: ${({ $isFocused }) => ($isFocused ? colors.gray[700] : colors.gray[300])};
+    font-weight: 400;
   }
 `;
 

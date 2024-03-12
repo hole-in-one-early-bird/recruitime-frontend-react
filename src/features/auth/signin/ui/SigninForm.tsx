@@ -45,7 +45,7 @@ export const SigninForm = () => {
 
   return (
     <SigninFormWrapper>
-      <Typography className='title' variant={'largeTitle'}>
+      <Typography className='title' variant={'headline1'} style={{ margin: '39px 0 66px' }}>
         로그인
       </Typography>
       <TextInput
@@ -76,14 +76,14 @@ export const SigninForm = () => {
         </Typography>
       </Error>
       <Button
-        onClick={handleSubmit}
+        onClick={isFormValid ? handleSubmit : undefined}
         variant={isFormValid ? 'primary' : 'primaryDisabled'}
         disabled={!isFormValid}
         style={{ marginBottom: '22px' }}
       >
         로그인
       </Button>
-      <AuthOptions>
+      <AuthOptions style={{ color: colors.gray[400] }}>
         <Link to={ROUTES_PATH.signup}>
           <StyledTypography variant={'caption'}>회원가입</StyledTypography>
         </Link>
@@ -112,7 +112,6 @@ const AuthOptions = styled.div`
 `;
 
 const StyledTypography = styled(Typography)`
-  padding: 2px;
   border-bottom: 1px solid ${colors.gray[400]};
 `;
 

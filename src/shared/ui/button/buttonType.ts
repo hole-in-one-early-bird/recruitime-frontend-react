@@ -14,6 +14,7 @@ export const variantStyles = {
     ${primaryCommonStyles}
     background-color: ${colors.blue[500]};
     color: ${colors.white};
+    font-weight: 700;
   `,
   // 입력 버튼 - inactive
   confirm: css`
@@ -39,6 +40,7 @@ export const variantStyles = {
     ${primaryCommonStyles}
     background-color: ${colors.gray[200]};
     color: ${colors.gray[400]};
+    font-weight: 700;
   `,
   cancel: css`
     ${primaryCommonStyles}

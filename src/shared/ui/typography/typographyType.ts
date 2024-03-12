@@ -56,6 +56,29 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '100%',
   },
 
+  label: {
+    color: colors.gray[800],
+    fontSize: '16px',
+    fontWeight: 500,
+    lineHeight: '1',
+    letterSpacing: '-0.02em',
+  },
+
+  caption: {
+    fontSize: '14px',
+    fontWeight: 500,
+    lineHeight: '1',
+    letterSpacing: '-0.02em',
+  },
+
+  error: {
+    color: colors.error,
+    fontSize: '14px',
+    fontWeight: 500,
+    lineHeight: '1',
+    letterSpacing: '-0.02em',
+  },
+  // ------------------------------------
   logo: {
     fontSize: '20px',
     fontWeight: 800,
@@ -212,13 +235,7 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '1',
     letterSpacing: '-0.02em',
   },
-  caption: {
-    color: colors.gray[400],
-    fontSize: '14px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
+
   caption4: {
     color: colors.gray[400],
     fontSize: '15px',
@@ -253,13 +270,7 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '24px',
     letterSpacing: '-0.16px',
   },
-  label: {
-    color: colors.gray[800],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
+
   title1: {
     color: colors.white,
     fontSize: '18px',
@@ -281,13 +292,7 @@ export const typographyStyles: TypographyVariants = {
     lineHeight: '1',
     letterSpacing: '-0.02em',
   },
-  error: {
-    color: colors.error,
-    fontSize: '12px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
+
   toast: {
     color: colors.white,
     fontSize: '18px',
