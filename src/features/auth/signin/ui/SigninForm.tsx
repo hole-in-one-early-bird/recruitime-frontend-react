@@ -17,12 +17,12 @@ export const SigninForm = () => {
     email: '',
     password: '',
   };
-  const { mutate: signIn } = useSignInMutation();
 
   const { values, handleChange, errors } = useForm(initialValues, ['email', 'password']);
   const location = useLocation();
   const [showToast, setShowToast] = useState(false);
   const [isLoginPage, setIsLoginPage] = useState(true);
+  const { signIn, loginResult } = useSignInMutation();
 
   useEffect(() => {
     if (location.state?.signupSuccess) {
@@ -70,6 +70,11 @@ export const SigninForm = () => {
         error={errors.password}
         isValid={!errors.password && values.password !== ''}
       />
+      <Error>
+        <Typography variant={'error'}>
+          {loginResult ? '' : `이메일과 비밀번호를 다시 한번 확인해주세요`}
+        </Typography>
+      </Error>
       <Button
         onClick={handleSubmit}
         variant={isFormValid ? 'primary' : 'primaryDisabled'}
@@ -131,6 +136,11 @@ const fadeOut = keyframes`
     opacity: 0;
     transform: translateY(20px);
   }
+`;
+
+const Error = styled.div`
+  text-align: center;
+  margin: 45px 0 11px;
 `;
 
 const ToastPopupBox = styled.div`

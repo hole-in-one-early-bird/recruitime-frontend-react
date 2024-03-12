@@ -3,20 +3,16 @@ import { useState } from 'react';
 import { authService } from '../api/authService';
 
 export const useValidation = () => {
-  const [lastValidationResult, setLastValidationResult] = useState(false);
-
   return {
     ...useMutation({
       mutationFn: authService.validation,
       onSuccess: (data) => {
-        setLastValidationResult(true);
-        console.log(data);
+        console.log(data, '사용할 수 있음');
       },
       onError: (error) => {
-        setLastValidationResult(false);
+        console.log('사용할 수 없음');
         console.error('실패', error);
       },
     }),
-    lastValidationResult,
   };
 };

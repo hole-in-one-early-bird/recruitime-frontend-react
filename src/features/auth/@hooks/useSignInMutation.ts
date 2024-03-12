@@ -1,13 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
-import { authService } from 'features/auth/api/authService';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authService } from '../api/authService';
 
 export const useSignInMutation = () => {
+  const [loginResult, setLoginResult] = useState(true);
   const navigate = useNavigate();
 
-  return useMutation({
+  const signInMutation = useMutation({
     mutationFn: authService.signIn,
     onSuccess: (data) => {
+      setLoginResult(true);
+
       if (data.data.loginMemberResponse && !data.data.loginMemberResponse.firstLogin) {
         navigate('/home');
       } else {
@@ -15,7 +19,14 @@ export const useSignInMutation = () => {
       }
     },
     onError: (error) => {
+      setLoginResult(false);
+
       console.error('실패', error);
     },
   });
+
+  return {
+    signIn: signInMutation.mutate,
+    loginResult,
+  };
 };
