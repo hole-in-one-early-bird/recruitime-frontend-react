@@ -39,7 +39,9 @@ export const EducationForm = () => {
     <EducationWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>학력과 적성을 체크할게요!</StyledTypography>
-        <Typography variant={'subtitle3'}>전공 적성도를 체크하기 위한 과정이에요</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          전공 적성도를 체크하기 위한 과정이에요
+        </Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker

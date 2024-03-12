@@ -2,7 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { variantStyles } from './buttonType';
 
-type VariantType = 'primary' | 'confirm' | 'active' | 'inactive' | 'primaryDisabled' | 'cancel';
+type VariantType =
+  | 'primary'
+  | 'confirm'
+  | 'inConfirm'
+  | 'active'
+  | 'inactive'
+  | 'primaryDisabled'
+  | 'cancel';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: VariantType;

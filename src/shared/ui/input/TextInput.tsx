@@ -47,7 +47,9 @@ export const TextInput: React.FC<TextInputProps> = ({
       </InputContainer>
       {caption && (
         <Caption>
-          <Typography variant={'caption'}>{caption}</Typography>
+          <Typography variant={'body1'} style={{ color: colors.gray[400] }}>
+            {caption}
+          </Typography>
         </Caption>
       )}
       {error && (

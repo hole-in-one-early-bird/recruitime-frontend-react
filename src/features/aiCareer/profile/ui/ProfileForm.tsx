@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { initialValues } from 'shared/constants/data';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import colors from 'shared/styles/color';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
 import { SelectType } from 'shared/ui/select/SelectButton';
@@ -30,7 +31,9 @@ export const ProfileForm = () => {
     <ProfileWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>프로필을 입력해 주세요!</StyledTypography>
-        <Typography variant={'subtitle3'}>맞춤 커리어 가이드를 위한 과정이에요</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          맞춤 커리어 가이드를 위한 과정이에요
+        </Typography>
       </div>
       <TextInput
         className='space'

@@ -27,7 +27,9 @@ export const Profile: React.FC<ProfileProps> = ({ userInfoData, handlers }) => {
     <ProfileWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>개인 프로필 작성</StyledTypography>
-        <Typography variant={'subtitle3'}>더 정확한 분석을 위해 프로필이 필요해요!</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          더 정확한 분석을 위해 프로필이 필요해요!
+        </Typography>
       </div>
       <TextInput
         className='space'

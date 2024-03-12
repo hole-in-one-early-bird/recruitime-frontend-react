@@ -53,7 +53,9 @@ export const Experience: React.FC<ExperienceProps> = ({ userInfoData, handlers }
     <ExperienceWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>나의 경험 작성</StyledTypography>
-        <Typography variant={'subtitle3'}>다양한 활동 경험들을 간단히 입력해 주세요</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          다양한 활동 경험들을 간단히 입력해 주세요
+        </Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker onClick={handleOpenModal} selectedOption={selectedOption} children='경험선택' />
@@ -70,7 +72,7 @@ export const Experience: React.FC<ExperienceProps> = ({ userInfoData, handlers }
           maxLength={15}
         />
         <StyledButton
-          variant={!selectedOption || !experience || experiences.length >= 5 ? 'inactive' : 'confirm'}
+          variant={!selectedOption || !experience || experiences.length >= 5 ? 'inConfirm' : 'confirm'}
           onClick={handleAddExperience}
           disabled={!selectedOption || !experience || experiences.length >= 5}
         >
@@ -87,7 +89,9 @@ export const Experience: React.FC<ExperienceProps> = ({ userInfoData, handlers }
           {experiences.map((e, index) => (
             <ExperienceItem key={index}>
               <Typography variant={'subtitle'}>{e.activity}</Typography>
-              <Typography variant={'subtitle2'}>{e.content}</Typography>
+              <Typography variant={'headline2'} style={{ color: colors.gray[700] }}>
+                {e.content}
+              </Typography>
               <img
                 onClick={() => removeExperience(index)}
                 src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}

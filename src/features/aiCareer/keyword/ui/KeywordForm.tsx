@@ -63,7 +63,9 @@ export const KeywordForm = () => {
     <KeywordsWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>관심 키워드를 선택해주세요!</StyledTypography>
-        <Typography variant={'subtitle3'}>세부 관심 분야를 파악하기 위한 과정이에요</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          세부 관심 분야를 파악하기 위한 과정이에요
+        </Typography>
       </div>
       <Notice>
         <Typography variant={'count2'}>{noticeText}</Typography>

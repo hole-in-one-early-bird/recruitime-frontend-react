@@ -32,7 +32,9 @@ export const ExperienceForm = () => {
     <ExperienceWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>경험을 입력해 주세요!</StyledTypography>
-        <Typography variant={'subtitle3'}>다양한 활동 경험들을 간단히 입력해 주세요</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          다양한 활동 경험들을 간단히 입력해 주세요
+        </Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker

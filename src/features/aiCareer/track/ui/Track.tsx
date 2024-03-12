@@ -6,6 +6,7 @@ import { initialValues, interestAreas } from 'shared/constants/data';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { MAX_SELECTIONS, removeEmoji, useUserData } from 'features/aiCareer/@hooks/useUserData';
+import colors from 'shared/styles/color';
 
 export const TrackForm = () => {
   const { userDataStore, handleSelectInterest, handleSelect } = useUserData(initialValues);
@@ -19,7 +20,9 @@ export const TrackForm = () => {
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>흥미 분야를 선택해 주세요!</StyledTypography>
         <div className='count'>
-          <Typography variant={'subtitle3'}>세부 관심 분야를 파악하기 위한 과정이에요</Typography>
+          <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+            세부 관심 분야를 파악하기 위한 과정이에요
+          </Typography>
           <Typography variant={'count1'}>{`(${selectedInterests.length}/${MAX_SELECTIONS})`}</Typography>
         </div>
       </div>

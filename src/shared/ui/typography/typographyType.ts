@@ -50,9 +50,9 @@ export const typographyStyles: TypographyVariants = {
   },
   headline2: {
     fontSize: '16px',
-    fontWeight: 500,
+    fontWeight: 400,
     // 2%
-    letterSpacing: '-0.48px',
+    letterSpacing: '-0.02rem',
     lineHeight: '100%',
   },
   body1: {
@@ -124,13 +124,7 @@ export const typographyStyles: TypographyVariants = {
     letterSpacing: '-0.02em',
     color: colors.gray[700],
   },
-  subtitle3: {
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-    color: colors.gray[500],
-  },
+
   placeholder: {
     fontSize: '16px',
     fontWeight: 500,

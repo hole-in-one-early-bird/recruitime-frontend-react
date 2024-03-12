@@ -37,7 +37,9 @@ export const Education: React.FC<EducationProps> = ({ userInfoData, handlers }) 
     <EducationWrapper>
       <div className='title'>
         <StyledTypography variant={'middleTitle'}>학력 정보</StyledTypography>
-        <Typography variant={'subtitle3'}>더 정확한 분석을 위해 프로필이 필요해요!</Typography>
+        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+          더 정확한 분석을 위해 프로필이 필요해요!
+        </Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker
