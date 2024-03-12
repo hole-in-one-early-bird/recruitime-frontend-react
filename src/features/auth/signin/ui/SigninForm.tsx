@@ -22,6 +22,7 @@ export const SigninForm = () => {
   const { values, handleChange, errors } = useForm(initialValues, ['email', 'password']);
   const location = useLocation();
   const [showToast, setShowToast] = useState(false);
+  const [isLoginPage, setIsLoginPage] = useState(true);
 
   useEffect(() => {
     if (location.state?.signupSuccess) {
@@ -53,7 +54,7 @@ export const SigninForm = () => {
         type='text'
         name='email'
         value={values.email}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, isLoginPage)}
         placeholder={'이메일을 입력해주세요'}
         error={errors.email}
         isValid={!errors.email && values.email !== ''}

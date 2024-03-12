@@ -64,7 +64,6 @@ export const authService = {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response.data);
     return response.data;
   },
   findPassword: async (signedEmail: string) => {
@@ -87,4 +86,15 @@ export const authService = {
       console.error('Error saving profile:', error);
     }
   },
+};
+
+export const checkDuplicates = async (email: string) => {
+  const formData = new FormData();
+  formData.append('email', email);
+  const response = await axios.post(`${API.VALIDATION}`, formData, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
 };

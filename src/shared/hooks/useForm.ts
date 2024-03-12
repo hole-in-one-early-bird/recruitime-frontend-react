@@ -1,11 +1,33 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { API } from 'config';
 import { useValidation } from 'features/auth/@hooks/useValidation';
-import { SignupData } from 'features/auth/api/authService';
+import { authService, checkDuplicates, SignupData } from 'features/auth/api/authService';
 import { useState } from 'react';
 
 export const useForm = (initialValues: any, validationFields: any) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<SignupData>({});
-  const { mutate: validateEmail, lastValidationResult } = useValidation();
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
+  // const { mutate, lastValidationResult } = useValidation();
+
+  const checkDuplicates = async (email: string) => {
+    try {
+      const data = { email };
+      const response = await axios.post(API.VALIDATION, data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.log(error.response.status);
+      if (error.response && error.response.status === 400) {
+        setIsEmailDuplicate(true);
+      }
+    }
+  };
 
   const validate = async (formValues: SignupData, isLoginPage: boolean = false) => {
     const errors: Partial<SignupData> = {};
@@ -15,9 +37,8 @@ export const useForm = (initialValues: any, validationFields: any) => {
         errors.email = '이메일 형식이 유효하지 않습니다.';
       } else {
         // 여기서 중복 여부 확인
-        validateEmail(formValues.email);
-
-        if (!lastValidationResult) {
+        const isEmailDuplicate = await checkDuplicates(formValues.email);
+        if (!isEmailDuplicate) {
           errors.email = '사용할 수 없는 이메일입니다.';
         }
       }
@@ -42,15 +63,17 @@ export const useForm = (initialValues: any, validationFields: any) => {
     return errors;
   };
 
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>, isLoginPage?: boolean) => {
     const { name, value } = e.target;
     const updatedValues = { ...values, [name]: value };
     setValues(updatedValues);
 
-    // 유효성 검사가 완료될 때까지 기다립니다.
-    const validationErrors = await validate(updatedValues);
-    setErrors(validationErrors);
+    // 회원가입 시에만 중복 검사를 수행합니다.
+    if (!isLoginPage && name === 'email') {
+      // 유효성 검사가 완료될 때까지 기다립니다.
+      const validationErrors = await validate(updatedValues);
+      setErrors(validationErrors);
+    }
   };
-
   return { values, handleChange, errors };
 };
