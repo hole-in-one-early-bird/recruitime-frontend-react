@@ -8,13 +8,11 @@ import { ROUTES_PATH } from 'shared/constants/routes';
 import { MAX_SELECTIONS, removeEmoji, useUserData } from 'features/aiCareer/@hooks/useUserData';
 
 export const TrackForm = () => {
-  const { userData, handleSelectInterest, handleSelect } = useUserData(initialValues);
+  const { userDataStore, handleSelectInterest, handleSelect } = useUserData(initialValues);
 
-  const selectedInterests = userData.interests;
+  const selectedInterests = userDataStore.interests;
 
-  useEffect(() => {
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
+  // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
   return (
     <TrackWrapper>
@@ -42,7 +40,7 @@ export const TrackForm = () => {
       </InterestsContainer>
       <Button
         variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
-        disabled={!userData.isAllFieldsFilled}
+        disabled={!selectedInterests}
         style={{
           position: 'fixed',
           bottom: '38px',

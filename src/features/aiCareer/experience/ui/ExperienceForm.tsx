@@ -15,7 +15,7 @@ import styled from 'styled-components';
 
 export const ExperienceForm = () => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
-  const { userData, handleSelect, addExperience, removeExperience } = useUserData(initialValues);
+  const { userDataStore, handleSelect, addExperience, removeExperience } = useUserData(initialValues);
 
   const handleSelectOption = (option: string) => {
     handleSelect('experienceOption', option);
@@ -26,9 +26,7 @@ export const ExperienceForm = () => {
     handleSelect('experienceDetail', e.target.value);
   };
 
-  useEffect(() => {
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
+  // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
 
   return (
     <ExperienceWrapper>
@@ -39,14 +37,14 @@ export const ExperienceForm = () => {
       <div className='optionPickerBox'>
         <OptionPicker
           onClick={handleOpenModal}
-          selectedOption={userData.experienceOption}
+          selectedOption={userDataStore.experienceOption}
           children='경험선택'
         />
       </div>
       <AddExperienceWrapper>
         <StyledTextInput
           type='text'
-          value={userData.experienceDetail}
+          value={userDataStore.experienceDetail}
           onChange={handleExperienceChange}
           placeholder='경험 내용 입력'
           name={'experienceDetail'}
@@ -55,26 +53,30 @@ export const ExperienceForm = () => {
         />
         <StyledButton
           variant={
-            !userData.experienceOption || !userData.experienceDetail || userData.experiences.length >= 5
+            !userDataStore.experienceOption ||
+            !userDataStore.experienceDetail ||
+            userDataStore.experiences.length >= 5
               ? 'inactive'
               : 'confirm'
           }
-          onClick={() => addExperience(userData.experienceOption, userData.experienceDetail)}
+          onClick={() => addExperience(userDataStore.experienceOption, userDataStore.experienceDetail)}
           disabled={
-            !userData.experienceOption || !userData.experienceDetail || userData.experiences.length >= 5
+            !userDataStore.experienceOption ||
+            !userDataStore.experienceDetail ||
+            userDataStore.experiences.length >= 5
           }
         >
           입력하기
         </StyledButton>
       </AddExperienceWrapper>
-      {userData.experiences.length === 0 ? (
+      {userDataStore.experiences.length === 0 ? (
         <EmptyBox>
           <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
           <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
         </EmptyBox>
       ) : (
         <ListBox>
-          {userData.experiences.map((e, index) => (
+          {userDataStore.experiences.map((e, index) => (
             <ExperienceItem key={index}>
               <Typography variant={'subtitle'}>{e.experience_type}</Typography>
               <Typography variant={'subtitle2'}>{e.experience_content}</Typography>
@@ -103,7 +105,7 @@ export const ExperienceForm = () => {
         isOpen={isOpen}
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
-        selected={userData.experienceOption}
+        selected={userDataStore.experienceOption}
         options={activities}
         $isTwoColumns
       />

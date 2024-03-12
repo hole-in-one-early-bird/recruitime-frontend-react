@@ -17,7 +17,7 @@ import styled from 'styled-components';
 
 export const EducationForm = () => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
-  const { userData, handleSelect } = useUserData(initialValues);
+  const { userDataStore, handleSelect } = useUserData(initialValues);
 
   const handleSelectOption = (option: string) => {
     handleSelect('education', option);
@@ -33,12 +33,7 @@ export const EducationForm = () => {
   };
 
   const isAllFieldsFilled =
-    userData.education !== '' && userData.major !== '' && userData.majorCheck !== '';
-
-  useEffect(() => {
-    console.log(isAllFieldsFilled);
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-  }, [userData]); // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
+    userDataStore.education !== '' && userDataStore.major !== '' && userDataStore.majorCheck !== '';
 
   return (
     <EducationWrapper>
@@ -50,7 +45,7 @@ export const EducationForm = () => {
         <OptionPicker
           label='학력 선택'
           onClick={handleOpenModal}
-          selectedOption={userData.education}
+          selectedOption={userDataStore.education}
           children='학력선택'
         />
       </div>
@@ -58,7 +53,7 @@ export const EducationForm = () => {
         className='space'
         type='text'
         label='전공/계열'
-        value={userData.major}
+        value={userDataStore.major}
         onChange={handleEducationChange}
         placeholder='전공 및 계열 입력'
         name={'education'}
@@ -71,7 +66,7 @@ export const EducationForm = () => {
           '😰 전공이 적성과는 맞지 않아요.',
         ]}
         onSelect={handleMatchSelect}
-        selected={userData.majorCheck}
+        selected={userDataStore.majorCheck}
         width='100%'
         style={{ textAlign: 'left' }}
       />
@@ -92,7 +87,7 @@ export const EducationForm = () => {
         isOpen={isOpen}
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
-        selected={userData.education}
+        selected={userDataStore.education}
         options={edu}
       />
     </EducationWrapper>
