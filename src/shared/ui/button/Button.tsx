@@ -9,6 +9,7 @@ type VariantType =
   | 'active'
   | 'inactive'
   | 'primaryDisabled'
+  | 'check'
   | 'cancel';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {

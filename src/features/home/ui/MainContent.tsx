@@ -5,8 +5,10 @@ import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import colors from 'shared/styles/color';
 import { Modal, PopupModal } from 'shared/ui/modal/Modal';
 import { Typography } from 'shared/ui/typography/Typography';
+
 import { UserDataType, useUserStore } from 'shared/zustand/userStore';
 import styled from 'styled-components';
 import { AIInteractive } from 'widgets/aIInteractiveCard/ui/AIInteractive';
@@ -83,10 +85,16 @@ export const MainContent = () => {
   return (
     <MainContentWrapper>
       <TitleBox>
-        <StyledTypography
-          variant={'largeTitle'}
-        >{`AI 커리어 탐색이 리쿠르탐과 \n커리어 탐색을 함께하세요`}</StyledTypography>
-        <Typography variant={'subtitle'}>맞춤 커리어 추천과 이력서 코칭을 받아보세요🔥</Typography>
+        <StyledTypography variant={'largeTitle'}>
+          {`AI 커리어 탐색이`} <span style={{ color: colors.blue[500] }}>리쿠르탐</span> {`과\n`}
+          {`커리어 탐색을 함께하세요`}
+        </StyledTypography>
+        <div className='sub'>
+          <Typography variant={'headline2'} style={{ color: colors.gray[600] }}>
+            맞춤 커리어 추천과 이력서 코칭을 받아보세요
+          </Typography>
+          <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.png'} alt='fireIcon' />
+        </div>
       </TitleBox>
       <ContentBox>
         <AIInteractive
@@ -117,7 +125,16 @@ export const MainContent = () => {
   );
 };
 
-const MainContentWrapper = styled.div``;
+const MainContentWrapper = styled.div`
+  .sub {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    img {
+      transform: translateY(-2px);
+    }
+  }
+`;
 
 const UserIcon = styled.img`
   display: block;
@@ -136,6 +153,6 @@ const ContentBox = styled.div`
 `;
 
 const StyledTypography = styled(Typography)`
-  margin-top: 50px;
+  margin: 50px 0 2px;
   white-space: pre-wrap;
 `;

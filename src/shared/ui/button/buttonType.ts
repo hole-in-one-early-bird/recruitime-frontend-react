@@ -52,9 +52,17 @@ export const variantStyles = {
     color: ${colors.gray[400]};
     font-weight: 700;
   `,
+  check: css`
+    padding: 15px;
+    border-radius: 10px;
+    background-color: ${colors.blue[400]};
+    color: ${colors.white};
+  `,
   cancel: css`
-    ${primaryCommonStyles}
-
-    color: #838383;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid ${colors.gray[400]};
+    color: ${colors.gray[400]};
+    background-color: ${colors.white};
   `,
 };

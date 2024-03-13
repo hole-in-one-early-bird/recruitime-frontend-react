@@ -65,6 +65,7 @@ const fadeOut = keyframes`
 `;
 
 const ToastPopupBox = styled.div`
+  margin-top: 30px;
   animation: ${fadeIn} 0.5s, ${fadeOut} 0.5s 1.5s;
   animation-fill-mode: forwards;
 `;

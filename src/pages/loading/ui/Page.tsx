@@ -37,6 +37,7 @@ export const Loading = () => {
       });
       setUserData(response.data.data);
       navigate(ROUTES_PATH.customizedCareer);
+      console.log(response.data.data);
     } catch (error) {
       console.error('Error getting recommendations:', error);
     }

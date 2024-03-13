@@ -1,9 +1,12 @@
+import axios from 'axios';
+import { API } from 'config';
 import html2canvas from 'html2canvas';
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { useChatStore } from 'shared/zustand/chatStore';
+import useCustomizedCareerStore from 'shared/zustand/store';
 import styled from 'styled-components';
 import { Typography } from '../typography/Typography';
 
@@ -23,7 +26,7 @@ const routeTitles: { [key: string]: string } = {
 export const Header = () => {
   const { chatBoxRef, setChatBoxRef } = useChatStore();
   const [isCaptureChatEnabled, setCaptureChatEnabled] = useState(false);
-
+  const resultData = useCustomizedCareerStore((state) => state.userData);
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
@@ -50,8 +53,14 @@ export const Header = () => {
   };
 
   const copyToClipboard = async () => {
+    const fullUrl = `${window.location.href}?code=${resultData.jobRecommendationCode}`;
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      const response = await axios.get(API.GETSHARELINK, {
+        params: {
+          code: resultData.jobRecommendationCode,
+        },
+      });
+      await navigator.clipboard.writeText(fullUrl); // 클립보드에 문자열 복사
       alert('링크가 클립보드에 복사되었습니다.');
     } catch (err) {
       alert('링크 복사에 실패했습니다.');
@@ -90,7 +99,7 @@ export const Header = () => {
         return (
           <HeaderContainer style={{ justifyContent: 'space-between' }}>
             <Typography variant={'logo'}>RECRUTAM</Typography>
-            <Link to={ROUTES_PATH.home}>
+            <Link to={ROUTES_PATH.mypage}>
               <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.png'} alt='userIcon' />
             </Link>
           </HeaderContainer>

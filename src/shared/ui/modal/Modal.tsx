@@ -82,20 +82,20 @@ export const PopupModal: React.FC<PopupModalProps> = ({
     <Overlay onClick={onClose}>
       <PopupModalWrapper>
         <TypoContainer>
-          <Typography variant={'body4'} children={'나의 개인 정보를 불러올까요?'} />
+          <Typography variant={'title3'} children={'입력한 프로필을 불러올까요?'} />
           <Typography
-            variant={'body4'}
-            children={`회원님이 저장하신 개인정보가\n자동으로 입력됩니다.`}
-            style={{ color: colors.gray[500] }}
+            variant={'headline2'}
+            children={`저장하신 개인정보가 자동으로 입력됩니다.`}
+            style={{ color: colors.gray[500], marginTop: '6px' }}
           />
         </TypoContainer>
 
         <ButtonContainer>
-          <Button variant={'cancel'} style={{ width: '50%', padding: '15px' }} onClick={onClickNo}>
+          <Button variant={'cancel'} style={{ width: '50%' }} onClick={onClickNo}>
             아니요
           </Button>
 
-          <Button variant={'primary'} style={{ width: '50%', padding: '15px' }} onClick={onClickYes}>
+          <Button variant={'check'} style={{ width: '50%' }} onClick={onClickYes}>
             네
           </Button>
         </ButtonContainer>
@@ -135,7 +135,7 @@ const PopupModalWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 33px 25px 16px;
+  padding: 30px 22px 30px;
   border-radius: 20px;
   background-color: ${colors.white};
 `;
@@ -165,7 +165,7 @@ const TypoContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 23px;
+  margin-top: 24px;
   ${common.flexCenterRow}
   gap: 9px;
 `;

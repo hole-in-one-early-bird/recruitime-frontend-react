@@ -29,11 +29,8 @@ export const Chat = () => {
   const { chatBoxRef, setChatBoxRef } = useChatStore();
   const [isChatProcessing, setChatProcessing] = useState(false); // 추가
 
-  const [job, setJob] = useState<InputData>({ job_name: '' });
-
   const [userId, setUserId] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState('');
-  const { userDataStore, setUserDataStore } = useUserStore();
   const resultData = useCustomizedCareerStore((state) => state.userData);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -72,8 +69,17 @@ export const Chat = () => {
   }, [setChatBoxRef, chatRef]);
 
   const handleImgClick = async () => {
+    if (isChatProcessing) {
+      // alert('리쿠르탐 응답중입니다');
+      return;
+    }
+    if (!inputValue.trim()) {
+      // alert('내용을 작성해주세요');
+      return;
+    }
     setInputValue('');
     const token = getAuthTokenFromCookie();
+    setChatProcessing(true);
 
     // Add user's input to chatData
     const newUserMessage = {
@@ -87,7 +93,7 @@ export const Chat = () => {
     try {
       const response = await axios.post(
         `${API.CHAT}`,
-        { message: inputValue },
+        { message: inputValue, jobRecommendationCode: resultData.jobRecommendationCode },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -107,6 +113,9 @@ export const Chat = () => {
       console.log('Chat request successful:', response.data);
     } catch (error) {
       console.error('Error sending chat request:', error);
+    } finally {
+      // 응답 후 입력란 활성화
+      setChatProcessing(false);
     }
   };
 

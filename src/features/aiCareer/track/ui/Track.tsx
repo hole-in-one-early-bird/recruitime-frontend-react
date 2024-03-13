@@ -31,11 +31,10 @@ export const TrackForm = () => {
           <StyledButton
             variant={selectedInterests.includes(removeEmoji(interest.name)) ? 'active' : 'inactive'}
             key={interest.id}
+            style={{ padding: '10px 16px' }}
             onClick={() => handleSelectInterest(interest.id)}
           >
-            <Typography
-              variant={selectedInterests.includes(interest.name) ? 'button3Active' : 'button3'}
-            >
+            <Typography variant={selectedInterests.includes(interest.name) ? 'active' : 'inactive'}>
               {interest.name}
             </Typography>
           </StyledButton>

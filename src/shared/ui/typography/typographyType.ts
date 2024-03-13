@@ -41,6 +41,12 @@ interface TypographyVariants {
 }
 // medium:500, semibold:600, bold:700, extrabold:800
 export const typographyStyles: TypographyVariants = {
+  base: {
+    fontSize: '14px',
+    fontWeight: 300,
+    lineHeight: '18px',
+    letterSpacing: '-0.02em',
+  },
   headline1: {
     fontSize: '24px',
     fontWeight: 700,
@@ -55,6 +61,14 @@ export const typographyStyles: TypographyVariants = {
     letterSpacing: '-0.02rem',
     lineHeight: '100%',
   },
+  title3: {
+    fontSize: '20px',
+    fontWeight: 500,
+    // 2%
+    letterSpacing: '-0.02rem',
+    lineHeight: '100%',
+  },
+
   body1: {
     fontSize: '14px',
     fontWeight: 400,
@@ -281,13 +295,6 @@ export const typographyStyles: TypographyVariants = {
   title2: {
     color: colors.gray[600],
     fontSize: '16px',
-    fontWeight: 700,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  title3: {
-    color: colors.gray[800],
-    fontSize: '20px',
     fontWeight: 700,
     lineHeight: '1',
     letterSpacing: '-0.02em',

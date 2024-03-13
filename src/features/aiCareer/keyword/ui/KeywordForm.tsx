@@ -81,6 +81,7 @@ export const KeywordForm = () => {
                   : 'inactive'
               }
               key={kw.keyword}
+              style={{ padding: '10px 16px' }}
               onClick={() => handleSelectKeyword(kw)}
             >
               <Typography

@@ -8,4 +8,5 @@ export const API = {
   KEYWORD: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/keyword`,
   CHAT: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/chat`,
   GETPROFILE: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/profile`,
+  GETSHARELINK: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/recommendations/share`,
 };
