@@ -30,7 +30,6 @@ export const Mypage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data.data.name);
       setUserInfo({
         name: response.data.data.name,
         email: response.data.data.email,

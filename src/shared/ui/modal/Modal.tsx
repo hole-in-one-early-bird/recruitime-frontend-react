@@ -21,8 +21,8 @@ interface ModalProps {
 interface PopupModalProps extends ModalProps {
   content1?: React.ReactNode;
   content2?: React.ReactNode;
-  onClickYes: () => void | Promise<void>;
-  onClickNo: () => void | Promise<void>;
+  onClickYes?: () => void | Promise<void>;
+  onClickNo?: () => void | Promise<void>;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -110,6 +110,35 @@ export const PopupModal: React.FC<PopupModalProps> = ({
             TypographyVariant={'subtitle01'}
           >
             네
+          </Button>
+        </ButtonContainer>
+      </PopupModalWrapper>
+    </Overlay>,
+    document.body
+  );
+};
+
+export const PopupResumeModal: React.FC<PopupModalProps> = ({ isOpen, content1, onClose }) => {
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return ReactDOM.createPortal(
+    <Overlay onClick={onClose}>
+      <PopupModalWrapper>
+        <TypoContainer>
+          <Typography variant={'mainTitle03'} style={{ color: colors.gray[800] }} children={content1} />
+        </TypoContainer>
+        <ButtonContainer>
+          <Button
+            variant={'cancel'}
+            style={{ width: '50%' }}
+            onClick={onClose}
+            TypographyVariant={'subtitle01'}
+          >
+            닫기
           </Button>
         </ButtonContainer>
       </PopupModalWrapper>

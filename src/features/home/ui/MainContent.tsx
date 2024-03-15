@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
-import { Modal, PopupModal } from 'shared/ui/modal/Modal';
+import { Modal, PopupModal, PopupResumeModal } from 'shared/ui/modal/Modal';
 import { Typography } from 'shared/ui/typography/Typography';
 
 import { UserDataType, useUserStore } from 'shared/zustand/userStore';
@@ -15,12 +15,17 @@ import { AIInteractive } from 'widgets/aIInteractiveCard/ui/AIInteractive';
 
 export const MainContent = () => {
   const [isFirstAIClicked, setFirstAIClicked] = useState(false);
+  const [isSecondAIClicked, setSecondAIClicked] = useState(false);
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { setUserDataStore } = useUserStore();
 
   const navigate = useNavigate();
   const handleFirstAIClick = () => {
     setFirstAIClicked(true);
+    handleOpenModal();
+  };
+  const handleSecondAIClick = () => {
+    setSecondAIClicked(true);
     handleOpenModal();
   };
 
@@ -115,6 +120,7 @@ export const MainContent = () => {
           subChildren={'막막한 자기소개서 첫 걸음부터'}
           alt={'note'}
           src={'icon/note'}
+          onClick={handleSecondAIClick}
         />
       </ContentBox>
       {isFirstAIClicked && (
@@ -125,6 +131,13 @@ export const MainContent = () => {
           content2={'저장하신 개인정보가 자동으로 입력됩니다.'}
           onClickYes={getProfileData}
           onClickNo={handleNoClick}
+        />
+      )}
+      {isSecondAIClicked && (
+        <PopupResumeModal
+          isOpen={isOpen}
+          onClose={handleCloseModal}
+          content1={'현재 준비중인 서비스 입니다.'}
         />
       )}
     </MainContentWrapper>

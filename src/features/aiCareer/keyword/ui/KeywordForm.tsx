@@ -29,7 +29,6 @@ export const KeywordForm = () => {
   }, [userDataStore.userKeywords]);
 
   useEffect(() => {
-    console.log(userDataStore.userKeywords);
     const count = userDataStore.userKeywords.length;
 
     if (count >= MIN_SELECTIONS_REQUIRED) {
@@ -49,7 +48,6 @@ export const KeywordForm = () => {
     const fetchKeywords = async () => {
       try {
         const response = await axios.get(API.KEYWORD);
-        console.log('Keywords response:', response.data.data);
         setKeyword(response.data.data); // 응답 데이터를 상태에 저장
       } catch (error) {
         console.error('Error getting keywords:', error);

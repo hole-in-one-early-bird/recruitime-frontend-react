@@ -29,7 +29,6 @@ export const ProfileForm = () => {
     '커뮤니티 활동을 좋아해요.',
   ];
   useEffect(() => {
-    console.log(aboutMe);
     setIsAllFieldsFilled(name !== '' && gender !== '' && age !== '' && aboutMe !== '');
   }, [name, gender, age, aboutMe]);
 
