@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API } from 'config';
+import { useUserStore } from 'shared/zustand/userStore';
 
 export interface SigninData {
   email: string;
@@ -46,7 +47,6 @@ export const authService = {
     const response = await axios.post(`${API.SIGNIN}`, userData);
     const { accessToken } = response.data.data;
     setAccessTokenCookie(accessToken);
-    console.log(response.data);
     return response.data;
   },
   signUp: async (userData: SignupData) => {
@@ -68,15 +68,41 @@ export const authService = {
   },
   findPassword: async (signedEmail: string) => {
     const response = await axios.get(API.PASSWORD_FIND, { params: { signedEmail } });
-    console.log(response);
     return response.data;
   },
   saveProfile: async (userInfoData: any) => {
     const token = getAuthTokenFromCookie();
-    const { experience, ...userInfoDataWithoutExperience } = userInfoData;
-
+    const transformedData = {
+      name: userInfoData.name,
+      gender: userInfoData.gender,
+      age: userInfoData.age,
+      highestDegree: userInfoData.education,
+      major: userInfoData.major,
+      experiences: userInfoData.experiences,
+    };
     try {
-      const response = await axios.post(API.USERINFO, userInfoDataWithoutExperience, {
+      const response = await axios.post(API.USERINFO, transformedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
+  },
+  editProfile: async (userInfoData: any) => {
+    const token = getAuthTokenFromCookie();
+    const transformedData = {
+      name: userInfoData.name,
+      gender: userInfoData.gender,
+      age: userInfoData.age,
+      highestDegree: userInfoData.education,
+      major: userInfoData.major,
+      experiences: userInfoData.experiences,
+    };
+    try {
+      const response = await axios.put(API.USERINFO, transformedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

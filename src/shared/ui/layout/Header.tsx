@@ -13,6 +13,7 @@ import { Typography } from '../typography/Typography';
 const routeTitles: { [key: string]: string } = {
   [ROUTES_PATH.mypage]: '마이페이지',
   [ROUTES_PATH.userInfo]: '프로필 저장',
+  [ROUTES_PATH.editUserInfo]: '프로필 수정',
   [ROUTES_PATH.profile]: '프로필 입력',
   [ROUTES_PATH.track]: '흥미 분야 선택',
   [ROUTES_PATH.education]: '학력 적성 체크',
@@ -97,8 +98,7 @@ export const Header = () => {
     switch (pathname) {
       case ROUTES_PATH.home:
         return (
-          <HeaderContainer style={{ justifyContent: 'space-between' }}>
-            <Typography variant={'logo'}>RECRUTAM</Typography>
+          <HeaderContainer style={{ justifyContent: 'flex-end ' }}>
             <Link to={ROUTES_PATH.mypage}>
               <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.png'} alt='userIcon' />
             </Link>
@@ -118,6 +118,22 @@ export const Header = () => {
         );
       case ROUTES_PATH.mypage:
       case ROUTES_PATH.userInfo:
+      case ROUTES_PATH.editUserInfo:
+      case ROUTES_PATH.findAccount:
+        return (
+          <HeaderContainer style={{ justifyContent: 'center' }}>
+            <BackIcon
+              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+              alt='arrowIcon'
+              onClick={() => navigate('/home')}
+            />
+            <Title variant={'header'} style={{ color: colors.gray[700] }}>
+              {title}
+            </Title>
+          </HeaderContainer>
+        );
+      case ROUTES_PATH.userInfo:
+      case ROUTES_PATH.editUserInfo:
       case ROUTES_PATH.findAccount:
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
@@ -126,7 +142,9 @@ export const Header = () => {
               alt='arrowIcon'
               onClick={handlePreviousClick}
             />
-            <Title variant={'headerTitle'}>{title}</Title>
+            <Title variant={'header'} style={{ color: colors.gray[700] }}>
+              {title}
+            </Title>
           </HeaderContainer>
         );
       case ROUTES_PATH.profile:
@@ -142,18 +160,22 @@ export const Header = () => {
                 alt='arrowIcon'
                 onClick={handlePreviousClick}
               />
-              <Title variant={'headerTitle'}>{title}</Title>
+              <Title variant={'header'} style={{ color: colors.gray[700] }}>
+                {title}
+              </Title>
             </HeaderContainer>
             <ProgressGauge>{progressGauge}</ProgressGauge>
           </>
         );
       case ROUTES_PATH.customizedCareer:
         return (
-          <HeaderContainer style={{ justifyContent: 'space-between' }}>
+          <HeaderContainer style={{ justifyContent: 'space-between', marginBottom: '20px' }}>
             <Link to={ROUTES_PATH.home}>
               <img src={process.env.PUBLIC_URL + '/images/icon/homeIcon.png'} alt='homeIcon' />
             </Link>
-            <Title variant={'headerTitle'}>{title}</Title>
+            <Title variant={'header'} style={{ color: colors.gray[700] }}>
+              {title}
+            </Title>
             <IconContainer>
               <div onClick={copyToClipboard}>
                 {' '}
@@ -178,7 +200,9 @@ export const Header = () => {
             <Link to={ROUTES_PATH.home} className='chat'>
               <HomeIcon src={`${process.env.PUBLIC_URL}/images/icon/homeIcon.png`} alt='homeIcon' />
             </Link>
-            <Title variant={'headerTitle'}>{title}</Title>
+            <Title variant={'header'} style={{ color: colors.gray[700] }}>
+              {title}
+            </Title>
             <SaveIcon
               onClick={captureChat}
               src={`${process.env.PUBLIC_URL}/images/icon/saveIcon.png`}

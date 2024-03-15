@@ -28,7 +28,6 @@ export const Loading = () => {
     };
 
     const token = getAuthTokenFromCookie();
-    console.log(token);
     try {
       const response = await axios.post(API.RECOMMENDATION, userDataWithoutEmoji, {
         headers: {
@@ -63,13 +62,15 @@ export const Loading = () => {
           <DropShadow />
         </DropShadowBox>
         <StyledTypography
-          variant={'largeTitle'}
+          variant={'mainTitle01'}
         >{`리쿠르탐이\n맞춤 커리어를 찾고 있어요!`}</StyledTypography>
         <ProccessBox>
           {profileAnalysisSteps.map((item, index) => (
             <Proccess key={index}>
               <FaCircleCheck />
-              <Typography variant={'body1'}>{item}</Typography>
+              <Typography variant={'body01'} style={{ color: colors.gray[700] }}>
+                {item}
+              </Typography>
             </Proccess>
           ))}
         </ProccessBox>

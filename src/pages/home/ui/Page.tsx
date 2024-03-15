@@ -10,7 +10,6 @@ export const Home = () => {
   const [showToast, setShowToast] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  // 쿠키에서 토큰을 읽는 로직 (쿠키 세션 라이브러리를 사용하는 것을 가정)
   const accessToken = getCookie('accessToken');
   const isAuthenticated = !!accessToken;
   // 토큰이 없으면 로그인 페이지로 리다이렉트

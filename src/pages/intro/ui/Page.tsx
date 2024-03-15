@@ -9,13 +9,13 @@ import styled from 'styled-components';
 export const Intro = () => {
   return (
     <IntroWrapper>
-      <StyledTypography variant={'headline1'}>
+      <StyledTypography variant={'mainTitle01'}>
         {`안녕하세요!\n커리어 탐색 `}
         <span style={{ color: colors.blue[500] }}>리쿠르탐</span>
         {`이에요`}
       </StyledTypography>
       <div className='sub'>
-        <Typography variant={'headline2'} style={{ color: colors.gray[600] }}>
+        <Typography variant={'subTitle01'} style={{ color: colors.gray[600] }}>
           AI 커리어 관련 서비스를 이용해보세요
         </Typography>
         <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.png'} alt='fireIcon' />
@@ -33,6 +33,7 @@ export const Intro = () => {
               left: '50%',
               transform: 'translateX(-50%)',
             }}
+            TypographyVariant={'button01'}
           >
             시작하기
           </Button>

@@ -105,8 +105,8 @@ export function useUserData(
     }
   };
 
-  const addExperience = (experience_type: string, experience_content: string) => {
-    const newExperiences = [...userDataStore.experiences, { experience_type, experience_content }];
+  const addExperience = (activity: string, content: string) => {
+    const newExperiences = [...userDataStore.experiences, { activity, content }];
     handleSelect('experiences', newExperiences);
   };
 

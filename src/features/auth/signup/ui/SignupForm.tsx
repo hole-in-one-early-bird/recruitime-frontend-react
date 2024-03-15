@@ -3,6 +3,7 @@ import { useValidation } from 'features/auth/@hooks/useValidation';
 import { useDebounce } from 'features/hooks/useDebounce';
 import React, { useEffect } from 'react';
 import { useForm } from 'shared/hooks/useForm';
+import colors from 'shared/styles/color';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
 
@@ -35,7 +36,11 @@ export const SignupForm = () => {
 
   return (
     <SignupFormWrapper>
-      <Typography className='title' variant={'largeTitle'} style={{ marginTop: '25px' }}>
+      <Typography
+        className='title'
+        variant={'mainTitle01'}
+        style={{ marginTop: '25px', color: colors.gray[900] }}
+      >
         회원가입
       </Typography>
       <TextInput
@@ -83,6 +88,7 @@ export const SignupForm = () => {
         variant={isFormValid ? 'primary' : 'primaryDisabled'}
         disabled={!isFormValid}
         style={{ position: 'fixed', bottom: '65px' }}
+        TypographyVariant={'button01'}
       >
         회원가입
       </Button>

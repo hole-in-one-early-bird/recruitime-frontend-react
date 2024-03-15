@@ -15,10 +15,10 @@ export const AIInteractive = ({ titleChildren, subChildren, alt, src, onClick }:
   return (
     <AIInteractiveWrapper onClick={onClick}>
       <div className='title'>
-        <Typography variant={'title3'} style={{ color: colors.gray[800], marginBottom: '6px' }}>
+        <Typography variant={'mainTitle03'} style={{ color: colors.gray[800], marginBottom: '6px' }}>
           {titleChildren}
         </Typography>
-        <Typography variant={'headline2'} style={{ color: colors.gray[600] }}>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[600] }}>
           {subChildren}
         </Typography>
       </div>

@@ -136,7 +136,7 @@ export const Chat = () => {
               <>
                 <UserContainer>
                   <UserBubble>
-                    <Typography variant={'body3'} style={{ color: colors.white }}>
+                    <Typography variant={'body03'} style={{ color: colors.white }}>
                       {message.content}
                     </Typography>
                   </UserBubble>
@@ -152,7 +152,9 @@ export const Chat = () => {
                     />
                   </ProfileInfo>
                   <BotBubble>
-                    <Typography variant={'body3'}>{message.content}</Typography>
+                    <Typography variant={'body03'} style={{ color: colors.gray[600] }}>
+                      {message.content}
+                    </Typography>
                   </BotBubble>
                 </BotContainer>
               </>
@@ -243,7 +245,7 @@ const BottomChat = styled.div`
   background-color: ${colors.white};
   ${common.flexCenterRow};
   gap: 12px;
-  border-top: 1px solid ${colors.gray[400]};
+  border-top: 1px solid #e9e9e9;
 `;
 
 const StyledChatInput = styled(ChatInput)`

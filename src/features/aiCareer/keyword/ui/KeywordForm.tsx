@@ -35,7 +35,7 @@ export const KeywordForm = () => {
     if (count >= MIN_SELECTIONS_REQUIRED) {
       setNoticeText(`더 많은 키워드로 정확한 분석을 받아보세요! (${count}/${MAX_SELECTIONS})`);
     } else {
-      setNoticeText(`10개 이상 선택해주세요! (${count}/${MAX_SELECTIONS})`);
+      setNoticeText(`10개 이상 선택해주세요. (${count}/${MAX_SELECTIONS})`);
     }
 
     setIsAllFieldsFilled(count >= MIN_SELECTIONS_REQUIRED);
@@ -62,13 +62,15 @@ export const KeywordForm = () => {
   return (
     <KeywordsWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>관심 키워드를 선택해주세요!</StyledTypography>
-        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
-          세부 관심 분야를 파악하기 위한 과정이에요
+        <StyledTypography variant={'mainTitle02'}>관심 키워드를 선택해주세요!</StyledTypography>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[500] }}>
+          맞춤 가이드를 위한 마지막 단계에요
         </Typography>
       </div>
       <Notice>
-        <Typography variant={'count2'}>{noticeText}</Typography>
+        <Typography variant={'count02'} style={{ color: colors.blue[600] }}>
+          {noticeText}
+        </Typography>
       </Notice>
 
       <KeywordsContainer>
@@ -81,14 +83,15 @@ export const KeywordForm = () => {
                   : 'inactive'
               }
               key={kw.keyword}
-              style={{ padding: '10px 16px' }}
+              TypographyVariant={'button04'}
+              style={{ padding: '10px 16px', fontWeight: userDataStore.userKeywords ? '500' : '400' }}
               onClick={() => handleSelectKeyword(kw)}
             >
               <Typography
                 variant={
                   userDataStore.userKeywords.some((selected) => selected.keyword === kw.keyword)
-                    ? 'button3Active'
-                    : 'button3'
+                    ? 'button02'
+                    : 'button04'
                 }
               >
                 {kw.keyword}
@@ -107,8 +110,13 @@ export const KeywordForm = () => {
           left: '50%',
           transform: 'translateX(-50%)',
         }}
+        TypographyVariant={'button01'}
       >
-        {isAllFieldsFilled ? <Link to={ROUTES_PATH.loading}>AI 맞춤 커리어 보러가기 </Link> : '계속하기'}
+        {isAllFieldsFilled ? (
+          <Link to={ROUTES_PATH.loading}>AI 맞춤 커리어 보러가기</Link>
+        ) : (
+          'AI 맞춤 커리어 보러가기'
+        )}
       </Button>
     </KeywordsWrapper>
   );
@@ -139,8 +147,8 @@ const StyledButton = styled(Button)``;
 
 const Notice = styled.div`
   margin: 26px -20px;
-  padding: 15px;
+  padding: 8px;
   margin-bottom: 20px;
-  background-color: ${colors.blue[100]};
+  background-color: ${colors.blue[50]};
   text-align: center;
 `;

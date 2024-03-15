@@ -51,10 +51,14 @@ export const CustomizedCareer = () => {
   return (
     <CustomizedCareerWrapper>
       <CustomizedCareerContainer>
-        <Typography
-          variant={'largeTitle'}
-          className='space'
-        >{`${userDataStore.name}님의\n맞춤 커리어 분석 결과에요`}</Typography>
+        <Typography variant={'mainTitle01'} className='space'>
+          <span style={{ color: colors.blue[500], textDecoration: 'underline' }}>
+            {userDataStore.name}
+          </span>
+          님의
+          <br />
+          맞춤 커리어 분석 결과에요
+        </Typography>
         <ContentBox>
           <Content>
             <AiChat>
@@ -67,7 +71,7 @@ export const CustomizedCareer = () => {
 
               <Link to={ROUTES_PATH.chat}>
                 <RadiusButton>
-                  <Typography variant={'button4'}>커리어 챗봇 연결</Typography>
+                  <Typography variant={'button05'}>커리어 챗봇 연결</Typography>
                 </RadiusButton>
               </Link>
             </AiChat>
@@ -75,22 +79,31 @@ export const CustomizedCareer = () => {
           <ResultBox>
             <CareerBox>
               <Job>
-                <Typography variant={'title2'} style={{ color: colors.white }}>
+                <Typography variant={'header'} style={{ color: colors.white }}>
                   {resultData?.jobName}
                 </Typography>
               </Job>
               <Des>
-                <Typography variant={'body2'}>{resultData?.jobDescription}</Typography>
+                <Typography variant={'body02'} style={{ color: colors.gray[600] }}>
+                  {resultData?.jobDescription}
+                </Typography>
               </Des>
             </CareerBox>
             <AccordionContainer>
               {accordionSections.map((section, index) => (
                 <AccordionSection key={index}>
                   <AccordionHeader onClick={() => toggleAccordion(index)}>
-                    {section.header}
+                    <Typography variant={'button05'} style={{ color: colors.gray[700] }}>
+                      {section.header}
+                    </Typography>
+
                     <Icon>{openSection === index ? <FaAngleUp /> : <FaAngleDown />}</Icon>
                   </AccordionHeader>
-                  <AccordionContent $isOpen={openSection === index}>{section.content}</AccordionContent>
+                  <AccordionContent $isOpen={openSection === index}>
+                    <Typography variant={'body02'} style={{ color: colors.gray[600] }}>
+                      {section.content}
+                    </Typography>
+                  </AccordionContent>
                 </AccordionSection>
               ))}
             </AccordionContainer>
@@ -99,7 +112,7 @@ export const CustomizedCareer = () => {
         <Link to={ROUTES_PATH.loading}>
           <ReplyButton>
             <img src={process.env.PUBLIC_URL + '/images/icon/refreshIcon.svg'} alt='refreshIcon' />
-            <Typography variant={'button4'} style={{ fontWeight: '500', color: colors.white }}>
+            <Typography variant={'button04'} style={{ fontWeight: '500', color: colors.white }}>
               다시하기
             </Typography>
           </ReplyButton>
@@ -154,7 +167,7 @@ const RadiusButton = styled.div`
   position: absolute;
   top: 60px;
   right: 120px;
-  padding: 15px 20px;
+  padding: 10px 18px;
   background-color: ${colors.white};
   border-radius: 30px;
 
@@ -167,11 +180,14 @@ const ReplyButton = styled.div`
   right: 20px;
   display: inline-flex;
   gap: 4px;
-  align-items: flex-start;
+  align-items: center;
   padding: 16px;
   color: ${colors.white};
   border-radius: 30px;
   background-color: ${colors.blue[500]};
+  img {
+    transform: translateY(-1px);
+  }
 `;
 
 const CareerBox = styled.div``;

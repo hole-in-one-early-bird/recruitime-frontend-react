@@ -7,304 +7,140 @@ interface TypographyVariant {
   letterSpacing?: string;
   color?: string;
 }
-// headline1: "headline1",
-//   headline2: "headline2",
-//   bodyText: "bodyText",
-//   bodyTextBold: "bodyTextBold",
-//   captionText: "captionText",
-//   buttonText: "buttonText",
-//   pageTitle: "pageTitle",
-//   subTitle: "subTitle",
-//   overline: "overline",
-//   errorMessage: "errorMessage",
-//   navigationText: "navigationText",
-//   cardTitle: "cardTitle",
-//   cardContent: "cardContent",
-//   listItem: "listItem",
-//   sectionHeader: "sectionHeader",
-//   inputText: "inputText",
-//   placeholderText: "placeholderText",
-//   tooltipText: "tooltipText",
-//   badgeText: "badgeText",
-//   highlightedText: "highlightedText",
-//   calloutText: "calloutText",
-//   linkText: "linkText",
-//   footerText: "footerText",
-//   breadcrumbText: "breadcrumbText",
-//   tagText: "tagText",
-//   infoText: "infoText",
-//   successText: "successText",
-//   warningText: "warningText",
-//   errorText: "errorText"
+
 interface TypographyVariants {
   [variant: string]: TypographyVariant;
 }
 // medium:500, semibold:600, bold:700, extrabold:800
+
 export const typographyStyles: TypographyVariants = {
   base: {
-    fontSize: '14px',
-    fontWeight: 300,
-    lineHeight: '18px',
-    letterSpacing: '-0.02em',
-  },
-  headline1: {
-    fontSize: '24px',
-    fontWeight: 700,
-    // 2%
-    letterSpacing: '-0.02rem',
-    lineHeight: '32px',
-  },
-  headline2: {
     fontSize: '16px',
-    fontWeight: 400,
-    // 2%
-    letterSpacing: '-0.02rem',
-    lineHeight: '100%',
   },
-  title3: {
-    fontSize: '20px',
-    fontWeight: 500,
-    // 2%
-    letterSpacing: '-0.02rem',
-    lineHeight: '100%',
-  },
-
-  body1: {
-    fontSize: '14px',
-    fontWeight: 400,
-    lineHeight: '18px',
-    letterSpacing: '-0.02em',
-  },
-
-  label: {
-    color: colors.gray[800],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-
-  caption: {
-    fontSize: '14px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-
-  error: {
-    color: colors.error,
-    fontSize: '14px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  // ------------------------------------
-  logo: {
-    fontSize: '20px',
-    fontWeight: 800,
-    color: colors.blue[500],
-  },
-  headerTitle: {
+  header: {
     fontSize: '18px',
     fontWeight: 600,
     lineHeight: '20px',
-    color: colors.gray[700],
+    letterSpacing: '0',
   },
-  largeTitle: {
+  textbox: {
+    fontSize: '16px',
+    fontWeight: 400,
+  },
+  toastButton: {
+    fontSize: '18px',
+    fontWeight: 500,
+    lineHeight: '20px',
+  },
+
+  mainTitle01: {
     fontSize: '24px',
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: '32px',
-    letterSpacing: '-0.02em',
-    color: colors.gray[900],
   },
-  middleTitle: {
+  mainTitle02: {
     fontSize: '22px',
-    fontWeight: 700,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-    color: colors.gray[900],
-  },
-  subtitle: {
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '100%',
-    letterSpacing: '-0.02em',
-    color: colors.gray[800],
-  },
-  subtitle2: {
-    fontSize: '16px',
-    fontWeight: 600,
-    lineHeight: '20px',
-    letterSpacing: '-0.02em',
-    color: colors.gray[700],
-  },
-
-  placeholder: {
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '100%',
-    letterSpacing: '-0.02em',
-    color: colors.gray[400],
-  },
-  // placeholderActive: {
-  //   color: colors.gray[700],
-  // },
-  button1: {
-    color: colors.gray[500],
-    fontSize: '16px',
-    fontWeight: 600,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  // button1Active: {
-  //   color: colors.blue[600],
-  // },
-  button2: {
-    color: colors.gray[500],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  button2Active: {
-    color: colors.white,
-    fontWeight: 700,
-  },
-  button3: {
-    color: colors.gray[500],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '20px',
-  },
-  button3Active: {
-    color: colors.blue[600],
     fontWeight: 600,
   },
-  button4: {
-    color: colors.blue[400],
-    fontSize: '16px',
+  mainTitle03: {
+    fontSize: '20px',
     fontWeight: 600,
-    lineHeight: '20px',
   },
-  keyword: {
-    color: colors.gray[400],
+  subTitle01: {
+    fontSize: '16px',
+    fontWeight: 500,
+  },
+  subTitle02: {
+    fontSize: '16px',
+    fontWeight: 400,
+  },
+  button01: {
     fontSize: '18px',
-    fontWeight: 700,
-    lineHeight: 'auto',
-    letterSpacing: '-0.02em',
+    fontWeight: 600,
   },
-  stepButton: {
-    color: colors.white,
-    fontSize: '18px',
-    fontWeight: 700,
-    lineHeight: 'auto',
-    letterSpacing: '-0.02em',
+  button02: {
+    fontSize: '16px',
+    fontWeight: 500,
   },
-  count1: {
-    color: colors.blue[600],
+  // 활성화 되면
+  //    font-weight: 500,
+  button03: {
+    fontSize: '16px',
+    fontWeight: 400,
+  },
+  // 활성화 되면
+  //    font-weight: 500,
+  button04: {
+    fontSize: '16px',
+    fontWeight: 400,
+    lineHeight: '20px',
+    letterSpacing: '0',
+  },
+  button05: {
+    fontSize: '16px',
+    fontWeight: 600,
+    lineHeight: '20px',
+  },
+  caption01: {
     fontSize: '14px',
-    fontWeight: 600,
-    lineHeight: '1',
-    letterSpacing: '-0',
+    fontWeight: 400,
   },
-  count2: {
-    color: colors.blue[600],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
+  caption02: {
+    fontSize: '12px',
+    fontWeight: 400,
   },
-  selectBox: {
-    color: colors.gray[300],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
+  caption03: {
+    fontSize: '14px',
+    fontWeight: 400,
   },
-  selectList: {
-    color: colors.gray[500],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  box1: {
-    color: colors.gray[800],
-    fontSize: '16px',
-    fontWeight: 600,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  box2: {
-    color: colors.gray[700],
-    fontSize: '16px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-  box3: {
-    color: colors.gray[800],
-    fontSize: '18px',
-    fontWeight: 500,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
-  },
-
-  caption4: {
-    color: colors.gray[400],
+  caption04: {
     fontSize: '15px',
-    fontWeight: 400,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
+    fontWeight: 300,
   },
-  // body1: {
-  //   color: colors.gray[700],
-  //   fontSize: '18px',
-  //   fontWeight: 500,
-  //   lineHeight: '1',
-  //   letterSpacing: '-0.02em',
-  // },
-  body2: {
-    color: colors.gray[700],
-    fontSize: '16px',
+  caption05: {
+    fontSize: '14px',
     fontWeight: 500,
-    lineHeight: '24px',
-    letterSpacing: '-0.02em',
   },
-  body3: {
-    color: colors.gray[600],
+  body01: {
+    fontSize: '18px',
+    fontWeight: 400,
+  },
+  //b: font-weight: 500,
+  body02: {
     fontSize: '16px',
     fontWeight: 400,
+    lineHeight: '24px',
+  },
+  body03: {
+    fontSize: '16px',
+    fontWeight: 300,
     lineHeight: '22px',
-    letterSpacing: '-0.02em',
   },
-  body4: {
+  body04: {
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+  },
+  // 활성화 후 font-weight: 500,
+  selectBox: {
     fontSize: '16px',
-    fontWeight: 600,
-    lineHeight: '24px',
-    letterSpacing: '-0.16px',
+    fontWeight: 400,
   },
-
-  title1: {
-    color: colors.white,
-    fontSize: '18px',
-    fontWeight: 700,
-    lineHeight: '20px',
-    letterSpacing: '-0.02em',
+  count01: {
+    fontSize: '14px',
+    fontWeight: 500,
+    letterSpacing: '0px',
   },
-  title2: {
-    color: colors.gray[600],
+  count02: {
     fontSize: '16px',
-    fontWeight: 700,
-    lineHeight: '1',
-    letterSpacing: '-0.02em',
+    fontWeight: 400,
   },
-
-  toast: {
-    color: colors.white,
+  modal01: {
     fontSize: '18px',
     fontWeight: 500,
-    lineHeight: '20px',
-    letterSpacing: '-0.02em',
+  },
+  modal02: {
+    fontSize: '16px',
+    fontWeight: 400,
   },
 };

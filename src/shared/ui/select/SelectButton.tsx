@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import colors from 'shared/styles/color';
 import styled, { css } from 'styled-components';
 import { Button } from '../button/Button';
@@ -12,6 +12,7 @@ interface SelectTypeProps {
   label?: string;
   width?: string;
   style?: React.CSSProperties;
+  TypographyVariant: string;
 }
 
 export const SelectType: React.FC<SelectTypeProps> = ({
@@ -22,12 +23,15 @@ export const SelectType: React.FC<SelectTypeProps> = ({
   label,
   width,
   style,
+  TypographyVariant,
 }) => {
   return (
     <SelectTypeWrapper className={className}>
       {label && (
         <Label>
-          <Typography variant={'label'}>{label}</Typography>
+          <Typography variant={'subTitle01'} style={{ color: colors.gray[800] }}>
+            {label}
+          </Typography>
         </Label>
       )}
       <SelectButtonBox>
@@ -39,6 +43,7 @@ export const SelectType: React.FC<SelectTypeProps> = ({
             selected={selected === option}
             onClick={() => onSelect(option)}
             width={width}
+            TypographyVariant={TypographyVariant}
           >
             {option}
           </StyledButton>

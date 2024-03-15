@@ -19,7 +19,7 @@ export const FindAccount = () => {
   };
   return (
     <FindAccountWrapper>
-      <StyledTypography className='title' variant={'largeTitle'}>
+      <StyledTypography className='title' variant={'mainTitle01'}>
         {`가입하신 이메일 주소를\n입력해주세요`}
       </StyledTypography>
       <TextInput
@@ -33,7 +33,12 @@ export const FindAccount = () => {
         isValid={!errors.email && values.email !== ''}
       />
 
-      <Button onClick={handleSubmit} variant={'primary'} style={{ position: 'fixed', bottom: '65px' }}>
+      <Button
+        TypographyVariant='content'
+        onClick={handleSubmit}
+        variant={'primary'}
+        style={{ position: 'fixed', bottom: '65px' }}
+      >
         비밀번호 발송
       </Button>
     </FindAccountWrapper>

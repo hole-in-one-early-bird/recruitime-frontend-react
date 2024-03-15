@@ -11,13 +11,13 @@ export const SignupSuccess = () => {
   return (
     <SignupSuccessWrapper>
       <CompleteContainer>
-        <Typography className='title' variant={'largeTitle'}>
+        <Typography className='title' variant={'mainTitle01'} style={{ color: colors.gray[900] }}>
           리쿠르탐에 오신걸 환영해요!
         </Typography>
 
         <Des>
           <div className='des'>
-            <StyledTypography variant={'body1'} style={{ color: colors.gray[600] }}>
+            <StyledTypography variant={'body04'} style={{ color: colors.gray[600] }}>
               {`프로필 입력 시 더 편리하게\n커리어를 분석할 수 있어요!`}
             </StyledTypography>
           </div>
@@ -25,11 +25,11 @@ export const SignupSuccess = () => {
         </Des>
       </CompleteContainer>
       <AuthOption>
-        <Button variant={'primary'} style={{ marginBottom: '16px' }}>
+        <Button variant={'primary'} style={{ marginBottom: '16px' }} TypographyVariant={'button01'}>
           <Link to={ROUTES_PATH.userInfo}>프로필 입력하기</Link>
         </Button>
         <Link to={ROUTES_PATH.home}>
-          <Typography className='next' variant={'caption'} style={{ color: colors.gray[400] }}>
+          <Typography className='next' variant={'caption01'} style={{ color: colors.gray[400] }}>
             다음에 하기
           </Typography>
         </Link>

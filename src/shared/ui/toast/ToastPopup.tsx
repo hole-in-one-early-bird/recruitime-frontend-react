@@ -6,7 +6,9 @@ import { Typography } from '../typography/Typography';
 export default function ToastPopup({ children }: { children: string }) {
   return (
     <ToastPopupBox>
-      <Typography variant={'toast'}>{children}</Typography>
+      <Typography variant={'toastButton'} style={{ color: colors.white }}>
+        {children}
+      </Typography>
     </ToastPopupBox>
   );
 }

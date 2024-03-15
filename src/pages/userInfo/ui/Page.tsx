@@ -1,42 +1,40 @@
-import axios from 'axios';
-import { API } from 'config';
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import { useProfileSaveMutation } from 'features/auth/@hooks/useProfileSaveMutation';
-import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 
-import { useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
 import { Education } from 'features/userInfo/education/ui/Education';
 import { Experience } from 'features/userInfo/experience/ui/Experience';
 import { Profile } from 'features/userInfo/profile/ui/Profile';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { initialValues } from 'shared/constants/data';
 import { Button } from 'shared/ui/button/Button';
 
 import styled from 'styled-components';
 
 export const UserInfo = () => {
-  const { userInfoData, handlers } = useUserInfoData('');
   const { mutate: saveProfile } = useProfileSaveMutation();
+  const { userDataStore } = useUserData(initialValues);
 
   const isAllDataComplete = () => {
     return (
-      userInfoData.name !== '' &&
-      userInfoData.gender !== '' &&
-      userInfoData.age !== '' &&
-      userInfoData.highestDegree !== '' &&
-      userInfoData.major !== '' &&
-      userInfoData.experiences.length >= 0
+      userDataStore.name !== '' &&
+      userDataStore.gender !== '' &&
+      userDataStore.age !== '' &&
+      userDataStore.major !== '' &&
+      userDataStore.experiences.length >= 0
     );
   };
 
   return (
     <UserInfoWrapper>
-      <Profile userInfoData={userInfoData} handlers={handlers} />
-      <Education userInfoData={userInfoData} handlers={handlers} />
-      <Experience userInfoData={userInfoData} handlers={handlers} />
+      <Profile />
+      <Education />
+      <Experience />
       <Button
         type='submit'
         variant={isAllDataComplete() ? 'primary' : 'primaryDisabled'}
-        onClick={() => isAllDataComplete() && saveProfile(userInfoData)}
+        onClick={() => isAllDataComplete() && saveProfile(userDataStore)}
         disabled={!isAllDataComplete()}
+        TypographyVariant={'button01'}
       >
         프로필 저장하기
       </Button>

@@ -29,7 +29,9 @@ export const TextInput: React.FC<TextInputProps> = ({
     <TextInputWrapper className={className}>
       {label && (
         <Label>
-          <Typography variant={'label'}>{label}</Typography>
+          <Typography variant={'subTitle01'} style={{ color: colors.gray[800] }}>
+            {label}
+          </Typography>
         </Label>
       )}
       <InputContainer>
@@ -47,14 +49,16 @@ export const TextInput: React.FC<TextInputProps> = ({
       </InputContainer>
       {caption && (
         <Caption>
-          <Typography variant={'body1'} style={{ color: colors.gray[400] }}>
+          <Typography variant={'caption03'} style={{ color: colors.gray[400] }}>
             {caption}
           </Typography>
         </Caption>
       )}
       {error && (
         <ErrorMsg>
-          <Typography variant={'error'}>{error}</Typography>
+          <Typography variant={'caption01'} style={{ color: colors.error }}>
+            {error}
+          </Typography>
         </ErrorMsg>
       )}
     </TextInputWrapper>
@@ -86,7 +90,6 @@ const StyledInput = styled.input<{ $isFocused: boolean; $isError: boolean; $isVa
 
   &::placeholder {
     color: ${({ $isFocused }) => ($isFocused ? colors.gray[700] : colors.gray[300])};
-    font-weight: 400;
   }
 `;
 

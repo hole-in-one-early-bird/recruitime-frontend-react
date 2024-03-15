@@ -19,8 +19,8 @@ interface ModalProps {
 }
 
 interface PopupModalProps extends ModalProps {
-  content: React.ReactNode;
-
+  content1?: React.ReactNode;
+  content2?: React.ReactNode;
   onClickYes: () => void | Promise<void>;
   onClickNo: () => void | Promise<void>;
 }
@@ -44,14 +44,16 @@ export const Modal: React.FC<ModalProps> = ({
       <ModalWrapper>
         {label && (
           <Label>
-            <Typography variant={'box3'}>{label}</Typography>
+            <Typography variant={'modal01'} style={{ color: colors.gray[800] }}>
+              {label}
+            </Typography>
           </Label>
         )}
         <OptionBox $isTwoColumns={$isTwoColumns}>
           {options?.map((option) => (
             <Option key={option} onClick={() => onSelect?.(option)} $isSelected={selected === option}>
               <Typography
-                variant={'selectList'}
+                variant={selected === option ? 'subTitle01' : 'subTitle02'}
                 style={{ color: selected === option ? colors.blue[400] : colors.gray[500] }}
               >
                 {option}
@@ -67,7 +69,8 @@ export const Modal: React.FC<ModalProps> = ({
 
 export const PopupModal: React.FC<PopupModalProps> = ({
   isOpen,
-  content,
+  content1,
+  content2,
   onClose,
   onClickYes,
   onClickNo,
@@ -82,20 +85,30 @@ export const PopupModal: React.FC<PopupModalProps> = ({
     <Overlay onClick={onClose}>
       <PopupModalWrapper>
         <TypoContainer>
-          <Typography variant={'title3'} children={'입력한 프로필을 불러올까요?'} />
+          <Typography variant={'mainTitle03'} style={{ color: colors.gray[800] }} children={content1} />
           <Typography
-            variant={'headline2'}
-            children={`저장하신 개인정보가 자동으로 입력됩니다.`}
+            variant={'subTitle02'}
+            children={content2}
             style={{ color: colors.gray[500], marginTop: '6px' }}
           />
         </TypoContainer>
 
         <ButtonContainer>
-          <Button variant={'cancel'} style={{ width: '50%' }} onClick={onClickNo}>
+          <Button
+            variant={'cancel'}
+            style={{ width: '50%' }}
+            onClick={onClickNo}
+            TypographyVariant={'subtitle01'}
+          >
             아니요
           </Button>
 
-          <Button variant={'check'} style={{ width: '50%' }} onClick={onClickYes}>
+          <Button
+            variant={'check'}
+            style={{ width: '50%' }}
+            onClick={onClickYes}
+            TypographyVariant={'subtitle01'}
+          >
             네
           </Button>
         </ButtonContainer>
@@ -136,7 +149,7 @@ const PopupModalWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 30px 22px 30px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: ${colors.white};
 `;
 

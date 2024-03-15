@@ -1,6 +1,7 @@
 import { BaseLayout } from 'app/layouts/baseLayout';
 import { Chat } from 'pages/chat';
 import { CustomizedCareer } from 'pages/customizedCareer';
+import { EditUserInfo } from 'pages/edituserInfo';
 import { Education } from 'pages/education';
 import { Experience } from 'pages/experience';
 import { FindAccountPage } from 'pages/findAccount';
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES_PATH.userInfo,
         element: <UserInfo />,
+      },
+      {
+        path: ROUTES_PATH.editUserInfo,
+        element: <EditUserInfo />,
       },
       {
         path: ROUTES_PATH.profile,

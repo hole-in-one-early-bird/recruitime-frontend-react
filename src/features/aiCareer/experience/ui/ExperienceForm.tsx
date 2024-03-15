@@ -26,13 +26,11 @@ export const ExperienceForm = () => {
     handleSelect('experienceDetail', e.target.value);
   };
 
-  // userData가 변경될 때마다 세션 스토리지를 업데이트합니다.
-
   return (
     <ExperienceWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>경험을 입력해 주세요!</StyledTypography>
-        <Typography variant={'headline2'} style={{ color: colors.gray[500] }}>
+        <StyledTypography variant={'mainTitle02'}>경험을 입력해 주세요!</StyledTypography>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[500] }}>
           다양한 활동 경험들을 간단히 입력해 주세요
         </Typography>
       </div>
@@ -61,12 +59,18 @@ export const ExperienceForm = () => {
               ? 'inactive'
               : 'confirm'
           }
-          onClick={() => addExperience(userDataStore.experienceOption, userDataStore.experienceDetail)}
-          disabled={
-            !userDataStore.experienceOption ||
-            !userDataStore.experienceDetail ||
-            userDataStore.experiences.length >= 5
-          }
+          TypographyVariant={'button02'}
+          onClick={() => {
+            if (
+              userDataStore.experienceOption &&
+              userDataStore.experienceDetail &&
+              userDataStore.experiences.length < 5
+            ) {
+              addExperience(userDataStore.experienceOption, userDataStore.experienceDetail);
+              handleSelect('experienceOption', '');
+              handleSelect('experienceDetail', '');
+            }
+          }}
         >
           입력하기
         </StyledButton>
@@ -74,14 +78,20 @@ export const ExperienceForm = () => {
       {userDataStore.experiences.length === 0 ? (
         <EmptyBox>
           <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
-          <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
+          <Typography variant={'caption04'} style={{ color: colors.gray[400] }}>
+            5개까지만 알려주세요
+          </Typography>
         </EmptyBox>
       ) : (
         <ListBox>
           {userDataStore.experiences.map((e, index) => (
             <ExperienceItem key={index}>
-              <Typography variant={'subtitle'}>{e.experience_type}</Typography>
-              <Typography variant={'subtitle2'}>{e.experience_content}</Typography>
+              <Typography variant={'subTitle01'} style={{ color: colors.gray[800] }}>
+                {e.activity}
+              </Typography>
+              <Typography variant={'subTitle02'} style={{ color: colors.gray[700] }}>
+                {e.content}
+              </Typography>
               <img
                 onClick={() => removeExperience(index)}
                 src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
@@ -91,17 +101,20 @@ export const ExperienceForm = () => {
           ))}
         </ListBox>
       )}
-      <StyledButton
-        variant={'primary'}
-        style={{
-          position: 'fixed',
-          bottom: '38px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        <Link to={ROUTES_PATH.keyword}>계속하기</Link>
-      </StyledButton>
+      <Link to={ROUTES_PATH.keyword}>
+        <StyledButton
+          variant={'primary'}
+          style={{
+            position: 'fixed',
+            bottom: '38px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+          TypographyVariant={'button01'}
+        >
+          계속하기
+        </StyledButton>
+      </Link>
       <Modal
         label='경험선택'
         isOpen={isOpen}

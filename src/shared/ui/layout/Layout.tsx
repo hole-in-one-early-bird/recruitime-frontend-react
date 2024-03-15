@@ -29,7 +29,6 @@ export const Layout = (props: Props) => {
 
 const LayoutContainer = styled.div`
   position: relative;
-  border: 1px solid #ddd;
 
   background-color: ${colors.white};
 `;
