@@ -15,8 +15,12 @@ export const AIInteractive = ({ titleChildren, subChildren, alt, src, onClick }:
   return (
     <AIInteractiveWrapper onClick={onClick}>
       <div className='title'>
-        <Typography variant={'title3'}>{titleChildren}</Typography>
-        <Typography variant={'subtitle2'}>{subChildren}</Typography>
+        <Typography variant={'mainTitle03'} style={{ color: colors.gray[800], marginBottom: '6px' }}>
+          {titleChildren}
+        </Typography>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[600] }}>
+          {subChildren}
+        </Typography>
       </div>
       <img src={process.env.PUBLIC_URL + `/images/${src}.png`} alt={alt} />
     </AIInteractiveWrapper>

@@ -26,9 +26,6 @@ export function useUserInfoData(initialValue: string) {
     experiences: [],
     experience: '',
   });
-  useEffect(() => {
-    console.log(userInfoData);
-  }, [userInfoData]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;

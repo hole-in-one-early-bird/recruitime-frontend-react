@@ -29,17 +29,17 @@ export const Layout = (props: Props) => {
 
 const LayoutContainer = styled.div`
   position: relative;
+
   background-color: ${colors.white};
 `;
 
 const ContentContainer = styled.div`
-  padding: 20px;
+  position: relative;
   overflow-x: hidden;
-  border: 1px solid #ddd;
+  padding: 20px;
   height: calc(var(--vh, 1vh) * 100);
   box-sizing: border-box;
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
   ::-webkit-scrollbar {
     width: 0;
     height: 0;

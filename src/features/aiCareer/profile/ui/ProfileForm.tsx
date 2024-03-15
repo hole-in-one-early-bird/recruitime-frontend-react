@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { initialValues } from 'shared/constants/data';
 import { ROUTES_PATH } from 'shared/constants/routes';
+import colors from 'shared/styles/color';
 import { Button } from 'shared/ui/button/Button';
 import { TextInput } from 'shared/ui/input/TextInput';
 import { SelectType } from 'shared/ui/select/SelectButton';
@@ -21,7 +22,12 @@ export const ProfileForm = () => {
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
 
   const { name, gender, age, aboutMe } = userDataStore;
-
+  const options = [
+    '창작과 예술을 좋아해요.',
+    '운동과 액티비티를 즐겨요.',
+    '학습과 감상을 즐겨요.',
+    '커뮤니티 활동을 좋아해요.',
+  ];
   useEffect(() => {
     setIsAllFieldsFilled(name !== '' && gender !== '' && age !== '' && aboutMe !== '');
   }, [name, gender, age, aboutMe]);
@@ -29,8 +35,12 @@ export const ProfileForm = () => {
   return (
     <ProfileWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>프로필을 입력해 주세요!</StyledTypography>
-        <Typography variant={'subtitle3'}>맞춤 커리어 가이드를 위한 과정이에요</Typography>
+        <StyledTypography variant={'mainTitle02'} style={{ color: colors.gray[900] }}>
+          프로필을 입력해 주세요!
+        </StyledTypography>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[500] }}>
+          맞춤 커리어 가이드를 위한 과정이에요
+        </Typography>
       </div>
       <TextInput
         className='space'
@@ -48,6 +58,7 @@ export const ProfileForm = () => {
         onSelect={handleSelect.bind(null, 'gender')}
         selected={gender}
         width='49%'
+        TypographyVariant={'button02'}
       />
       <SelectType
         className='space'
@@ -56,6 +67,7 @@ export const ProfileForm = () => {
         onSelect={handleSelect.bind(null, 'age')}
         selected={age}
         width='32%'
+        TypographyVariant={'button02'}
       />
       <SelectType
         label='어떤 취미를 가지고 있나요?'
@@ -67,22 +79,30 @@ export const ProfileForm = () => {
         ]}
         onSelect={handleSelect.bind(null, 'aboutMe')}
         selected={aboutMe}
-        style={{ textAlign: 'left' }}
+        style={{ textAlign: 'left', fontWeight: aboutMe ? '500' : '400' }}
         width='100%'
+        TypographyVariant={'base'}
       />
 
-      <Button
-        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!isAllFieldsFilled}
-        style={{
-          position: 'fixed',
-          bottom: '38px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        {isAllFieldsFilled ? <Link to={ROUTES_PATH.track}>계속하기</Link> : '계속하기'}
-      </Button>
+      {isAllFieldsFilled ? (
+        <Link to={ROUTES_PATH.track}>
+          <Button
+            variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+            disabled={!isAllFieldsFilled}
+            style={{
+              position: 'fixed',
+              bottom: '38px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+            TypographyVariant='button01'
+          >
+            계속하기
+          </Button>
+        </Link>
+      ) : (
+        '계속하기'
+      )}
     </ProfileWrapper>
   );
 };

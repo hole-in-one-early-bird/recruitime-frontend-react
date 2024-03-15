@@ -1,7 +1,8 @@
+import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import { UserInfoData, useUserInfoData } from 'features/userInfo/@hooks/useUserInfoData';
-import React, { useState } from 'react';
-import { activities } from 'shared/constants/data';
+import React, { ChangeEvent, useState } from 'react';
+import { activities, initialValues } from 'shared/constants/data';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import { Button } from 'shared/ui/button/Button';
@@ -10,84 +11,89 @@ import { Modal } from 'shared/ui/modal/Modal';
 import { OptionPicker } from 'shared/ui/select/OptionPicker';
 import { Typography } from 'shared/ui/typography/Typography';
 import styled from 'styled-components';
-interface Experience {
-  activity: string;
-  content: string;
-}
-// Experience.tsx
-interface ExperienceProps {
-  userInfoData: {
-    experience: string;
-    experiences: Experience[];
-  };
-  handlers: {
-    addExperience: (activity: string, content: string) => void;
-    removeExperience: (index: number) => void;
-    handleExperienceChange: (value: string) => void;
-  };
-}
 
-export const Experience: React.FC<ExperienceProps> = ({ userInfoData, handlers }) => {
-  const { experience, experiences } = userInfoData;
-  const { addExperience, removeExperience, handleExperienceChange } = handlers;
-
-  const [selectedOption, setSelectedOption] = useState('');
-
+export const Experience = () => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
-
-  const handleAddExperience = () => {
-    if (!selectedOption || !experience || experiences.length >= 5) {
-      return;
-    }
-    addExperience(selectedOption, experience);
-    handleExperienceChange('');
-    setSelectedOption('');
-  };
+  const { userDataStore, handleSelect, addExperience, removeExperience } = useUserData(initialValues);
 
   const handleSelectOption = (option: string) => {
-    setSelectedOption(option);
+    handleSelect('experienceOption', option);
     handleCloseModal();
+  };
+
+  const handleExperienceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleSelect('experienceDetail', e.target.value);
   };
 
   return (
     <ExperienceWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>나의 경험 작성</StyledTypography>
-        <Typography variant={'subtitle3'}>다양한 활동 경험들을 간단히 입력해 주세요</Typography>
+        <StyledTypography variant={'mainTitle02'} style={{ color: colors.gray[900] }}>
+          나의 경험 작성
+        </StyledTypography>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[500] }}>
+          다양한 활동 경험들을 간단히 입력해 주세요
+        </Typography>
       </div>
       <div className='optionPickerBox'>
-        <OptionPicker onClick={handleOpenModal} selectedOption={selectedOption} children='경험선택' />
+        <OptionPicker
+          onClick={handleOpenModal}
+          selectedOption={userDataStore.experienceOption}
+          children='경험선택'
+        />
       </div>
 
       <AddExperienceWrapper>
         <StyledTextInput
           type='text'
-          value={experience}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleExperienceChange(e.target.value)}
+          value={userDataStore.experienceDetail}
+          onChange={handleExperienceChange}
           placeholder='경험 내용 입력'
-          name={'experience'}
+          name={'experienceDetail'}
           caption='최대 15자까지 입력할 수 있어요.'
           maxLength={15}
         />
         <StyledButton
-          variant={!selectedOption || !experience || experiences.length >= 5 ? 'inactive' : 'confirm'}
-          onClick={handleAddExperience}
-          disabled={!selectedOption || !experience || experiences.length >= 5}
+          TypographyVariant={'button02'}
+          variant={
+            !userDataStore.experienceOption ||
+            !userDataStore.experienceDetail ||
+            userDataStore.experiences.length >= 5
+              ? 'inactive'
+              : 'confirm'
+          }
+          onClick={() => {
+            if (
+              userDataStore.experienceOption &&
+              userDataStore.experienceDetail &&
+              userDataStore.experiences.length < 5
+            ) {
+              addExperience(userDataStore.experienceOption, userDataStore.experienceDetail);
+              handleSelect('experienceOption', '');
+              handleSelect('experienceDetail', '');
+            }
+          }}
         >
           입력하기
         </StyledButton>
       </AddExperienceWrapper>
-      {experiences.length === 0 ? (
+      {userDataStore.experiences.length === 0 ? (
         <EmptyBox>
           <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.png'} alt='characterImage' />
-          <Typography variant={'caption4'}>5개까지만 알려주세요</Typography>
+          <Typography variant={'caption04'} style={{ color: colors.gray[400] }}>
+            5개까지만 알려주세요
+          </Typography>
         </EmptyBox>
       ) : (
         <ListBox>
-          {experiences.map((e, index) => (
+          {userDataStore.experiences.map((e, index) => (
             <ExperienceItem key={index}>
-              <Typography variant={'subtitle'}>{e.activity}</Typography>
-              <Typography variant={'subtitle2'}>{e.content}</Typography>
+              <Typography variant={'subTitle01'} style={{ color: colors.gray[800] }}>
+                {e.activity}
+              </Typography>
+              <Typography variant={'subTitle02'} style={{ color: colors.gray[700] }}>
+                {e.content}
+              </Typography>
               <img
                 onClick={() => removeExperience(index)}
                 src={process.env.PUBLIC_URL + '/images/icon/closeIcon.png'}
@@ -102,7 +108,7 @@ export const Experience: React.FC<ExperienceProps> = ({ userInfoData, handlers }
         isOpen={isOpen}
         onClose={handleCloseModal}
         onSelect={handleSelectOption}
-        selected={selectedOption}
+        selected={userDataStore.experienceOption}
         options={activities}
         $isTwoColumns
       />
@@ -161,5 +167,8 @@ const ExperienceItem = styled.div`
   border-radius: 10px;
   > :last-child {
     justify-self: end;
+  }
+  img {
+    cursor: pointer;
   }
 `;

@@ -21,6 +21,12 @@ export const variantStyles = {
     background-color: ${colors.blue[400]};
     color: ${colors.white};
   `,
+  // 입력 버튼 - inactive
+  inConfirm: css`
+    ${primaryCommonStyles}
+    background-color: ${colors.gray[50]};
+    color: ${colors.gray[500]};
+  `,
   // 활성화 버튼
   active: css`
     ${primaryCommonStyles}
@@ -40,9 +46,17 @@ export const variantStyles = {
     background-color: ${colors.gray[200]};
     color: ${colors.gray[400]};
   `,
+  check: css`
+    padding: 15px;
+    border-radius: 10px;
+    background-color: ${colors.blue[400]};
+    color: ${colors.white};
+  `,
   cancel: css`
-    ${primaryCommonStyles}
-
-    color: #838383;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid ${colors.gray[400]};
+    color: ${colors.gray[400]};
+    background-color: ${colors.white};
   `,
 };

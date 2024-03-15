@@ -6,6 +6,7 @@ import { initialValues, interestAreas } from 'shared/constants/data';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { MAX_SELECTIONS, removeEmoji, useUserData } from 'features/aiCareer/@hooks/useUserData';
+import colors from 'shared/styles/color';
 
 export const TrackForm = () => {
   const { userDataStore, handleSelectInterest, handleSelect } = useUserData(initialValues);
@@ -17,10 +18,17 @@ export const TrackForm = () => {
   return (
     <TrackWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>흥미 분야를 선택해 주세요!</StyledTypography>
+        <StyledTypography variant={'mainTitle02'} style={{ color: colors.gray[900] }}>
+          흥미 분야를 선택해 주세요!
+        </StyledTypography>
         <div className='count'>
-          <Typography variant={'subtitle3'}>세부 관심 분야를 파악하기 위한 과정이에요</Typography>
-          <Typography variant={'count1'}>{`(${selectedInterests.length}/${MAX_SELECTIONS})`}</Typography>
+          <Typography variant={'subTitle02'} style={{ color: colors.gray[500] }}>
+            세부 관심 분야를 파악하기 위한 과정이에요
+          </Typography>
+          <Typography
+            variant={'count01'}
+            style={{ color: colors.blue[600] }}
+          >{`(${selectedInterests.length}/${MAX_SELECTIONS})`}</Typography>
         </div>
       </div>
       <InterestsContainer>
@@ -29,27 +37,37 @@ export const TrackForm = () => {
             variant={selectedInterests.includes(removeEmoji(interest.name)) ? 'active' : 'inactive'}
             key={interest.id}
             onClick={() => handleSelectInterest(interest.id)}
+            TypographyVariant={'base'}
+            style={{
+              padding: '10px 16px',
+              fontWeight: selectedInterests.includes(removeEmoji(interest.name)) ? '500' : '400',
+            }}
           >
-            <Typography
-              variant={selectedInterests.includes(interest.name) ? 'button3Active' : 'button3'}
-            >
-              {interest.name}
-            </Typography>
+            {interest.name}
           </StyledButton>
         ))}
       </InterestsContainer>
-      <Button
-        variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
-        disabled={!selectedInterests}
-        style={{
-          position: 'fixed',
-          bottom: '38px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        {selectedInterests.length > 0 ? <Link to={ROUTES_PATH.education}>계속하기</Link> : '계속하기'}
-      </Button>
+
+      {selectedInterests.length > 0 ? (
+        <Link to={ROUTES_PATH.education}>
+          <Button
+            variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
+            disabled={!selectedInterests}
+            style={{
+              position: 'fixed',
+              bottom: '38px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              fontWeight: selectedInterests ? '500' : '400',
+            }}
+            TypographyVariant={'button01'}
+          >
+            계속하기{' '}
+          </Button>
+        </Link>
+      ) : (
+        '계속하기'
+      )}
     </TrackWrapper>
   );
 };

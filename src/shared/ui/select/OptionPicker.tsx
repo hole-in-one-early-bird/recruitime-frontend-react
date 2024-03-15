@@ -20,14 +20,19 @@ export const OptionPicker: React.FC<OptionPickerProps> = ({
     <OptionPickerWrapper>
       {label && (
         <Label>
-          <StyledTypography variant={'label'}>{label}</StyledTypography>
+          <StyledTypography variant={'subTitle01'} style={{ color: colors.gray[800] }}>
+            {label}
+          </StyledTypography>
         </Label>
       )}
 
       <OptionPickerBox onClick={onClick} $isSelected={!!selectedOption}>
         <Typography
           variant={'selectBox'}
-          style={{ color: selectedOption ? colors.blue[400] : colors.gray[300] }}
+          style={{
+            color: selectedOption ? colors.blue[400] : colors.gray[300],
+            fontWeight: selectedOption ? 500 : 400,
+          }}
         >
           {selectedOption || children}
         </Typography>

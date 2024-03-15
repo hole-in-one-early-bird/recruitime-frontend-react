@@ -29,7 +29,9 @@ export const TextInput: React.FC<TextInputProps> = ({
     <TextInputWrapper className={className}>
       {label && (
         <Label>
-          <Typography variant={'label'}>{label}</Typography>
+          <Typography variant={'subTitle01'} style={{ color: colors.gray[800] }}>
+            {label}
+          </Typography>
         </Label>
       )}
       <InputContainer>
@@ -47,12 +49,16 @@ export const TextInput: React.FC<TextInputProps> = ({
       </InputContainer>
       {caption && (
         <Caption>
-          <Typography variant={'caption'}>{caption}</Typography>
+          <Typography variant={'caption03'} style={{ color: colors.gray[400] }}>
+            {caption}
+          </Typography>
         </Caption>
       )}
       {error && (
         <ErrorMsg>
-          <Typography variant={'error'}>{error}</Typography>
+          <Typography variant={'caption01'} style={{ color: colors.error }}>
+            {error}
+          </Typography>
         </ErrorMsg>
       )}
     </TextInputWrapper>
@@ -77,13 +83,13 @@ const StyledInput = styled.input<{ $isFocused: boolean; $isError: boolean; $isVa
   border-radius: 10px;
   outline: none;
   transition: border 0.3s ease;
-
+  color: ${colors.gray[700]};
   &:disabled {
     border: 1px solid ${colors.gray[200]};
   }
 
   &::placeholder {
-    color: ${({ $isFocused }) => ($isFocused ? colors.gray[800] : colors.gray[300])};
+    color: ${({ $isFocused }) => ($isFocused ? colors.gray[700] : colors.gray[300])};
   }
 `;
 

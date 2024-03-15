@@ -16,8 +16,8 @@ export type UserDataType = {
 };
 
 export interface Experience {
-  experience_type: string;
-  experience_content: string;
+  activity: string;
+  content: string;
 }
 
 export type Keyword = {

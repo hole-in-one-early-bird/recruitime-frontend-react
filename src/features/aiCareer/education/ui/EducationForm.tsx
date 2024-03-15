@@ -38,8 +38,10 @@ export const EducationForm = () => {
   return (
     <EducationWrapper>
       <div className='title'>
-        <StyledTypography variant={'middleTitle'}>학력과 적성을 체크할게요!</StyledTypography>
-        <Typography variant={'subtitle3'}>전공 적성도를 체크하기 위한 과정이에요</Typography>
+        <StyledTypography variant={'mainTitle02'}>학력과 적성을 체크할게요!</StyledTypography>
+        <Typography variant={'subTitle02'} style={{ color: colors.gray[500] }}>
+          전공 적성도를 체크하기 위한 과정이에요
+        </Typography>
       </div>
       <div className='optionPickerBox'>
         <OptionPicker
@@ -59,7 +61,7 @@ export const EducationForm = () => {
         name={'education'}
       />
       <SelectType
-        label='어떤 취미를 가지고 있나요?'
+        label='전공/계열에 대한 생각은 어때요?'
         options={[
           '😍 전공이 적성에 잘 맞아요!',
           '😳 보통이에요 / 잘 모르겠어요.',
@@ -68,20 +70,30 @@ export const EducationForm = () => {
         onSelect={handleMatchSelect}
         selected={userDataStore.majorCheck}
         width='100%'
-        style={{ textAlign: 'left' }}
+        style={{ textAlign: 'left', fontWeight: userDataStore.majorCheck ? '500' : '400' }}
+        TypographyVariant={'button03'}
       />
-      <Button
-        variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-        disabled={!isAllFieldsFilled}
-        style={{
-          position: 'fixed',
-          bottom: '38px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-      >
-        {isAllFieldsFilled ? <Link to={ROUTES_PATH.experience}>계속하기</Link> : '계속하기'}
-      </Button>
+
+      {isAllFieldsFilled ? (
+        <Link to={ROUTES_PATH.experience}>
+          <Button
+            variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+            disabled={!isAllFieldsFilled}
+            style={{
+              position: 'fixed',
+              bottom: '38px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+            TypographyVariant={'button01'}
+          >
+            계속하기
+          </Button>
+        </Link>
+      ) : (
+        '계속하기'
+      )}
+
       <Modal
         label='학력선택'
         isOpen={isOpen}

@@ -11,24 +11,25 @@ export const SignupSuccess = () => {
   return (
     <SignupSuccessWrapper>
       <CompleteContainer>
-        <Typography className='title' variant={'largeTitle'}>
-          로그인이 완료되었어요!
+        <Typography className='title' variant={'mainTitle01'} style={{ color: colors.gray[900] }}>
+          리쿠르탐에 오신걸 환영해요!
         </Typography>
-        <DesContainer>
+
+        <Des>
           <div className='des'>
-            <StyledTypography variant={'caption'}>
+            <StyledTypography variant={'body04'} style={{ color: colors.gray[600] }}>
               {`프로필 입력 시 더 편리하게\n커리어를 분석할 수 있어요!`}
             </StyledTypography>
           </div>
           <img src={process.env.PUBLIC_URL + '/images/char/recruitimeBg.png'} alt='characterImage' />
-        </DesContainer>
+        </Des>
       </CompleteContainer>
       <AuthOption>
-        <Button variant={'primary'} style={{ marginBottom: '16px' }}>
-          <Link to={ROUTES_PATH.userInfo}>프로필입력하기</Link>
+        <Button variant={'primary'} style={{ marginBottom: '16px' }} TypographyVariant={'button01'}>
+          <Link to={ROUTES_PATH.userInfo}>프로필 입력하기</Link>
         </Button>
         <Link to={ROUTES_PATH.home}>
-          <Typography className='next' variant={'caption'}>
+          <Typography className='next' variant={'caption01'} style={{ color: colors.gray[400] }}>
             다음에 하기
           </Typography>
         </Link>
@@ -50,14 +51,11 @@ const CompleteContainer = styled.div`
   .title {
     margin-bottom: 66px;
   }
-  .next {
-    padding: 2px;
-    border-bottom: 1px solid ${colors.gray[400]};
-  }
 `;
 
-const DesContainer = styled.div`
+const Des = styled.div`
   position: relative;
+  margin-left: 26px;
 `;
 
 const StyledTypography = styled(Typography)`
@@ -77,4 +75,7 @@ const AuthOption = styled.div`
   width: 100%;
   position: fixed;
   bottom: 35px;
+  .next {
+    border-bottom: 1px solid ${colors.gray[400]};
+  }
 `;

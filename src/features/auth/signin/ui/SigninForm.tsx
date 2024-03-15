@@ -45,7 +45,11 @@ export const SigninForm = () => {
 
   return (
     <SigninFormWrapper>
-      <Typography className='title' variant={'largeTitle'}>
+      <Typography
+        className='title'
+        variant={'mainTitle01'}
+        style={{ margin: '39px 0 66px', color: colors.gray[900] }}
+      >
         로그인
       </Typography>
       <TextInput
@@ -71,24 +75,29 @@ export const SigninForm = () => {
         isValid={!errors.password && values.password !== ''}
       />
       <Error>
-        <Typography variant={'error'}>
+        <Typography variant={'caption01'} style={{ color: colors.error }}>
           {loginResult ? '' : `이메일과 비밀번호를 다시 한번 확인해주세요`}
         </Typography>
       </Error>
       <Button
-        onClick={handleSubmit}
+        onClick={isFormValid ? handleSubmit : undefined}
         variant={isFormValid ? 'primary' : 'primaryDisabled'}
         disabled={!isFormValid}
         style={{ marginBottom: '22px' }}
+        TypographyVariant='button1'
       >
         로그인
       </Button>
-      <AuthOptions>
+      <AuthOptions style={{ color: colors.gray[400] }}>
         <Link to={ROUTES_PATH.signup}>
-          <StyledTypography variant={'caption'}>회원가입</StyledTypography>
+          <StyledTypography variant={'caption01'} style={{ color: colors.gray[400] }}>
+            회원가입
+          </StyledTypography>
         </Link>
         <Link to={ROUTES_PATH.findAccount}>
-          <StyledTypography variant={'caption'}>계정 찾기</StyledTypography>
+          <StyledTypography variant={'caption01'} style={{ color: colors.gray[400] }}>
+            계정 찾기
+          </StyledTypography>
         </Link>
       </AuthOptions>
       <ToastPopupBox> {showToast && <ToastPopup>회원가입이 완료되었습니다!</ToastPopup>}</ToastPopupBox>
@@ -112,7 +121,6 @@ const AuthOptions = styled.div`
 `;
 
 const StyledTypography = styled(Typography)`
-  padding: 2px;
   border-bottom: 1px solid ${colors.gray[400]};
 `;
 

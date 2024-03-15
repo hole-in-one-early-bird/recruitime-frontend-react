@@ -7,6 +7,7 @@ export const ROUTES_PATH = {
   findAccount: '/findAccount',
   signupSuccess: '/signupSuccess',
   userInfo: '/userInfo',
+  editUserInfo: '/editUserInfo',
   profile: '/profile',
   track: '/track',
   education: '/education',

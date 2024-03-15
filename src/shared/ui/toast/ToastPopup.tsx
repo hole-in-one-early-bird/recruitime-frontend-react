@@ -6,13 +6,15 @@ import { Typography } from '../typography/Typography';
 export default function ToastPopup({ children }: { children: string }) {
   return (
     <ToastPopupBox>
-      <Typography variant={'toast'}>{children}</Typography>
+      <Typography variant={'toastButton'} style={{ color: colors.white }}>
+        {children}
+      </Typography>
     </ToastPopupBox>
   );
 }
 
 const ToastPopupBox = styled.div`
-  padding: 22px;
+  padding: 20px;
   border-radius: 30px;
   background-color: ${colors.blue[400]};
   text-align: center;
