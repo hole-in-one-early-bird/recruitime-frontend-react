@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { common } from 'shared/styles/common';
 import styled from 'styled-components';

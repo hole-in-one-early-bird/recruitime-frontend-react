@@ -3,10 +3,10 @@ import { API } from 'config';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 import { useModal } from 'features/userInfo/@hooks/useModal';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
-import { Modal, PopupModal, PopupResumeModal } from 'shared/ui/modal/Modal';
+import { PopupModal, PopupResumeModal } from 'shared/ui/modal/Modal';
 import { Typography } from 'shared/ui/typography/Typography';
 
 import { UserDataType, useUserStore } from 'shared/zustand/userStore';
@@ -153,11 +153,6 @@ const MainContentWrapper = styled.div`
       transform: translateY(-2px);
     }
   }
-`;
-
-const UserIcon = styled.img`
-  display: block;
-  margin-left: auto;
 `;
 
 const TitleBox = styled.div`

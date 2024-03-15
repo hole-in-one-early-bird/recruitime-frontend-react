@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API } from 'config';
 import html2canvas from 'html2canvas';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
@@ -25,8 +25,7 @@ const routeTitles: { [key: string]: string } = {
 };
 
 export const Header = () => {
-  const { chatBoxRef, setChatBoxRef } = useChatStore();
-  const [isCaptureChatEnabled, setCaptureChatEnabled] = useState(false);
+  const { chatBoxRef } = useChatStore();
   const resultData = useCustomizedCareerStore((state) => state.userData);
   const navigate = useNavigate();
   const location = useLocation();
@@ -56,7 +55,7 @@ export const Header = () => {
   const copyToClipboard = async () => {
     const fullUrl = `${window.location.href}?code=${resultData.jobRecommendationCode}`;
     try {
-      const response = await axios.get(API.GETSHARELINK, {
+      await axios.get(API.GETSHARELINK, {
         params: {
           code: resultData.jobRecommendationCode,
         },
@@ -117,9 +116,6 @@ export const Header = () => {
           </>
         );
       case ROUTES_PATH.mypage:
-      case ROUTES_PATH.userInfo:
-      case ROUTES_PATH.editUserInfo:
-      case ROUTES_PATH.findAccount:
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
             <BackIcon

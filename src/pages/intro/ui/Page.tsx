@@ -32,6 +32,7 @@ export const Intro = () => {
               bottom: '40px',
               left: '50%',
               transform: 'translateX(-50%)',
+              maxWidth: 'calc(100% - 40px)',
             }}
             TypographyVariant={'button01'}
           >
@@ -46,7 +47,6 @@ export const Intro = () => {
 const IntroWrapper = styled.div`
   .bg {
     position: relative;
-
     img {
       position: absolute;
       top: 156px;
