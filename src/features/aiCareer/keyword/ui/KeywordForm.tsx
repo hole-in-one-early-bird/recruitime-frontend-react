@@ -108,7 +108,8 @@ export const KeywordForm = () => {
             left: '50%',
             transform: 'translateX(-50%)',
             pointerEvents: isAllFieldsFilled ? 'auto' : 'none',
-            maxWidth: 'calc(100% - 40px)',
+            maxWidth: '440px',
+            width: 'calc(100% - 40px)',
           }}
           TypographyVariant={'button01'}
         >

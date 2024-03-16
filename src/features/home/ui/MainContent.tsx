@@ -105,7 +105,7 @@ export const MainContent = () => {
           <Typography variant={'subTitle01'} style={{ color: colors.gray[600] }}>
             맞춤 커리어 추천과 이력서 코칭을 받아보세요
           </Typography>
-          <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.png'} alt='fireIcon' />
+          <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.svg'} alt='fireIcon' />
         </div>
       </TitleBox>
       <ContentBox>

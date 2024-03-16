@@ -50,7 +50,7 @@ export const Loading = () => {
       <ContentBox>
         <Character>
           <img
-            src={process.env.PUBLIC_URL + 'images/char/watingCharacter.png'}
+            src={process.env.PUBLIC_URL + 'images/char/watingCharacter.svg'}
             alt='watingCharacterImg'
           />
         </Character>

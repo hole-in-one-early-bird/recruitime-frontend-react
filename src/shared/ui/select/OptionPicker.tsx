@@ -37,7 +37,7 @@ export const OptionPicker: React.FC<OptionPickerProps> = ({
           {selectedOption || children}
         </Typography>
         <img
-          src={process.env.PUBLIC_URL + `/images/icon/${selectedOption ? 'upIcon' : 'downIcon'}.png`}
+          src={process.env.PUBLIC_URL + `/images/icon/${selectedOption ? 'upIcon' : 'downIcon'}.svg`}
           alt='icon'
         />
       </OptionPickerBox>

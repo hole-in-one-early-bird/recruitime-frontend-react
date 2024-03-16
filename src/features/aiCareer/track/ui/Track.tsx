@@ -58,7 +58,8 @@ export const TrackForm = () => {
             transform: 'translateX(-50%)',
             fontWeight: selectedInterests ? '500' : '400',
             pointerEvents: selectedInterests ? 'auto' : 'none',
-            maxWidth: 'calc(100% - 40px)',
+            maxWidth: '440px',
+            width: 'calc(100% - 40px)',
           }}
           TypographyVariant={'button01'}
         >
