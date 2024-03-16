@@ -147,7 +147,7 @@ export const Chat = () => {
                 <BotContainer>
                   <ProfileInfo>
                     <img
-                      src={process.env.PUBLIC_URL + '/images/char/recruitime.png'}
+                      src={process.env.PUBLIC_URL + '/images/char/recruitime.svg'}
                       alt='characterImage'
                     />
                   </ProfileInfo>

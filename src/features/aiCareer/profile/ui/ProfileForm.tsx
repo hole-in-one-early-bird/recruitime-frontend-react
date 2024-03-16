@@ -83,8 +83,7 @@ export const ProfileForm = () => {
         width='100%'
         TypographyVariant={'base'}
       />
-
-      {isAllFieldsFilled ? (
+      <div>
         <Link to={ROUTES_PATH.track}>
           <Button
             variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
@@ -94,15 +93,16 @@ export const ProfileForm = () => {
               bottom: '38px',
               left: '50%',
               transform: 'translateX(-50%)',
+              pointerEvents: isAllFieldsFilled ? 'auto' : 'none',
+              maxWidth: '440px',
+              width: 'calc(100% - 40px)',
             }}
-            TypographyVariant='button01'
+            TypographyVariant={'button01'}
           >
             계속하기
           </Button>
         </Link>
-      ) : (
-        '계속하기'
-      )}
+      </div>
     </ProfileWrapper>
   );
 };
@@ -119,11 +119,4 @@ const ProfileWrapper = styled.div`
 
 const StyledTypography = styled(Typography)`
   margin: 18px 0 8px;
-`;
-
-const NextButton = styled(Button)`
-  position: fixed;
-  bottom: 38px;
-  left: 50%;
-  transform: translateX(-50%);
 `;

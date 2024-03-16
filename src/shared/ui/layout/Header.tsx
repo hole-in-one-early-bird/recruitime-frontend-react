@@ -83,8 +83,8 @@ export const Header = () => {
     if (chatBoxRef && chatBoxRef.current) {
       try {
         const canvas = await html2canvas(chatBoxRef.current);
-        const image = canvas.toDataURL('image/png');
-        downloadImage(image, 'chat-capture.png');
+        const image = canvas.toDataURL('image/svg');
+        downloadImage(image, 'chat-capture.svg');
       } catch (error) {
         console.error('채팅 캡처에 실패했습니다:', error);
       }
@@ -97,9 +97,12 @@ export const Header = () => {
     switch (pathname) {
       case ROUTES_PATH.home:
         return (
-          <HeaderContainer style={{ justifyContent: 'flex-end ' }}>
+          <HeaderContainer style={{ justifyContent: 'space-between' }}>
+            <Typography variant={'mainTitle03'} style={{ fontWeight: 700, color: colors.blue[500] }}>
+              RECRUTAM
+            </Typography>
             <Link to={ROUTES_PATH.mypage}>
-              <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.png'} alt='userIcon' />
+              <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.svg'} alt='userIcon' />
             </Link>
           </HeaderContainer>
         );
@@ -108,7 +111,7 @@ export const Header = () => {
           <>
             <HeaderContainer style={{ justifyContent: 'center' }}>
               <BackIcon
-                src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+                src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.svg`}
                 alt='arrowIcon'
                 onClick={handlePreviousClick}
               />
@@ -119,7 +122,7 @@ export const Header = () => {
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
             <BackIcon
-              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.svg`}
               alt='arrowIcon'
               onClick={() => navigate('/home')}
             />
@@ -134,7 +137,7 @@ export const Header = () => {
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
             <BackIcon
-              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.svg`}
               alt='arrowIcon'
               onClick={handlePreviousClick}
             />
@@ -152,7 +155,7 @@ export const Header = () => {
           <>
             <HeaderContainer style={{ justifyContent: 'center' }}>
               <BackIcon
-                src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+                src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.svg`}
                 alt='arrowIcon'
                 onClick={handlePreviousClick}
               />
@@ -167,7 +170,7 @@ export const Header = () => {
         return (
           <HeaderContainer style={{ justifyContent: 'space-between', marginBottom: '20px' }}>
             <Link to={ROUTES_PATH.home}>
-              <img src={process.env.PUBLIC_URL + '/images/icon/homeIcon.png'} alt='homeIcon' />
+              <img src={process.env.PUBLIC_URL + '/images/icon/homeIcon.svg'} alt='homeIcon' />
             </Link>
             <Title variant={'header'} style={{ color: colors.gray[700] }}>
               {title}
@@ -175,11 +178,11 @@ export const Header = () => {
             <IconContainer>
               <div onClick={copyToClipboard}>
                 {' '}
-                <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.png'} alt='shareIcon' />
+                <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.svg'} alt='shareIcon' />
               </div>
 
               {/* <img
-                src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.png'}
+                src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
                 alt='inActiveBookmarkIcon'
               /> */}
             </IconContainer>
@@ -189,19 +192,19 @@ export const Header = () => {
         return (
           <HeaderContainer style={{ justifyContent: 'space-between' }}>
             <BackIcon
-              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.png`}
+              src={`${process.env.PUBLIC_URL}/images/icon/arrowIcon.svg`}
               alt='arrowIcon'
               onClick={handlePreviousClick}
             />
             <Link to={ROUTES_PATH.home} className='chat'>
-              <HomeIcon src={`${process.env.PUBLIC_URL}/images/icon/homeIcon.png`} alt='homeIcon' />
+              <HomeIcon src={`${process.env.PUBLIC_URL}/images/icon/homeIcon.svg`} alt='homeIcon' />
             </Link>
             <Title variant={'header'} style={{ color: colors.gray[700] }}>
               {title}
             </Title>
             <SaveIcon
               onClick={captureChat}
-              src={`${process.env.PUBLIC_URL}/images/icon/saveIcon.png`}
+              src={`${process.env.PUBLIC_URL}/images/icon/saveIcon.svg`}
               alt='saveIcon'
             />
           </HeaderContainer>

@@ -107,7 +107,7 @@ const ErrorMsg = styled.div`
 `;
 
 const CheckIcon = styled.img.attrs({
-  src: process.env.PUBLIC_URL + '/images/icon/checkIcon.png', // 아이콘의 경로를 지정하세요
+  src: process.env.PUBLIC_URL + '/images/icon/checkIcon.svg', // 아이콘의 경로를 지정하세요
   alt: 'Check',
 })`
   position: absolute;

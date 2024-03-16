@@ -47,27 +47,25 @@ export const TrackForm = () => {
           </StyledButton>
         ))}
       </InterestsContainer>
-
-      {selectedInterests.length > 0 ? (
-        <Link to={ROUTES_PATH.education}>
-          <Button
-            variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
-            disabled={!selectedInterests}
-            style={{
-              position: 'fixed',
-              bottom: '38px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              fontWeight: selectedInterests ? '500' : '400',
-            }}
-            TypographyVariant={'button01'}
-          >
-            계속하기{' '}
-          </Button>
-        </Link>
-      ) : (
-        '계속하기'
-      )}
+      <Link to={ROUTES_PATH.education}>
+        <Button
+          variant={selectedInterests.length > 0 ? 'primary' : 'primaryDisabled'}
+          disabled={!selectedInterests}
+          style={{
+            position: 'fixed',
+            bottom: '38px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            fontWeight: selectedInterests ? '500' : '400',
+            pointerEvents: selectedInterests ? 'auto' : 'none',
+            maxWidth: '440px',
+            width: 'calc(100% - 40px)',
+          }}
+          TypographyVariant={'button01'}
+        >
+          계속하기
+        </Button>
+      </Link>
     </TrackWrapper>
   );
 };

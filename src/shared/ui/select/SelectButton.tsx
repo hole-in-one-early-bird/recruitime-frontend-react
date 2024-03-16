@@ -66,13 +66,21 @@ const SelectButtonBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  * {
+    @media screen and (max-width: 360px) {
+      padding: 10px 7px;
+    }
+  }
+  @media screen and (max-width: 440px) {
+    gap: 3px;
+  }
 `;
 
 const StyledButton = styled(Button)<{ selected: boolean; width?: string }>`
   padding: 18px;
   border-radius: 10px;
   cursor: pointer;
-  flex: ${({ width }) => `0 0 ${width}%`}; // width를 백분율로 설정합니다.
+
   text-align: center;
   margin-bottom: 8px; // 줄 바꿈 후의 버튼과의 간격을 위해 추가합니다.
 `;

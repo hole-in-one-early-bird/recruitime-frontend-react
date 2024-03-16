@@ -64,7 +64,7 @@ export const CustomizedCareer = () => {
             <AiChat>
               <Character>
                 <img
-                  src={process.env.PUBLIC_URL + '/images/char/resultCharacter.png'}
+                  src={process.env.PUBLIC_URL + '/images/char/resultCharacter.svg'}
                   alt='characterImage'
                 />
               </Character>

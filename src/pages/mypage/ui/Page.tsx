@@ -71,7 +71,7 @@ export const Mypage = () => {
 
           <Profile>
             <ProfileImg>
-              <img src={process.env.PUBLIC_URL + '/images/char/recruitime.png'} alt='recruitime' />
+              <img src={process.env.PUBLIC_URL + '/images/char/recruitime.svg'} alt='recruitime' />
             </ProfileImg>
             <ProfileInfo>
               <Typography variant={'body01'} style={{ color: colors.gray[800] }}>
@@ -89,7 +89,7 @@ export const Mypage = () => {
               <Typography variant={'body02'} style={{ color: colors.gray[700] }}>
                 프로필 수정
               </Typography>
-              <img src={`${process.env.PUBLIC_URL}/images/icon/rightArrowIcon.png`} alt='arrowIcon' />
+              <img src={`${process.env.PUBLIC_URL}/images/icon/rightArrowIcon.svg`} alt='arrowIcon' />
             </Content>
           </Link>
         </MenuBox>

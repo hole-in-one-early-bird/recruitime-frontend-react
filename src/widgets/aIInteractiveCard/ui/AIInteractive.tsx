@@ -22,7 +22,7 @@ export const AIInteractive = ({ titleChildren, subChildren, alt, src, onClick }:
           {subChildren}
         </Typography>
       </div>
-      <img src={process.env.PUBLIC_URL + `/images/${src}.png`} alt={alt} />
+      <img src={process.env.PUBLIC_URL + `/images/${src}.svg`} alt={alt} />
     </AIInteractiveWrapper>
   );
 };
@@ -34,6 +34,7 @@ const AIInteractiveWrapper = styled.div`
   background-color: ${colors.blue[50]};
   padding: 24px;
   img {
+    width: 120px;
     margin-top: 47px;
   }
 `;
