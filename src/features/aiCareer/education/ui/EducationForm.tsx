@@ -74,25 +74,23 @@ export const EducationForm = () => {
         TypographyVariant={'button03'}
       />
 
-      {isAllFieldsFilled ? (
-        <Link to={ROUTES_PATH.experience}>
-          <Button
-            variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
-            disabled={!isAllFieldsFilled}
-            style={{
-              position: 'fixed',
-              bottom: '38px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-            }}
-            TypographyVariant={'button01'}
-          >
-            계속하기
-          </Button>
-        </Link>
-      ) : (
-        '계속하기'
-      )}
+      <Link to={ROUTES_PATH.experience}>
+        <Button
+          variant={isAllFieldsFilled ? 'primary' : 'primaryDisabled'}
+          disabled={!isAllFieldsFilled}
+          style={{
+            position: 'fixed',
+            bottom: '38px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            pointerEvents: isAllFieldsFilled ? 'auto' : 'none',
+            maxWidth: 'calc(100% - 40px)',
+          }}
+          TypographyVariant={'button01'}
+        >
+          계속하기
+        </Button>
+      </Link>
 
       <Modal
         label='학력선택'

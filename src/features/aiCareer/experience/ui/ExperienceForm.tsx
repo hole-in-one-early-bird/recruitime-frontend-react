@@ -101,6 +101,7 @@ export const ExperienceForm = () => {
           ))}
         </ListBox>
       )}
+
       <Link to={ROUTES_PATH.keyword}>
         <StyledButton
           variant={'primary'}
@@ -109,6 +110,7 @@ export const ExperienceForm = () => {
             bottom: '38px',
             left: '50%',
             transform: 'translateX(-50%)',
+            maxWidth: 'calc(100% - 40px)',
           }}
           TypographyVariant={'button01'}
         >
