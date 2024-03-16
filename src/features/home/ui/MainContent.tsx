@@ -8,6 +8,7 @@ import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
 import { PopupModal, PopupResumeModal } from 'shared/ui/modal/Modal';
 import { Typography } from 'shared/ui/typography/Typography';
+import { useModalStore } from 'shared/zustand/modalStore';
 
 import { UserDataType, useUserStore } from 'shared/zustand/userStore';
 import styled from 'styled-components';
@@ -18,15 +19,14 @@ export const MainContent = () => {
   const [isSecondAIClicked, setSecondAIClicked] = useState(false);
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
   const { setUserDataStore } = useUserStore();
-
+  const modalStore = useModalStore();
   const navigate = useNavigate();
+
   const handleFirstAIClick = () => {
-    setFirstAIClicked(true);
-    handleOpenModal();
+    modalStore.firstModal.setOpen(true);
   };
   const handleSecondAIClick = () => {
-    setSecondAIClicked(true);
-    handleOpenModal();
+    modalStore.secondModal.setOpen(true);
   };
 
   const getProfileData = async () => {
@@ -62,6 +62,7 @@ export const MainContent = () => {
       };
       navigate('/profile');
       setUserDataStore(mappedData);
+      modalStore.firstModal.setOpen(false);
     } catch (error) {
       alert('저장된 데이터가 없습니다.');
       console.error('프로필 데이터를 가져오는 중 오류가 발생했습니다:');
@@ -89,6 +90,7 @@ export const MainContent = () => {
 
     // ROUTES_PATH.profile로 이동
     navigate(ROUTES_PATH.profile);
+    modalStore.firstModal.setOpen(false);
   };
 
   return (
@@ -123,20 +125,20 @@ export const MainContent = () => {
           onClick={handleSecondAIClick}
         />
       </ContentBox>
-      {isFirstAIClicked && (
+      {modalStore.firstModal.isOpen && (
         <PopupModal
-          isOpen={isOpen}
-          onClose={handleCloseModal}
+          isOpen={modalStore.firstModal.isOpen}
+          onClose={() => modalStore.firstModal.setOpen(false)}
           content1={'입력한 프로필을 불러올까요?'}
           content2={'저장하신 개인정보가 자동으로 입력됩니다.'}
           onClickYes={getProfileData}
           onClickNo={handleNoClick}
         />
       )}
-      {isSecondAIClicked && (
+      {modalStore.secondModal.isOpen && (
         <PopupResumeModal
-          isOpen={isOpen}
-          onClose={handleCloseModal}
+          isOpen={modalStore.secondModal.isOpen}
+          onClose={() => modalStore.secondModal.setOpen(false)}
           content1={'현재 준비중인 서비스 입니다.'}
         />
       )}

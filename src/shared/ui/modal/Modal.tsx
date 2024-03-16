@@ -178,6 +178,9 @@ const PopupModalWrapper = styled.div`
   padding: 30px 22px 30px;
   border-radius: 10px;
   background-color: ${colors.white};
+  @media screen and (max-width: 480px) {
+    max-width: calc(100% - 80px); /* 화면 양쪽에 각각 40px의 여백을 추가합니다. */
+  }
 `;
 
 const OptionBox = styled.div<{ $isTwoColumns?: boolean }>`
