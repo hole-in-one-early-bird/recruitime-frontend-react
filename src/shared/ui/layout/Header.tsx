@@ -97,7 +97,10 @@ export const Header = () => {
     switch (pathname) {
       case ROUTES_PATH.home:
         return (
-          <HeaderContainer style={{ justifyContent: 'flex-end ' }}>
+          <HeaderContainer style={{ justifyContent: 'space-between' }}>
+            <Typography variant={'mainTitle03'} style={{ fontWeight: 700, color: colors.blue[500] }}>
+              RECRUTAM
+            </Typography>
             <Link to={ROUTES_PATH.mypage}>
               <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.svg'} alt='userIcon' />
             </Link>
