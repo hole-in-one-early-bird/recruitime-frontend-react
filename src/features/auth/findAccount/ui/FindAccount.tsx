@@ -18,6 +18,12 @@ export const FindAccount = () => {
     e.preventDefault();
     findPassword(values.email);
   };
+
+  const isEmailMatch = values.email !== '';
+  const isFormValid =
+    Object.values(values).every((value) => (value as string).trim() !== '') &&
+    Object.values(errors).every((error) => !error);
+
   return (
     <FindAccountWrapper>
       <StyledTypography className='title' variant={'mainTitle01'}>
@@ -36,7 +42,7 @@ export const FindAccount = () => {
       <Button
         TypographyVariant='content'
         onClick={handleSubmit}
-        variant={'primary'}
+        variant={isFormValid ? 'primary' : 'primaryDisabled'}
         style={{
           position: 'absolute',
           bottom: '40px',
