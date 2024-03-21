@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import useCustomizedCareerStore from 'shared/zustand/store';
+import { useUserStore } from 'shared/zustand/userStore';
 
 export const Loading = () => {
   const navigate = useNavigate();
@@ -35,6 +36,22 @@ export const Loading = () => {
         },
       });
       setUserData(response.data.data);
+      useUserStore.setState({
+        userDataStore: {
+          name: '',
+          gender: '',
+          age: '',
+          aboutMe: '',
+          interests: [],
+          education: '',
+          major: '',
+          majorCheck: '',
+          experiences: [],
+          experienceOption: '',
+          experienceDetail: '',
+          userKeywords: [],
+        },
+      });
       navigate(ROUTES_PATH.customizedCareer);
     } catch (error) {
       console.error('Error getting recommendations:', error);

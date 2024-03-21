@@ -12,4 +12,5 @@ export const API = {
   GETSHARELINK: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/recommendations/share`,
   GETUSERINFO: `${process.env.REACT_APP_PUBLIC_BASE_URL}/my-page`,
   BOOKMARK: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/bookmark`,
+  BOOKMARKDETAIL: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/bookmark/detail`,
 };

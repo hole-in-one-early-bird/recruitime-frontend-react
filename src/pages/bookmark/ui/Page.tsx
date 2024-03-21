@@ -5,30 +5,35 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
+import { common } from 'shared/styles/common';
 import { Typography } from 'shared/ui/typography/Typography';
 import useBookmarkStore from 'shared/zustand/bookmarkStore';
 import styled from 'styled-components';
 
 export const Bookmark = () => {
-  const [bookmarks, setBookmarks] = useState<{ book: string; link: string }[]>([]);
-  // 응답 데이터를 저장할 상태
-  const { bookmark, setBookmark } = useBookmarkStore();
-  const handleBookmarkClick = () => {
-    setBookmark(!bookmark);
-  };
+  const [bookmarks, setBookmarks] = useState<
+    { book: string; link: string; code: string; isCheck: boolean }[]
+  >([]);
+
   const deleteBookmark = async (code: string) => {
-    handleBookmarkClick();
+    console.log(code);
+    const token = getAuthTokenFromCookie();
     try {
-      await axios.delete(API.BOOKMARK, {
+      const result = await axios.delete(API.BOOKMARK, {
         data: {
           code: code,
         },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      setBookmarks((prevBookmarks) => prevBookmarks.filter((bookmark) => bookmark.code !== code));
     } catch (err) {
       console.error('Failed to delete bookmark: ', err);
     }
   };
   useEffect(() => {
+    console.log(bookmarks);
     const getBookmark = async () => {
       const token = getAuthTokenFromCookie();
       try {
@@ -40,7 +45,10 @@ export const Bookmark = () => {
         const newBookmarks = response.data.data.bookmarks.map(
           (bookmark: { jobName: string; code: string }) => ({
             book: bookmark.jobName,
-            link: `${window.location.href}?code=${bookmark.code}`,
+            // 나중에 주소 수정
+            link: `http://localhost:3000/customizedCareer?code=${bookmark.code}`,
+            code: bookmark.code,
+            isCheck: true,
           })
         );
         setBookmarks(newBookmarks);
@@ -54,30 +62,34 @@ export const Bookmark = () => {
   return (
     <BookmarkContainer>
       <BookmarkList>
-        {bookmarks.map((item, index) => (
-          <Link to={item.link} key={index}>
-            <Content>
-              <Typography variant={'body02'} style={{ color: colors.gray[700] }}>
-                {item.book}
-              </Typography>
-              {bookmark ? (
-                <div onClick={() => deleteBookmark(item.link)}>
-                  <img
-                    src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
-                    alt='inActiveBookmarkIcon'
-                  />
-                </div>
-              ) : (
-                <div>
-                  <img
-                    src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
-                    alt='inActiveBookmarkIcon'
-                  />
-                </div>
-              )}
-            </Content>
-          </Link>
-        ))}
+        {bookmarks.length > 0 ? (
+          bookmarks.map(
+            (item, index) =>
+              // isCheck가 true일 때만 렌더링
+              item.isCheck && (
+                <Content key={index}>
+                  <Link to={item.link}>
+                    <Typography variant={'body02'} style={{ color: colors.gray[700] }}>
+                      {item.book}
+                    </Typography>
+                  </Link>
+                  <div onClick={() => deleteBookmark(item.code)}>
+                    <img
+                      src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
+                      alt='activeBookmarkIcon'
+                    />
+                  </div>
+                </Content>
+              )
+          )
+        ) : (
+          <EmptyBox>
+            <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.svg'} alt='characterImage' />
+            <Typography variant={'caption04'} style={{ color: colors.gray[400] }}>
+              아직 북마크한 리쥬메가 없어요!
+            </Typography>
+          </EmptyBox>
+        )}
       </BookmarkList>
     </BookmarkContainer>
   );
@@ -85,6 +97,9 @@ export const Bookmark = () => {
 
 const BookmarkContainer = styled.div`
   margin-top: 16px;
+  img {
+    cursor: pointer;
+  }
 `;
 const BookmarkList = styled.div``;
 const Content = styled.div`
@@ -94,4 +109,14 @@ const Content = styled.div`
   background-color: ${colors.blue[50]};
   padding: 20px;
   border-radius: 10px;
+  margin-bottom: 8px;
+`;
+
+const EmptyBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  ${common.flexCenterColumn}
+  gap: 7px;
 `;

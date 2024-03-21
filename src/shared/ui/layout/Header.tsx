@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API } from 'config';
+import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 import html2canvas from 'html2canvas';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -77,23 +78,35 @@ export const Header = () => {
   const addBookmark = async () => {
     handleBookmarkClick();
     const data = {
-      jobName: resultData.job,
+      jobName: resultData.jobName,
       code: resultData.jobRecommendationCode,
     };
+    const token = getAuthTokenFromCookie();
     try {
-      await axios.post(API.BOOKMARK, data);
+      const result = await axios.post(API.BOOKMARK, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(result);
     } catch (err) {
       console.error('Failed to copy: ', err);
     }
   };
+
   const deleteBookmark = async () => {
     handleBookmarkClick();
+    const token = getAuthTokenFromCookie();
     try {
-      await axios.delete(API.BOOKMARK, {
+      const result = await axios.delete(API.BOOKMARK, {
         data: {
           code: resultData.jobRecommendationCode,
         },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      console.log(result);
     } catch (err) {
       console.error('Failed to delete bookmark: ', err);
     }
