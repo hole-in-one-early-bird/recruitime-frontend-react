@@ -24,13 +24,13 @@ export const useForm = (initialValues: any, validationFields: any) => {
     }
   };
 
-  const validate = async (formValues: SignupData, isLoginPage?: boolean) => {
+  const validate = async (formValues: SignupData, isPage?: boolean) => {
     const errors: Partial<SignupData> = {};
     // 이메일 필드 유효성 검사
     if (validationFields.includes('email') && formValues.email) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
         errors.email = '이메일 형식이 유효하지 않습니다.';
-      } else if (!isLoginPage) {
+      } else if (!isPage) {
         // 회원가입 시에만 중복 여부 확인
         const isEmailDuplicate = await checkDuplicates(formValues.email);
         if (!isEmailDuplicate) {
@@ -58,7 +58,7 @@ export const useForm = (initialValues: any, validationFields: any) => {
     return errors;
   };
 
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>, isLoginPage?: boolean) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>, isPage?: boolean) => {
     const { name, value } = e.target;
     const updatedValues = { ...values, [name]: value };
     setValues(updatedValues);
@@ -66,7 +66,7 @@ export const useForm = (initialValues: any, validationFields: any) => {
     // 회원가입 시에만 중복 검사를 수행합니다.
     if (name === 'email') {
       // 유효성 검사가 완료될 때까지 기다립니다.
-      const validationErrors = await validate(updatedValues, isLoginPage);
+      const validationErrors = await validate(updatedValues, isPage);
       setErrors(validationErrors);
     }
   };

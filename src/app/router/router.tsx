@@ -1,4 +1,5 @@
 import { BaseLayout } from 'app/layouts/baseLayout';
+import { Bookmark } from 'pages/bookmark';
 import { Chat } from 'pages/chat';
 import { CustomizedCareer } from 'pages/customizedCareer';
 import { EditUserInfo } from 'pages/edituserInfo';
@@ -11,6 +12,7 @@ import { Keyword } from 'pages/keyword';
 import { Loading } from 'pages/loading';
 import { Mypage } from 'pages/mypage';
 import { Profile } from 'pages/profile';
+import { ResetPasswordPage } from 'pages/resetPassword';
 import { SigninPage } from 'pages/signin';
 import { SignupPage } from 'pages/signup';
 import { SignupSuccessPage } from 'pages/signupSuccess';
@@ -48,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES_PATH.findAccount,
         element: <FindAccountPage />,
+      },
+      {
+        path: ROUTES_PATH.resetPassword,
+        element: <ResetPasswordPage />,
       },
       {
         path: ROUTES_PATH.signupSuccess,
@@ -95,7 +101,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES_PATH.bookmark,
-        // element: <Bookmark />,
+        element: <Bookmark />,
       },
     ],
   },

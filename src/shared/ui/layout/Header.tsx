@@ -5,6 +5,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
+import useBookmarkStore from 'shared/zustand/bookmarkStore';
 import { useChatStore } from 'shared/zustand/chatStore';
 import useCustomizedCareerStore from 'shared/zustand/store';
 import styled from 'styled-components';
@@ -21,7 +22,7 @@ const routeTitles: { [key: string]: string } = {
   [ROUTES_PATH.keyword]: '키워드 선택',
   [ROUTES_PATH.customizedCareer]: 'AI 맞춤 커리어',
   [ROUTES_PATH.chat]: '커리어 챗봇',
-  [ROUTES_PATH.bookmark]: '북마크',
+  [ROUTES_PATH.bookmark]: '내 추천 커리어',
 };
 
 export const Header = () => {
@@ -30,6 +31,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
+  const { bookmark, setBookmark } = useBookmarkStore();
 
   const stepMapping: { [key: string]: number } = {
     '/profile': 1,
@@ -52,6 +54,10 @@ export const Header = () => {
     navigate(-1);
   };
 
+  const handleBookmarkClick = () => {
+    setBookmark(!bookmark);
+  };
+
   const copyToClipboard = async () => {
     const fullUrl = `${window.location.href}?code=${resultData.jobRecommendationCode}`;
     try {
@@ -68,6 +74,30 @@ export const Header = () => {
     }
   };
 
+  const addBookmark = async () => {
+    handleBookmarkClick();
+    const data = {
+      jobName: resultData.job,
+      code: resultData.jobRecommendationCode,
+    };
+    try {
+      await axios.post(API.BOOKMARK, data);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+  const deleteBookmark = async () => {
+    handleBookmarkClick();
+    try {
+      await axios.delete(API.BOOKMARK, {
+        data: {
+          code: resultData.jobRecommendationCode,
+        },
+      });
+    } catch (err) {
+      console.error('Failed to delete bookmark: ', err);
+    }
+  };
   const downloadImage = (dataUrl: string, filename: string) => {
     // `<a>` 태그를 생성합니다.
     const link = document.createElement('a');
@@ -134,6 +164,8 @@ export const Header = () => {
       case ROUTES_PATH.userInfo:
       case ROUTES_PATH.editUserInfo:
       case ROUTES_PATH.findAccount:
+      case ROUTES_PATH.resetPassword:
+      case ROUTES_PATH.bookmark:
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
             <BackIcon
@@ -177,14 +209,23 @@ export const Header = () => {
             </Title>
             <IconContainer>
               <div onClick={copyToClipboard}>
-                {' '}
                 <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.svg'} alt='shareIcon' />
               </div>
-
-              {/* <img
-                src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
-                alt='inActiveBookmarkIcon'
-              /> */}
+              {bookmark ? (
+                <div onClick={deleteBookmark}>
+                  <img
+                    src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
+                    alt='inActiveBookmarkIcon'
+                  />
+                </div>
+              ) : (
+                <div onClick={addBookmark}>
+                  <img
+                    src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
+                    alt='inActiveBookmarkIcon'
+                  />
+                </div>
+              )}
             </IconContainer>
           </HeaderContainer>
         );
@@ -249,8 +290,9 @@ const Title = styled(Typography)`
 const IconContainer = styled.div`
   display: flex;
   align-items: center;
-  & > img:not(:last-child) {
-    margin-right: 10px;
+  gap: 14px;
+  * {
+    cursor: pointer;
   }
 `;
 

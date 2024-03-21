@@ -22,9 +22,7 @@ interface UserData {
 
 export const CustomizedCareer = () => {
   const [openSection, setOpenSection] = useState(null);
-  const [useResult, setUseResult] = useState<UserData | null>(null);
-  const [userId, setUserId] = useState<number | null>(null);
-  const [bookId, setBookId] = useState<number | null>(null);
+
   const resultData = useCustomizedCareerStore((state) => state.userData);
   const { userDataStore } = useUserData(initialValues);
 

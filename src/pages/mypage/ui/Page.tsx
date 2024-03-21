@@ -16,9 +16,14 @@ export const Mypage = () => {
   const [isLogoutClicked, setIsLogoutClicked] = useState(false);
   const [userInfo, setUserInfo] = useState({ name: '', email: '' });
   const navigate = useNavigate();
-  const list = {
-    profile: { title: '프로필 수정', link: '' },
-    career: { title: '나의 추천 커리어', link: '' },
+  type ListItem = {
+    title: string;
+    link: string;
+  };
+
+  const list: Record<string, ListItem> = {
+    profile: { title: '프로필 수정', link: ROUTES_PATH.editUserInfo },
+    career: { title: '나의 추천 커리어', link: ROUTES_PATH.bookmark },
     resume: { title: '나의 이력서', link: '' },
     jobPosting: { title: '나의 채용공고', link: '' },
   };
@@ -84,14 +89,22 @@ export const Mypage = () => {
           </Profile>
         </ProfileBox>
         <MenuBox>
-          <Link to={ROUTES_PATH.editUserInfo}>
-            <Content>
-              <Typography variant={'body02'} style={{ color: colors.gray[700] }}>
-                프로필 수정
-              </Typography>
-              <img src={`${process.env.PUBLIC_URL}/images/icon/rightArrowIcon.svg`} alt='arrowIcon' />
-            </Content>
-          </Link>
+          {Object.keys(list).map((key) => {
+            const item = list[key];
+            return (
+              <Link to={item.link} key={key}>
+                <Content>
+                  <Typography variant={'body02'} style={{ color: colors.gray[700] }}>
+                    {item.title}
+                  </Typography>
+                  <img
+                    src={`${process.env.PUBLIC_URL}/images/icon/rightArrowIcon.svg`}
+                    alt='arrowIcon'
+                  />
+                </Content>
+              </Link>
+            );
+          })}
         </MenuBox>
       </div>
 
@@ -143,6 +156,7 @@ const ProfileInfo = styled.div`
 const MenuBox = styled.div``;
 const Content = styled.div`
   display: flex;
+  margin-bottom: 8px;
   align-items: center;
   justify-content: space-between;
   background-color: ${colors.blue[50]};

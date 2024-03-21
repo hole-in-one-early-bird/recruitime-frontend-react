@@ -3,6 +3,7 @@ export const API = {
   SIGNUP: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/register`,
   VALIDATION: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/check-duplicate-email`,
   PASSWORD_FIND: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/password/find`,
+  PASSWORD_RESET: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/resetpassword`,
   USERINFO: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/profile`,
   RECOMMENDATION: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/recommendations`,
   KEYWORD: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/keyword`,
@@ -10,4 +11,5 @@ export const API = {
   GETPROFILE: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/profile`,
   GETSHARELINK: `${process.env.REACT_APP_PUBLIC_BASE_URL}/jobs/recommendations/share`,
   GETUSERINFO: `${process.env.REACT_APP_PUBLIC_BASE_URL}/my-page`,
+  BOOKMARK: `${process.env.REACT_APP_PUBLIC_BASE_URL}/users/bookmark`,
 };
