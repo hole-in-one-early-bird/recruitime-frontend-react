@@ -38,7 +38,7 @@ export const Loading = () => {
       setUserData(response.data.data);
       useUserStore.setState({
         userDataStore: {
-          name: '',
+          name: userDataStore.name,
           gender: '',
           age: '',
           aboutMe: '',

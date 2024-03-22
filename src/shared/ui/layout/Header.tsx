@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API } from 'config';
 import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 import html2canvas from 'html2canvas';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
@@ -32,8 +32,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
-  const { bookmark, setBookmark } = useBookmarkStore();
-
+  const [bookmark, setBookmark] = useState(false);
   const stepMapping: { [key: string]: number } = {
     '/profile': 1,
     '/track': 2,
@@ -55,6 +54,18 @@ export const Header = () => {
     navigate(-1);
   };
 
+  useEffect(() => {
+    return () => {
+      resetBookmark();
+    };
+  }, []);
+
+  // 북마크 상태를 초기화하는 함수
+  const resetBookmark = () => {
+    // 북마크 상태를 초기값으로 설정
+    setBookmark(false);
+  };
+
   const handleBookmarkClick = () => {
     setBookmark(!bookmark);
   };
@@ -74,6 +85,18 @@ export const Header = () => {
       console.error('Failed to copy: ', err);
     }
   };
+  useEffect(() => {
+    // URL 쿼리 매개변수에서 code 값을 가져옴
+    const searchParams = new URLSearchParams(location.search);
+    const codeParam = searchParams.get('code');
+
+    // code 값이 존재하면 북마크 상태를 활성화
+    if (codeParam) {
+      setBookmark(true);
+    } else {
+      setBookmark(false);
+    }
+  }, [location.search]);
 
   const addBookmark = async () => {
     handleBookmarkClick();
@@ -133,6 +156,9 @@ export const Header = () => {
       }
     }
   };
+
+  const searchParams = new URLSearchParams(location.search);
+  const codeParam = searchParams.get('code');
 
   const renderHeaderContent = () => {
     const title = routeTitles[pathname] || '';
@@ -224,20 +250,24 @@ export const Header = () => {
               <div onClick={copyToClipboard}>
                 <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.svg'} alt='shareIcon' />
               </div>
-              {bookmark ? (
-                <div onClick={deleteBookmark}>
-                  <img
-                    src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
-                    alt='inActiveBookmarkIcon'
-                  />
-                </div>
-              ) : (
-                <div onClick={addBookmark}>
-                  <img
-                    src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
-                    alt='inActiveBookmarkIcon'
-                  />
-                </div>
+              {codeParam ? null : (
+                <>
+                  {bookmark ? (
+                    <div onClick={deleteBookmark}>
+                      <img
+                        src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
+                        alt='inActiveBookmarkIcon'
+                      />
+                    </div>
+                  ) : (
+                    <div onClick={addBookmark}>
+                      <img
+                        src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
+                        alt='inActiveBookmarkIcon'
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </IconContainer>
           </HeaderContainer>

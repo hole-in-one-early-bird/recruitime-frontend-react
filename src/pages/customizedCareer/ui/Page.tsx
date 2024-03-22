@@ -22,6 +22,7 @@ interface UserData {
 
 export const CustomizedCareer = () => {
   const [openSection, setOpenSection] = useState(null);
+
   const [previousResult, setPreviousResult] = useState<UserData>({
     jobRecommendationCode: '',
     jobName: '',
@@ -30,6 +31,7 @@ export const CustomizedCareer = () => {
     certifications: '',
     recommendationReason: '',
   }); // 이전 결과 페이지 정보 상태 추가
+
   const location = useLocation();
   const resultData = useCustomizedCareerStore((state) => state.userData);
   const { userDataStore } = useUserData(initialValues);
@@ -57,6 +59,7 @@ export const CustomizedCareer = () => {
       console.error('Failed to fetch previous result: ', error);
     }
   };
+
   const isCode = location.search.includes('code');
   const accordionSections = [
     {
