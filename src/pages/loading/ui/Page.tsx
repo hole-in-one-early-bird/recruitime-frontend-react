@@ -35,6 +35,7 @@ export const Loading = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response);
       setUserData(response.data.data);
       useUserStore.setState({
         userDataStore: {

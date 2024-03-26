@@ -71,7 +71,7 @@ export const Header = () => {
   };
 
   const copyToClipboard = async () => {
-    const fullUrl = `${window.location.href}?code=${resultData.jobRecommendationCode}`;
+    const fullUrl = `http://49.50.166.153:8080/customizedCareer?code=${resultData.jobRecommendationCode}`;
     try {
       await axios.get(API.GETSHARELINK, {
         params: {

@@ -46,7 +46,7 @@ export const Bookmark = () => {
           (bookmark: { jobName: string; code: string }) => ({
             book: bookmark.jobName,
             // 나중에 주소 수정
-            link: `http://localhost:3000/customizedCareer?code=${bookmark.code}`,
+            link: `http://49.50.166.153:8080/customizedCareer?code=${bookmark.code}`,
             code: bookmark.code,
             isCheck: true,
           })
