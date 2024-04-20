@@ -1,5 +1,5 @@
 import { useFindEmailMutation } from 'features/auth/@hooks/useFindEmailMutation';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useForm } from 'shared/hooks/useForm';
 import { Button } from 'shared/ui/button/Button';
@@ -11,12 +11,19 @@ export const FindAccount = () => {
   const initialValues = {
     email: '',
   };
+  const [isPage, setisPage] = useState(true);
   const { mutate: findPassword } = useFindEmailMutation();
   const { values, handleChange, errors } = useForm(initialValues, ['email']);
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     findPassword(values.email);
   };
+
+  const isEmailMatch = values.email !== '';
+  const isFormValid =
+    Object.values(values).every((value) => (value as string).trim() !== '') &&
+    Object.values(errors).every((error) => !error);
+
   return (
     <FindAccountWrapper>
       <StyledTypography className='title' variant={'mainTitle01'}>
@@ -27,17 +34,22 @@ export const FindAccount = () => {
         type='text'
         name='email'
         value={values.email}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, true)}
         placeholder={'이메일을 입력해주세요'}
         error={errors.email}
-        isValid={!errors.email && values.email !== ''}
       />
 
       <Button
         TypographyVariant='content'
         onClick={handleSubmit}
-        variant={'primary'}
-        style={{ position: 'fixed', bottom: '65px' }}
+        variant={isFormValid ? 'primary' : 'primaryDisabled'}
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          maxWidth: 'calc(100% - 40px)',
+        }}
       >
         비밀번호 발송
       </Button>

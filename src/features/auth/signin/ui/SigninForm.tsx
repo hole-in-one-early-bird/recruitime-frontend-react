@@ -21,7 +21,6 @@ export const SigninForm = () => {
   const { values, handleChange, errors } = useForm(initialValues, ['email', 'password']);
   const location = useLocation();
   const [showToast, setShowToast] = useState(false);
-  const [isLoginPage, setIsLoginPage] = useState(true);
   const { signIn, loginResult } = useSignInMutation();
 
   useEffect(() => {
@@ -58,7 +57,7 @@ export const SigninForm = () => {
         type='text'
         name='email'
         value={values.email}
-        onChange={(e) => handleChange(e, isLoginPage)}
+        onChange={(e) => handleChange(e, true)}
         placeholder={'이메일을 입력해주세요'}
         error={errors.email}
         isValid={!errors.email && values.email !== ''}
@@ -100,7 +99,7 @@ export const SigninForm = () => {
           </StyledTypography>
         </Link>
       </AuthOptions>
-      <ToastPopupBox> {showToast && <ToastPopup>회원가입이 완료되었습니다!</ToastPopup>}</ToastPopupBox>
+      <ToastPopupBox> {showToast && <ToastPopup>회원가입이 완료되었습니다!</ToastPopup>} </ToastPopupBox>
     </SigninFormWrapper>
   );
 };

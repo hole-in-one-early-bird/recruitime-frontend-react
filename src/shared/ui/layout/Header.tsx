@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { API } from 'config';
+import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 import html2canvas from 'html2canvas';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
+import useBookmarkStore from 'shared/zustand/bookmarkStore';
 import { useChatStore } from 'shared/zustand/chatStore';
 import useCustomizedCareerStore from 'shared/zustand/store';
 import styled from 'styled-components';
@@ -21,7 +23,7 @@ const routeTitles: { [key: string]: string } = {
   [ROUTES_PATH.keyword]: '키워드 선택',
   [ROUTES_PATH.customizedCareer]: 'AI 맞춤 커리어',
   [ROUTES_PATH.chat]: '커리어 챗봇',
-  [ROUTES_PATH.bookmark]: '북마크',
+  [ROUTES_PATH.bookmark]: '내 추천 커리어',
 };
 
 export const Header = () => {
@@ -30,7 +32,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
-
+  const [bookmark, setBookmark] = useState(false);
   const stepMapping: { [key: string]: number } = {
     '/profile': 1,
     '/track': 2,
@@ -52,8 +54,24 @@ export const Header = () => {
     navigate(-1);
   };
 
+  useEffect(() => {
+    return () => {
+      resetBookmark();
+    };
+  }, []);
+
+  // 북마크 상태를 초기화하는 함수
+  const resetBookmark = () => {
+    // 북마크 상태를 초기값으로 설정
+    setBookmark(false);
+  };
+
+  const handleBookmarkClick = () => {
+    setBookmark(!bookmark);
+  };
+
   const copyToClipboard = async () => {
-    const fullUrl = `${window.location.href}?code=${resultData.jobRecommendationCode}`;
+    const fullUrl = `http://49.50.166.153:8080/customizedCareer?code=${resultData.jobRecommendationCode}`;
     try {
       await axios.get(API.GETSHARELINK, {
         params: {
@@ -67,7 +85,55 @@ export const Header = () => {
       console.error('Failed to copy: ', err);
     }
   };
+  useEffect(() => {
+    // URL 쿼리 매개변수에서 code 값을 가져옴
+    const searchParams = new URLSearchParams(location.search);
+    const codeParam = searchParams.get('code');
 
+    // code 값이 존재하면 북마크 상태를 활성화
+    if (codeParam) {
+      setBookmark(true);
+    } else {
+      setBookmark(false);
+    }
+  }, [location.search]);
+
+  const addBookmark = async () => {
+    handleBookmarkClick();
+    const data = {
+      jobName: resultData.jobName,
+      code: resultData.jobRecommendationCode,
+    };
+    const token = getAuthTokenFromCookie();
+    try {
+      const result = await axios.post(API.BOOKMARK, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(result);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+
+  const deleteBookmark = async () => {
+    handleBookmarkClick();
+    const token = getAuthTokenFromCookie();
+    try {
+      const result = await axios.delete(API.BOOKMARK, {
+        data: {
+          code: resultData.jobRecommendationCode,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(result);
+    } catch (err) {
+      console.error('Failed to delete bookmark: ', err);
+    }
+  };
   const downloadImage = (dataUrl: string, filename: string) => {
     // `<a>` 태그를 생성합니다.
     const link = document.createElement('a');
@@ -90,6 +156,9 @@ export const Header = () => {
       }
     }
   };
+
+  const searchParams = new URLSearchParams(location.search);
+  const codeParam = searchParams.get('code');
 
   const renderHeaderContent = () => {
     const title = routeTitles[pathname] || '';
@@ -134,6 +203,8 @@ export const Header = () => {
       case ROUTES_PATH.userInfo:
       case ROUTES_PATH.editUserInfo:
       case ROUTES_PATH.findAccount:
+      case ROUTES_PATH.resetPassword:
+      case ROUTES_PATH.bookmark:
         return (
           <HeaderContainer style={{ justifyContent: 'center' }}>
             <BackIcon
@@ -177,14 +248,27 @@ export const Header = () => {
             </Title>
             <IconContainer>
               <div onClick={copyToClipboard}>
-                {' '}
                 <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.svg'} alt='shareIcon' />
               </div>
-
-              {/* <img
-                src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
-                alt='inActiveBookmarkIcon'
-              /> */}
+              {codeParam ? null : (
+                <>
+                  {bookmark ? (
+                    <div onClick={deleteBookmark}>
+                      <img
+                        src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
+                        alt='inActiveBookmarkIcon'
+                      />
+                    </div>
+                  ) : (
+                    <div onClick={addBookmark}>
+                      <img
+                        src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
+                        alt='inActiveBookmarkIcon'
+                      />
+                    </div>
+                  )}
+                </>
+              )}
             </IconContainer>
           </HeaderContainer>
         );
@@ -249,8 +333,9 @@ const Title = styled(Typography)`
 const IconContainer = styled.div`
   display: flex;
   align-items: center;
-  & > img:not(:last-child) {
-    margin-right: 10px;
+  gap: 14px;
+  * {
+    cursor: pointer;
   }
 `;
 

@@ -67,7 +67,10 @@ export const authService = {
     return response.data;
   },
   findPassword: async (signedEmail: string) => {
-    const response = await axios.get(API.PASSWORD_FIND, { params: { signedEmail } });
+    const data = { signedEmail: signedEmail };
+
+    const response = await axios.post(API.PASSWORD_FIND, data);
+
     return response.data;
   },
   saveProfile: async (userInfoData: any) => {

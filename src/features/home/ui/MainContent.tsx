@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 import colors from 'shared/styles/color';
+import { Button } from 'shared/ui/button/Button';
 import { PopupModal, PopupResumeModal } from 'shared/ui/modal/Modal';
 import { Typography } from 'shared/ui/typography/Typography';
 import { useModalStore } from 'shared/zustand/modalStore';
@@ -103,28 +104,31 @@ export const MainContent = () => {
         </StyledTypography>
         <div className='sub'>
           <Typography variant={'subTitle01'} style={{ color: colors.gray[600] }}>
-            맞춤 커리어 추천과 이력서 코칭을 받아보세요
+            리쿠르탐에서 AI 커리어 추천을 받아보세요.
           </Typography>
           <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.svg'} alt='fireIcon' />
         </div>
       </TitleBox>
-      <ContentBox>
-        <AIInteractive
-          titleChildren={'맞춤형 AI 커리어 추천'}
-          subChildren={'나에게 딱 맞는 커리어 가이드'}
-          alt={'character'}
-          src={'char/recruitime'}
-          onClick={handleFirstAIClick}
-        />
 
-        <AIInteractive
-          titleChildren={'맞춤형 AI 이력서 코칭'}
-          subChildren={'막막한 자기소개서 첫 걸음부터'}
-          alt={'note'}
-          src={'icon/note'}
-          onClick={handleSecondAIClick}
-        />
-      </ContentBox>
+      <div className='bg'>
+        <img src={process.env.PUBLIC_URL + '/images/char/introRecruitime.svg'} alt='characterImage' />
+      </div>
+
+      <Button
+        variant={'primary'}
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          maxWidth: 'calc(100% - 40px)',
+        }}
+        TypographyVariant={'button01'}
+        onClick={handleFirstAIClick}
+      >
+        시작하기
+      </Button>
+
       {modalStore.firstModal.isOpen && (
         <PopupModal
           isOpen={modalStore.firstModal.isOpen}
@@ -147,6 +151,13 @@ export const MainContent = () => {
 };
 
 const MainContentWrapper = styled.div`
+  .bg {
+    position: relative;
+    img {
+      position: absolute;
+      right: -25px;
+    }
+  }
   .sub {
     display: flex;
     align-items: flex-end;
@@ -158,13 +169,7 @@ const MainContentWrapper = styled.div`
 `;
 
 const TitleBox = styled.div`
-  margin-bottom: 106px;
-`;
-
-const ContentBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  margin-bottom: 80px;
 `;
 
 const StyledTypography = styled(Typography)`

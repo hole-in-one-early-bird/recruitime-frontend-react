@@ -39,7 +39,9 @@ export const Home = () => {
   );
 };
 
-const HomeWrapper = styled.div``;
+const HomeWrapper = styled.div`
+  height: 100vh;
+`;
 
 const fadeIn = keyframes`
   0% {

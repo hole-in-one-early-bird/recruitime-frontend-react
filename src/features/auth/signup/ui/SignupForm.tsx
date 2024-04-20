@@ -87,7 +87,13 @@ export const SignupForm = () => {
         onClick={handleSubmit}
         variant={isFormValid ? 'primary' : 'primaryDisabled'}
         disabled={!isFormValid}
-        style={{ position: 'fixed', bottom: '65px' }}
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          maxWidth: 'calc(100% - 40px)',
+        }}
         TypographyVariant={'button01'}
       >
         회원가입

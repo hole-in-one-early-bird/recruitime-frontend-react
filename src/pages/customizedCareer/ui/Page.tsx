@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
 import colors from 'shared/styles/color';
@@ -8,40 +8,71 @@ import { ROUTES_PATH } from 'shared/constants/routes';
 import useCustomizedCareerStore from 'shared/zustand/store';
 import { useUserData } from 'features/aiCareer/@hooks/useUserData';
 import { initialValues } from 'shared/constants/data';
-
+import axios from 'axios';
+import { API } from 'config';
+import { getAuthTokenFromCookie } from 'features/auth/api/authService';
 interface UserData {
-  id: number;
-  user_name: string;
-  job_name: string;
-  job_description: string;
-  related_major: string;
+  jobRecommendationCode: string;
+  jobName: string;
+  jobDescription: string;
+  relatedMajor: string;
   certifications: string;
-  recommendation_reason: string;
-  user_id: number;
+  recommendationReason: string;
 }
 
 export const CustomizedCareer = () => {
   const [openSection, setOpenSection] = useState(null);
-  const [useResult, setUseResult] = useState<UserData | null>(null);
-  const [userId, setUserId] = useState<number | null>(null);
-  const [bookId, setBookId] = useState<number | null>(null);
+
+  const [previousResult, setPreviousResult] = useState<UserData>({
+    jobRecommendationCode: '',
+    jobName: '',
+    jobDescription: '',
+    relatedMajor: '',
+    certifications: '',
+    recommendationReason: '',
+  }); // 이전 결과 페이지 정보 상태 추가
+
+  const location = useLocation();
   const resultData = useCustomizedCareerStore((state) => state.userData);
   const { userDataStore } = useUserData(initialValues);
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const code = params.get('code');
+
+    if (code) {
+      fetchPreviousResult(code); // 코드를 사용하여 이전 결과 페이지 정보 가져오기
+    }
+  }, [location.search]);
+
+  const fetchPreviousResult = async (code: string) => {
+    const token = getAuthTokenFromCookie();
+    try {
+      const response = await axios.get(`${API.BOOKMARKDETAIL}?code=${code}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setPreviousResult(response.data.data); // 가져온 정보를 상태에 저장
+      console.log(response.data.data);
+    } catch (error) {
+      console.error('Failed to fetch previous result: ', error);
+    }
+  };
+
+  const isCode = location.search.includes('code');
   const accordionSections = [
     {
       header: '관련 학과',
-      content: resultData.relatedMajor,
+      content: isCode ? previousResult.relatedMajor : resultData?.relatedMajor,
     },
     {
       header: '관련 자격증',
-
-      content: resultData.certifications,
+      content: isCode ? previousResult.certifications : resultData?.certifications,
     },
     {
       header: '왜 이 커리어가 추천 되었나요?',
-
-      content: resultData.recommendationReason,
+      content: isCode ? previousResult.recommendationReason : resultData?.recommendationReason,
     },
   ];
   const toggleAccordion = (index: any) => {
@@ -80,12 +111,12 @@ export const CustomizedCareer = () => {
             <CareerBox>
               <Job>
                 <Typography variant={'header'} style={{ color: colors.white }}>
-                  {resultData?.jobName}
+                  {isCode ? previousResult.jobName : resultData?.jobName}
                 </Typography>
               </Job>
               <Des>
                 <Typography variant={'body02'} style={{ color: colors.gray[600] }}>
-                  {resultData?.jobDescription}
+                  {isCode ? previousResult.jobDescription : resultData?.jobDescription}
                 </Typography>
               </Des>
             </CareerBox>
