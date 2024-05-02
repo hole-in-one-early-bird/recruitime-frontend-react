@@ -77,7 +77,7 @@ export const ExperienceForm = () => {
       </AddExperienceWrapper>
       {userDataStore.experiences.length === 0 ? (
         <EmptyBox>
-          <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.svg'} alt='characterImage' />
+          <img src={'/images/char/listRecruitime.svg'} alt='characterImage' />
           <Typography variant={'caption04'} style={{ color: colors.gray[400] }}>
             5개까지만 알려주세요
           </Typography>
@@ -94,7 +94,7 @@ export const ExperienceForm = () => {
               </Typography>
               <img
                 onClick={() => removeExperience(index)}
-                src={process.env.PUBLIC_URL + '/images/icon/closeIcon.svg'}
+                src={'/images/icon/closeIcon.svg'}
                 alt='closeIcon'
               />
             </ExperienceItem>

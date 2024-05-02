@@ -94,10 +94,7 @@ export const CustomizedCareer = () => {
           <Content>
             <AiChat>
               <Character>
-                <img
-                  src={process.env.PUBLIC_URL + '/images/char/resultCharacter.svg'}
-                  alt='characterImage'
-                />
+                <img src={'/images/char/resultCharacter.svg'} alt='characterImage' />
               </Character>
 
               <Link to={ROUTES_PATH.chat}>
@@ -142,7 +139,7 @@ export const CustomizedCareer = () => {
         </ContentBox>
         <Link to={ROUTES_PATH.loading}>
           <ReplyButton>
-            <img src={process.env.PUBLIC_URL + '/images/icon/refreshIcon.svg'} alt='refreshIcon' />
+            <img src={'/images/icon/refreshIcon.svg'} alt='refreshIcon' />
             <Typography variant={'button04'} style={{ fontWeight: '500', color: colors.white }}>
               다시하기
             </Typography>

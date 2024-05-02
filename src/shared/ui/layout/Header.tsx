@@ -171,7 +171,7 @@ export const Header = () => {
               RECRUTAM
             </Typography>
             <Link to={ROUTES_PATH.mypage}>
-              <img src={process.env.PUBLIC_URL + '/images/icon/userIcon.svg'} alt='userIcon' />
+              <img src={'/images/icon/userIcon.svg'} alt='userIcon' />
             </Link>
           </HeaderContainer>
         );
@@ -241,30 +241,24 @@ export const Header = () => {
         return (
           <HeaderContainer style={{ justifyContent: 'space-between', marginBottom: '20px' }}>
             <Link to={ROUTES_PATH.home}>
-              <img src={process.env.PUBLIC_URL + '/images/icon/homeIcon.svg'} alt='homeIcon' />
+              <img src={'/images/icon/homeIcon.svg'} alt='homeIcon' />
             </Link>
             <Title variant={'header'} style={{ color: colors.gray[700] }}>
               {title}
             </Title>
             <IconContainer>
               <div onClick={copyToClipboard}>
-                <img src={process.env.PUBLIC_URL + '/images/icon/shareIcon.svg'} alt='shareIcon' />
+                <img src={'/images/icon/shareIcon.svg'} alt='shareIcon' />
               </div>
               {codeParam ? null : (
                 <>
                   {bookmark ? (
                     <div onClick={deleteBookmark}>
-                      <img
-                        src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
-                        alt='inActiveBookmarkIcon'
-                      />
+                      <img src={'/images/icon/activeBookmarkIcon.svg'} alt='inActiveBookmarkIcon' />
                     </div>
                   ) : (
                     <div onClick={addBookmark}>
-                      <img
-                        src={process.env.PUBLIC_URL + '/images/icon/inActiveBookmarkIcon.svg'}
-                        alt='inActiveBookmarkIcon'
-                      />
+                      <img src={'/images/icon/inActiveBookmarkIcon.svg'} alt='inActiveBookmarkIcon' />
                     </div>
                   )}
                 </>

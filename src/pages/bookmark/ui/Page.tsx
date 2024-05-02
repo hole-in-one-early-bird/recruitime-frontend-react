@@ -74,17 +74,14 @@ export const Bookmark = () => {
                     </Typography>
                   </Link>
                   <div onClick={() => deleteBookmark(item.code)}>
-                    <img
-                      src={process.env.PUBLIC_URL + '/images/icon/activeBookmarkIcon.svg'}
-                      alt='activeBookmarkIcon'
-                    />
+                    <img src={'/images/icon/activeBookmarkIcon.svg'} alt='activeBookmarkIcon' />
                   </div>
                 </Content>
               )
           )
         ) : (
           <EmptyBox>
-            <img src={process.env.PUBLIC_URL + '/images/char/listRecruitime.svg'} alt='characterImage' />
+            <img src={'/images/char/listRecruitime.svg'} alt='characterImage' />
             <Typography variant={'caption04'} style={{ color: colors.gray[400] }}>
               아직 북마크한 리쥬메가 없어요!
             </Typography>

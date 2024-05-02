@@ -53,8 +53,8 @@ export const Chat = () => {
   ]);
 
   const iconSrc = inputValue
-    ? process.env.PUBLIC_URL + '/images/icon/activeCircleArrowIcon.svg' // 활성화된 아이콘 경로
-    : process.env.PUBLIC_URL + '/images/icon/CircleArrowIcon.svg'; // 기본 아이콘 경로
+    ? '/images/icon/activeCircleArrowIcon.svg' // 활성화된 아이콘 경로
+    : '/images/icon/CircleArrowIcon.svg'; // 기본 아이콘 경로
 
   const chatRef = useRef<HTMLDivElement>(null);
 
@@ -146,10 +146,7 @@ export const Chat = () => {
               <>
                 <BotContainer>
                   <ProfileInfo>
-                    <img
-                      src={process.env.PUBLIC_URL + '/images/char/recruitime.svg'}
-                      alt='characterImage'
-                    />
+                    <img src={'/images/char/recruitime.svg'} alt='characterImage' />
                   </ProfileInfo>
                   <BotBubble>
                     <Typography variant={'body03'} style={{ color: colors.gray[600] }}>
