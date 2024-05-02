@@ -26,6 +26,7 @@ export const MainContent = () => {
   const handleFirstAIClick = () => {
     modalStore.firstModal.setOpen(true);
   };
+
   const handleSecondAIClick = () => {
     modalStore.secondModal.setOpen(true);
   };
@@ -106,14 +107,12 @@ export const MainContent = () => {
           <Typography variant={'subTitle01'} style={{ color: colors.gray[600] }}>
             리쿠르탐에서 AI 커리어 추천을 받아보세요.
           </Typography>
-          <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.svg'} alt='fireIcon' />
+          <img src={'/images/icon/fireIcon.svg'} alt='fireIcon' />
         </div>
       </TitleBox>
-
       <div className='bg'>
-        <img src={process.env.PUBLIC_URL + '/images/char/introRecruitime.svg'} alt='characterImage' />
+        <img src={'/images/char/introRecruitime.svg'} alt='characterImage' />
       </div>
-
       <Button
         variant={'primary'}
         style={{

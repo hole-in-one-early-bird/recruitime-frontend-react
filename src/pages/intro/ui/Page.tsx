@@ -18,10 +18,10 @@ export const Intro = () => {
         <Typography variant={'subTitle01'} style={{ color: colors.gray[600] }}>
           AI 커리어 관련 서비스를 이용해보세요
         </Typography>
-        <img src={process.env.PUBLIC_URL + '/images/icon/fireIcon.svg'} alt='fireIcon' />
+        <img src={'/images/icon/fireIcon.svg'} alt='fireIcon' />
       </div>
       <div className='bg'>
-        <img src={process.env.PUBLIC_URL + '/images/char/introRecruitime.svg'} alt='characterImage' />
+        <img src={'/images/char/introRecruitime.svg'} alt='characterImage' />
       </div>
       <div>
         <Link to={ROUTES_PATH.signin}>

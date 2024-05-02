@@ -22,7 +22,7 @@ export const AIInteractive = ({ titleChildren, subChildren, alt, src, onClick }:
           {subChildren}
         </Typography>
       </div>
-      <img src={process.env.PUBLIC_URL + `/images/${src}.svg`} alt={alt} />
+      <img src={`/images/${src}.svg`} alt={alt} />
     </AIInteractiveWrapper>
   );
 };

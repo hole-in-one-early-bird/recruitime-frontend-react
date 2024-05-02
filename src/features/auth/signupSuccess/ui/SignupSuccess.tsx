@@ -21,7 +21,7 @@ export const SignupSuccess = () => {
               {`프로필 입력 시 더 편리하게\n커리어를 분석할 수 있어요!`}
             </StyledTypography>
           </div>
-          <img src={process.env.PUBLIC_URL + '/images/char/recruitimeBg.svg'} alt='characterImage' />
+          <img src={'/images/char/recruitimeBg.svg'} alt='characterImage' />
         </Des>
       </CompleteContainer>
       <AuthOption>
