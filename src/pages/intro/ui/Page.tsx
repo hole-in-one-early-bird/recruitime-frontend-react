@@ -1,10 +1,10 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from 'shared/constants/routes';
-import colors from 'shared/styles/color';
-import { Button } from 'shared/ui/button/Button';
-import { Typography } from 'shared/ui/typography/Typography';
+
 import styled from 'styled-components';
+import { ROUTES_PATH } from '../../../shared/constants/routes';
+import colors from '../../../shared/styles/color';
+import { Button } from '../../../shared/ui/button/Button';
+import { Typography } from '../../../shared/ui/typography/Typography';
 
 export const Intro = () => {
   return (
