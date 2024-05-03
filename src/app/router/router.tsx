@@ -18,7 +18,6 @@ import { SignupPage } from 'pages/signup';
 import { SignupSuccessPage } from 'pages/signupSuccess';
 import { Track } from 'pages/track';
 import { UserInfo } from 'pages/userInfo';
-import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { ROUTES_PATH } from 'shared/constants/routes';
 
